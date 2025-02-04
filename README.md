@@ -45,3 +45,13 @@ This project is a **multimedia recommendation app** tailored to a user’s inter
 - **Image input** (OPTIONAL. provide screenshot of problem)
 
 ---
+
+## Long Term Goals
+
+### 1. **Random Suggestion**
+- adventerous 
+### 2. **Profile Link Sharing**
+### 3. **Content Filtering**
+
+## Target Audience
+All ages - Individuals who seek to ease the process of finding new material to experience.
