@@ -49,7 +49,6 @@ This project is a **multimedia recommendation app** tailored to a user’s inter
 ## Long Term Goals
 
 ### 1. **Random Suggestion**
-- adventerous 
 ### 2. **Profile Link Sharing**
 ### 3. **Content Filtering**
 
