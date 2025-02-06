@@ -7,7 +7,7 @@ This project is a **multimedia recommendation app** tailored to a user’s inter
 
 ## Tech Stack: MERN
 - **Backend**: Express [backend]
-- **Frontend**: Read [frontend]
+- **Frontend**: React [frontend]
 - **Database**: PostgreSQL (structured data), MongoDB (metadata)
 - **Runtime Environment**: Node.js [for API calls]
 - **AI Model**: Scikit-learn, TensorFlow, or PyTorch for AI recommendations
