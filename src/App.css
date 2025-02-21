@@ -1,0 +1,363 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+body {
+  background-color: #303030;
+  margin: 0;
+  padding: 0;
+}
+.App-header {
+  background-color: #303030;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: rgb(30, 30, 30);
+}
+
+.App-link {
+  color: #ae5de1; /* #61dafb */
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.top-bar {
+  background-color: #222222;
+  height: 60px;
+  width: 100%; 
+  position: fixed; 
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 0 20px; 
+  z-index: 999; 
+}
+.under-bar {
+  background-color: #3F2A52;
+  height: 60px; 
+  width: 100%; 
+  top: 60px; 
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 999; 
+  position: fixed; 
+}
+.foryou-box{
+  background-color: #222222;
+  height: 370px;
+  width: 100%;
+  position: fixed;
+  align-items: center;
+  top: 238px;
+}
+
+.divider {
+  width: 100%; 
+  height: 2px;  /* Line thickness */
+  background-color: rgb(11, 11, 11);
+  position: absolute;
+  top: 120px; 
+  left: 0;
+}
+.top-line{
+  top: 58px;
+}
+.bottom-line{
+  bottom:10px;
+}
+
+.foryou-divider{
+  width: 100%;  /* Make it span the entire width */
+  height: 2px;  /* Line thickness */
+  background-color: rgb(11, 11, 11); 
+  position: absolute;
+  top: 120px; 
+  left: 0;
+}
+.foryou-topline{
+  top:237px;
+}
+.foryou-bottomline{
+  top:607px;
+}
+
+.link{
+  color:white;
+  text-decoration: none;
+  font-size: 18px;
+}
+.link:hover{
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  padding: 20px 0;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  width: 80%; 
+}
+
+a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  margin-right: 20px;
+  display: inline;
+}
+
+a:visited {
+  color: rgb(255, 255, 255); /* Color for visited links */
+}
+
+a:hover {
+  color: rgb(255, 255, 255); /* Color when hovered */
+}
+
+a:active {
+  color: rgb(255, 255, 255); /* Color when clicked */
+}
+
+a.bingr {
+  font-size: 39px; /* Make "bingr" link bigger */
+  font-weight: bold; /* Optional: Make it stand out more */
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  left: 30px; /* Adjust as needed */
+}
+.right-links a {
+  color: lightgray;
+  align-items: center;
+  font-size: 19px;
+  font-weight: 400;
+  text-decoration: none;
+  margin-left: auto;
+  margin-right: 50px;
+  gap: 20px;
+}
+.left-links a {
+  color: lightgray;
+  font-size: 19px;
+  font-weight: 400;
+  text-decoration: none; 
+  margin-right: 50px;
+  margin-left: auto;
+}
+
+/* BUTTONS CSS */
+.buttons-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end; 
+  padding-right:40px; /* Ensures they don’t go off-screen */
+  width: 100%; 
+}
+.custom-contained {
+  background-color: #5e3d7b !important;
+  color: rgb(255, 255, 255) !important;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+  transition: all 0.2s ease-in-out; 
+}
+.custom-outlined {
+  background-color: transparent;
+  color: white !important;
+  border: 2px solid darkorchid;
+  display: inline-block;
+  text-align: center;
+  margin: 0;
+}
+.custom-contained:hover {
+  background-color: #805ca0 !important;
+  color: white;
+}
+.custom-outlined:hover {
+  border-color: aquamarine;
+  color: aliceblue;
+}
+/* AVATAR / USER ICON */
+.avatar-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  width: 100px; 
+  height: 100px; 
+  margin-right: 10px;
+}
+.avatar-container .MuiAvatar-root {
+  width: 62px;  
+  height: 62px; 
+  cursor: pointer; /* Makes the avatar clickable */
+}
+.page-content {
+  margin-top: 150px; 
+  margin-left: 30px;
+  color:white;
+  font-size: 28px;
+}
+.fixed-textrea{
+  width: 400px;
+  height: 100px;
+  resize: none;
+}
+.signin-form{
+  width: 340px;
+  height: 430px;
+  padding: 20px;
+  background-color: #222222;
+  color: white; 
+  border-radius: 20px; 
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.centered-form {
+  width: 650px;
+  padding: 20px;
+  background-color: #222222;
+  color: white; 
+  border-radius: 8px; /* Rounded corners for a smooth look */
+  
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.bugtitle {
+  font-size: 36px; 
+  color: #ffffff; 
+  text-align: center; 
+  margin-top: 130px; 
+}
+
+/* SIGN IN PAGE */
+.signin-title{
+  font:menu;
+  font-size: 32px; 
+  color: #ffffff; 
+  text-align: center; /* Centers the title horizontally */
+}
+.signin-content{
+  font-size: 23px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.signin-input {
+  height: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #555;
+  border-radius: 8px;
+  outline: none;
+}
+
+.signin-input:focus {
+  border-color: #007bff; /* Highlight when selected */
+}
+.custom-signin-contained {
+  background-color: #2a79ba !important; 
+  color: rgb(255, 255, 255) !important;
+  padding: 10px 20px;
+  width:240px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block; 
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+  transition: all 0.2s ease-in-out; 
+}
+.custom-signin-contained:hover {
+  background-color: #48a7cd !important;
+  color: white;
+}
+.sign-in-page { /* For background */
+  background-image: url('./assets/images/Web_App_Bg_Transparent.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; /* Full-screen height */
+  width: 100vw;
+}
+/* END SIGN IN PAGE */
+
+/* CAROUSEL CSS */
+.details-box {
+  background-color: #171020; 
+  height: 218px; 
+  width: 450px; 
+  position: fixed;
+  top: 541px;
+  left: 770px;
+  transform: translateX(-50%); /* Offset it by half its width */
+  transform:translateY(-235px);
+  z-index: 1000;
+  filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.6));
+}
+
+.swiper {
+  position: relative;
+  transform: translateY(70px);
+}
+.swiper-slide img {
+  filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.6));
+}
+.swiper-slide-active img {
+  transform: translateX(-10%); /* This css effects the slide before currently displayed slide */
+}
+
+.swiper-slide-next img {
+  transform: translateX(-42%); /* This css effects the currently displayed slide */
+
+}
+.swiper-slide-next + .swiper-slide img {
+  transform: translateX(30%); /* This css effects the slide after the one currently being displayed */
+}
+.swiper-pagination {
+  color: #ffffff !important;
+  bottom: 0px !important; /* Adjust the positioning to move it below the carousel */
+}
