@@ -45,7 +45,7 @@ body {
   background-color: #222222;
   height: 60px;
   width: 100%; 
-  position: fixed; 
+  position: relative; 
   top: 0;
   left: 0;
   display: flex;
@@ -58,22 +58,29 @@ body {
   background-color: #3F2A52;
   height: 60px; 
   width: 100%; 
-  top: 60px; 
-  left: 0;
+  top: 0px; 
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  z-index: 999; 
-  position: fixed; 
+  position: relative; 
 }
-.foryou-box{
-  background-color: #222222;
-  height: 370px;
+/* Center the category text */
+.category h2 {
+    text-align: center; /* Center the h2 text */
+    color: white;
+    margin: 10px;
+    padding: 10px 0; /* Add spacing inside the header */
+}
+
+/* Make sure the boxes are not affected */
+.foryou-box {
   width: 100%;
-  position: fixed;
-  align-items: center;
-  top: 238px;
+  background-color: #222222; /* Background color for visibility */
+  height: 370px; /* Height for the foryou-box */
+  position: relative;
+  border: 2px solid black;
+  overflow: visible;
 }
 
 .divider {
@@ -232,7 +239,7 @@ a.bingr {
   cursor: pointer; /* Makes the avatar clickable */
 }
 .page-content {
-  margin-top: 150px; 
+  position: relative;
   margin-left: 30px;
   color:white;
   font-size: 28px;
@@ -330,21 +337,25 @@ a.bingr {
   background-color: #171020; 
   height: 218px; 
   width: 450px; 
-  position: fixed;
-  top: 541px;
-  left: 770px;
-  transform: translateX(-50%); /* Offset it by half its width */
-  transform:translateY(-235px);
+  position: relative;
+  left: 774px;
+  top: 72px;
   z-index: 1000;
   filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.6));
 }
 
 .swiper {
   position: relative;
-  transform: translateY(70px);
+  transform: translateY(-145px);
+}
+
+.swiper-carousel {
+  position: relative;
+  transform: translateY(-170px);
+  border: 2px solid greenyellow;
 }
 .swiper-slide img {
-  filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 1.6));
 }
 .swiper-slide-active img {
   transform: translateX(-10%); /* This css effects the slide before currently displayed slide */
@@ -355,9 +366,127 @@ a.bingr {
 
 }
 .swiper-slide-next + .swiper-slide img {
-  transform: translateX(30%); /* This css effects the slide after the one currently being displayed */
+  transform: translateX(0%); /* AFFECTS CAROUSEL AND SLIDES */
 }
 .swiper-pagination {
   color: #ffffff !important;
-  bottom: 0px !important; /* Adjust the positioning to move it below the carousel */
+  bottom: 0px !important;
+}
+.profile-picture {
+  width: 230px;
+  height: 230px;
+  left: 30px;
+  top: 30px;
+  border-radius: 90%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #333333;
+  cursor: pointer;
+  position: relative;
+}
+.profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.banner-picture {
+  width: 100vw;
+  height: 330px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #7e7d7d;
+  cursor: pointer;
+  position: fixed;
+  left: 0;
+  top: 120px; 
+  margin: 0;
+  padding: 0;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* action games stuff */
+.image-container {
+  width: auto;
+  height: auto;
+  display: flex;
+  overflow: visible;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 999;
+  /* border: 2px solid orchid; */
+}
+.image-container img { /* actual images INSIDE the slides */
+  width: 100%;
+  height: 100%;
+  /* border: 2px solid blueviolet; /* Helps in debugging layout issues */
+  transform: translateX(0px);
+  position: relative;
+  overflow: visible;
+}
+
+.swiper-slide:hover .image-container img {
+  transform: scale(1.15); /* Slightly scale the image inside the slide */
+}
+
+.swiper-slide {
+  position: relative;
+  z-index: 1; /* Default z-index */
+  transition: transform 0.3s ease-in-out, z-index 0s 0.3s; /* Delay z-index reset */
+}
+
+.swiper-slide:hover {
+  z-index: 10; /* Bring the hovered slide to the front */
+  transform: scale(1.10);
+}
+
+
+.swiper-slide:hover .hover-box {
+  opacity: 1; /* Make the box visible on hover */
+  transform: scale(1); /* Optionally scale the box when hovered */
+}
+
+.hover-box {
+  position: absolute;
+  width: 350px;
+  height: 400px;
+  top: -408px; /* Position the hover box above the image */
+  left: 0%; /* Center it horizontally */
+  transform: translateX(-50%); /* Adjust position for centering */
+  border: 2px solid blueviolet; /* Box border */
+  background-color: #2c162e;
+  opacity: 0; /* Initially hidden */
+  color: white;
+  font-weight: bold;
+}
+.actiongames-slider{
+  transform: translateY(160px);
+  overflow: visible;
+}
+.swiper-slide {
+  margin: 15px 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  /* border: 2px solid red; */
+  position: relative;
+  overflow: visible;
+}
+
+.swiper-slides-container {
+ /* border: 2px solid blue; */
+  overflow: visible !important; /* problem, goes outside container. if off, hover box wont be visible */
+}
+
+.hover-box {
+  /* border: 2px solid green; */
 }

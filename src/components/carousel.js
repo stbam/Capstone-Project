@@ -47,12 +47,14 @@ function Carousel() {
           <span style={{color: "white", textAlign: "left", marginLeft: 14, fontSize: 14}}>Tag Tag Tag Tag</span>
         </div>
             <Swiper
-            className="swiper-container"
-            modules={[Navigation, Pagination, EffectCoverflow, Autoplay]}
-            autoplay={{
-                delay:3500,
-                disableOnInteraction: false,
-            }}
+            className="swiper-carousel"
+            modules={[Navigation, Pagination, EffectCoverflow]}
+            /* 
+              autoplay={{
+                  delay:1500,
+                  disableOnInteraction: false,
+              }}
+            */
             loop={true}
             spaceBetween={50} 
             slidesPerView={3}

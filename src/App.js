@@ -13,17 +13,23 @@ import Profile from "./pages/profile";
 import BugReport from "./pages/bugreport";
 import SignIn from "./pages/signin";
 import Register from "./pages/register";
+import SteamGameSearchPage from "./pages/SteamGameSearchPage"; /* this is here for debugging */
 /* End pages */
+
+import SteamGameSearch from "./SteamGameSearch";
+import SteamGameDetails from "./SteamGameDetails";
 
 function App() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const [selectedAppId, setSelectedAppId] = useState(null);
 
   useEffect(() => {
     setResults(dummyData);
   }, []);
 
   return (
+    
     <Router>
       <NavbarWrapper />
       <Routes>
@@ -36,6 +42,7 @@ function App() {
         <Route path="/bugreport" element={<BugReport />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/steam-search" element={<SteamGameSearchPage/>}/>
       </Routes>
     </Router>
   );
