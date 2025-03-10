@@ -47,7 +47,7 @@ function Carousel() {
           <span style={{color: "white", textAlign: "left", marginLeft: 14, fontSize: 14}}>Tag Tag Tag Tag</span>
         </div>
             <Swiper
-            className="swiper-carousel"
+            className="game-carousel"
             modules={[Navigation, Pagination, EffectCoverflow]}
             /* 
               autoplay={{
@@ -68,7 +68,9 @@ function Carousel() {
             onSlideChange={(swiper) => setCurrentGame(games[swiper.realIndex])} // Update the title on slide change
             >
             {games.map((game, index) => (
-                <SwiperSlide key={index}>
+                <SwiperSlide 
+                className="game-carousel-slide"
+                key={index}>
                 <img src={game.img} alt={`Slide ${index + 1}`} />
                 </SwiperSlide>
             ))}

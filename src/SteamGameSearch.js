@@ -1,33 +1,23 @@
 import React, { useState } from "react";
 
-function SteamGameSearch({ onSelect }) {
-    const [searchResults, setSearchResults] = useState([]);
-    const [searchQuery, setSearchQuery] = useState("");
-
+function SteamGameSearch({ onSelect, searchQuery, setSearchQuery, setSearchResults, searchResults }) {
     const handleSearch = async () => {
         try {
             const response = await fetch(`http://localhost:5001/api/search/${searchQuery}`);
 
-            // Log response headers to check content type
-            console.log("Response Headers:", response.headers.get("content-type"));
-    
-            // Log raw response text before parsing
-            const textData = await response.text();  
-            console.log("Raw response text:", textData); 
-    
-            // Check if response is valid JSON
+            const textData = await response.text();  // Log raw response text for debugging
+            console.log("Raw response text:", textData);
+
             try {
-                const data = JSON.parse(textData);  
-                setSearchResults(data);
+                const data = JSON.parse(textData);
+                setSearchResults(data);  // Set the search results
             } catch (parseError) {
                 console.error("Error parsing JSON:", parseError);
             }
-    
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     };
-    
 
     const handleSelect = (game) => {
         onSelect(game.appid); // Pass the selected appId to the parent component
@@ -44,7 +34,7 @@ function SteamGameSearch({ onSelect }) {
             <button onClick={handleSearch}>Search</button>
 
             <ul>
-                {searchResults.map((game) => (
+                {(Array.isArray(searchResults) ? searchResults : []).map((game) => (
                     <li key={game.appid} onClick={() => handleSelect(game)}>
                         {game.name}
                     </li>

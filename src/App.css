@@ -349,24 +349,31 @@ a.bingr {
   transform: translateY(-145px);
 }
 
-.swiper-carousel {
+.game-carousel {
   position: relative;
   transform: translateY(-170px);
   border: 2px solid greenyellow;
 }
-.swiper-slide img {
+.game-carousel .swiper-slide {
+  border: 4px solid orangered;
+  right: 155px;
+}
+.game-carousel .swiper-slide img {
   filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 1.6));
 }
-.swiper-slide-active img {
-  transform: translateX(-10%); /* This css effects the slide before currently displayed slide */
+.game-carousel .swiper-slide-active img {
+  transform: translateX(0px); /* affects slide before current displayed */
+  border: 2px solid cyan;
 }
 
-.swiper-slide-next img {
-  transform: translateX(-42%); /* This css effects the currently displayed slide */
-
+.game-carousel .swiper-slide-next img {
+  border: 2px solid salmon; /* This css effects the slide before currently displayed slide */
+  transform: translateX(0px);
 }
-.swiper-slide-next + .swiper-slide img {
-  transform: translateX(0%); /* AFFECTS CAROUSEL AND SLIDES */
+
+.game-carousel .swiper-slide-next + .swiper-slide img {
+  transform: translateX(55%); /* AFFECTS CAROUSEL AND SLIDES */
+  border: 2px solid purple;
 }
 .swiper-pagination {
   color: #ffffff !important;
@@ -422,12 +429,12 @@ a.bingr {
   align-items: center;
   position: relative;
   z-index: 999;
-  /* border: 2px solid orchid; */
+
 }
 .image-container img { /* actual images INSIDE the slides */
   width: 100%;
   height: 100%;
-  /* border: 2px solid blueviolet; /* Helps in debugging layout issues */
+  border: 2px solid blueviolet; /* Helps in debugging layout issues */
   transform: translateX(0px);
   position: relative;
   overflow: visible;
@@ -436,11 +443,17 @@ a.bingr {
 .swiper-slide:hover .image-container img {
   transform: scale(1.15); /* Slightly scale the image inside the slide */
 }
+.image-container:hover .hover-box {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease, visibility 0s linear 0s; /* Make hover effect smooth */
+}
 
 .swiper-slide {
   position: relative;
   z-index: 1; /* Default z-index */
   transition: transform 0.3s ease-in-out, z-index 0s 0.3s; /* Delay z-index reset */
+  transform: translateX(0px);/* adjusts position of slides, NOT carousel */
 }
 
 .swiper-slide:hover {
@@ -466,8 +479,9 @@ a.bingr {
   opacity: 0; /* Initially hidden */
   color: white;
   font-weight: bold;
+  z-index: 990;
 }
-.actiongames-slider{
+.games-slider{
   transform: translateY(160px);
   overflow: visible;
 }
@@ -477,16 +491,78 @@ a.bingr {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  /* border: 2px solid red; */
+  border: 2px solid red;
   position: relative;
   overflow: visible;
 }
 
 .swiper-slides-container {
- /* border: 2px solid blue; */
-  overflow: visible !important; /* problem, goes outside container. if off, hover box wont be visible */
+  border: 2px solid blue; 
+  overflow: hidden; /* problem, goes outside container. if off, hover box wont be visible */
 }
 
 .hover-box {
-  /* border: 2px solid green; */
+  border: 2px solid green;
 }
+
+/* movie stuff */
+
+.movies-container{
+  transform: translateY(160px);
+  display: block;
+}
+.foryou-moviebox {
+  width: 100%;
+  background-color: #222222; /* Background color for visibility */
+  height: 960px; /* Adjust height for movie posters */
+  position: relative;
+  border: 2px solid black;
+  overflow: visible !important;
+}
+.swiper-slides-container-movie {
+  border: 2px solid rgb(0, 225, 255); 
+  overflow: visible !important; /* problem, goes outside container. if off, hover box wont be visible */
+}
+.swiper-slide-movie {
+  margin: 15px 0 !important;
+  padding: 0 !important;
+  border: 2px solid yellow;
+  position: relative;
+  overflow: visible;
+}
+.swiper-slide-movie:hover .hover-box {
+  opacity: 1; /* Make the box visible on hover */
+  transform: scale(1); /* Optionally scale the box when hovered */
+}
+.hover-box-movie {
+  position: absolute;
+  width: 350px;
+  height: 400px;
+  top: -408px; /* Position the hover box above the image */
+  left: 0%; /* Center it horizontally */
+  transform: translateX(-50%); /* Adjust position for centering */
+  border: 2px solid blueviolet; /* Box border */
+  background-color: #2c162e;
+  opacity: 0; /* Initially hidden */
+  color: white;
+  font-weight: bold;
+  z-index: 990;
+}
+/* end movie stuff */
+
+.see-more {
+  cursor: pointer;
+  text-align: center; /* Centers inline elements like text */
+  display: block; /* Ensures the div takes full width for centering */
+  margin: 20px auto; /* Adds spacing and centers horizontally */
+}
+
+
+.see-more:hover {
+  text-decoration: none;
+  color: darkblue; /* Optional: Change color on hover */
+}
+.hover-box-wrapper{
+  overflow: visible !important;
+}
+

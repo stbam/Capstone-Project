@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
+const {fetchSteamGameDetails} = require('./steamApiHelper');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -60,15 +61,10 @@ app.get("/api/search/:query", async (req, res) => {
 app.get("/api/game-details/:appid", async (req, res) => {
     try {
         const appid = req.params.appid;
-        const gameDetailsUrl = `https://store.steampowered.com/api/appdetails?appids=${appid}`;
-        const { data } = await axios.get(gameDetailsUrl);
-        if (data[appid]?.success) {
-            res.json(data[appid].data);
-        } else {
-            res.status(404).json({ message: "Game details not found." });
-        }
+        const gameDetails = await fetchSteamGameDetails(appid);
+        res.json(gameDetails);
     } catch (error) {
-        res.status(500).json({ error: "Failed to fetch game details" });
+        res.status(500).json({ error: "Failed to fetch game details", details: error.message });
     }
 });
 

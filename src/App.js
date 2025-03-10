@@ -14,10 +14,11 @@ import BugReport from "./pages/bugreport";
 import SignIn from "./pages/signin";
 import Register from "./pages/register";
 import SteamGameSearchPage from "./pages/SteamGameSearchPage"; /* this is here for debugging */
+import TMDBtest from "./pages/TMDBtest"; /* this is here for debugging */
 /* End pages */
 
-import SteamGameSearch from "./SteamGameSearch";
-import SteamGameDetails from "./SteamGameDetails";
+import ScrollToTop from "./ScrollToTop";
+
 
 function App() {
   const [query, setQuery] = useState("");
@@ -31,6 +32,7 @@ function App() {
   return (
     
     <Router>
+      <ScrollToTop/>
       <NavbarWrapper />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -43,6 +45,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/steam-search" element={<SteamGameSearchPage/>}/>
+        <Route path="/tmdb-search" element={<TMDBtest/>}/>
       </Routes>
     </Router>
   );

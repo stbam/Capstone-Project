@@ -1,4 +1,7 @@
 import React, {useState} from "react";
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+
 import Carousel from "../components/carousel";
 import ActionGames from "../components/ActionGames";
 import HorrorGames from "../components/HorrorGames";
@@ -8,6 +11,7 @@ import HandDrawnGames from "../components/HandDrawnGames";
 import SteamGameDetails from "../SteamGameDetails";
 import SteamGameSearch from "../SteamGameSearch";
 
+import Movies from "./movies";
 function shuffleArray(array) {
     return array.sort(() => Math.random() - 0.5);
 }
@@ -34,14 +38,34 @@ function Home() {
                 </div>
             </div>
 
+            <div className="page-content">
+                <h1>Games</h1>
+            </div>
             {categories.map(({ title, component }) => (
                 <div className="category" key={title}>
                     <h2>{title}</h2>
                     <div className="foryou-box">
-                        <div className="actiongames-slider">{component}</div>
+                        <div className="games-slider">{component}</div>
                     </div>
                 </div>
             ))}
+
+                <div className="see-more">
+
+                    <Link to="/games">
+                        <Button className="custom-contained">See More</Button>
+                    </Link>
+                </div>
+            <div>
+                <Movies/>
+                <div className="see-more">
+                    <Link to="/movies">
+                        <Button className="custom-contained">See More</Button>
+                    </Link>
+                </div>
+
+            </div>
+            
         </div>
     );
 }
