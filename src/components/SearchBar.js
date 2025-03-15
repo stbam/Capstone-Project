@@ -1,6 +1,7 @@
 import searchLogo from '../assets/images/search-svgrepo-com.svg';
 import { useState } from 'react';
 import './SearchBar.css'
+
 const AutocompleteSearchBar  = ({query, setQuery}) => {
   const [inputValue, setInputValue] = useState(query);
   const handleSearch = () => {

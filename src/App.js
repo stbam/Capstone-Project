@@ -22,6 +22,7 @@ import ScrollToTop from "./ScrollToTop";
 
 
 function App() {
+  
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [selectedAppId, setSelectedAppId] = useState(null);
@@ -55,14 +56,14 @@ function App() {
 }
 
 // NavbarWrapper component that handles conditional rendering
-function NavbarWrapper() {
+function NavbarWrapper({query,setQuery}) {
   const location = useLocation();
   
   if (location.pathname === '/signin' || location.pathname === '/register') {
     return null; // Don't render Navbar on SignIn or Register pages
   }
 
-  return <Navbar />;
+  return <Navbar query={query} setQuery={setQuery} />;
 }
 
 export default App;
