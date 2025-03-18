@@ -8,7 +8,7 @@ input:focus {
   }
   /*Library cards*/
 .library-cards-subtitle{
-  
+  margin-top: 70px;
 }
 .subtitle{
   display: flex;
