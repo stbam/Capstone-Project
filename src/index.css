@@ -1,0 +1,32 @@
+input:focus {
+    outline: none;
+  }
+  body {
+    background-color: #303030;
+    margin: 0;
+    padding: 0;
+  }
+  /*Library cards*/
+.library-cards-subtitle{
+  margin-top: 70px;
+}
+.subtitle{
+  display: flex;
+  align-items: flex-end;
+  gap: 30px;
+  color: gray;
+ /*these two remove highlighting*/
+user-select: none;
+margin-left: 60px; /*hardcoded movement to the right to align with figma design*/
+}
+#grey-title{
+  color: gray;
+}
+.library-cards{
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap:20px;
+
+
+}

@@ -1,0 +1,28 @@
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    left: 50%;
+  }
+  
+  .search-logo {
+    width: 30px; 
+    height: auto;
+    margin-right: 10px;
+  }
+  
+  .search-bar {
+    width: 250px;
+    padding: 10px;
+    border: none;
+    background-color: white;
+    font-size: 16px;
+  }
+  
+  /* Removes default browser outline on focus */
+  .search-bar:focus {
+    outline: none;
+  }
+  

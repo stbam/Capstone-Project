@@ -1,56 +1,70 @@
-# Multimedia Recommendation Web App
+# Getting Started with Create React App
 
-By Gabriel Delgado, Stanislav Rushnitski, Martin Taddey, Ulises Castillo, Shareena Wiggins
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Project Overview
-This project is a **multimedia recommendation app** tailored to a user’s interests, similar to MyAnimeList. It includes features such as **AI-based recommendations**, **user profiles**, **media tracking**, **follower system**, and **bug reporting**.
+## Available Scripts
 
-## Tech Stack: MERN
-- **Backend**: Express [backend]
-- **Frontend**: React [frontend]
-- **Database**: PostgreSQL (structured data), MongoDB (metadata)
-- **Runtime Environment**: Node.js [for API calls]
-- **AI Model**: Scikit-learn, TensorFlow, or PyTorch for AI recommendations
+In the project directory, you can run:
 
-## MVP Features
+### `npm start`
 
-### 1. **User Authentication & Profiles**
-- **Sign Up/Login** 
-- **User Profiles** (username, avatar, bio)
-- **User Settings** (privacy preferences, notification settings)
-- **Session Management** (login, logout, remember me)
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-### 2. **Media Catalog & Tracking**
-- **Browse Media** (search and filter movies, TV shows, books, etc.)
-- **Media Details Page** (title, description, genre, ratings)
-- **User Library** (track media in categories: read/watching, completed, etc.)
-- **Rating & Review System** (rate and comment on media)
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-### 3. **AI-Based Recommendations**
-- **Collaborative Filtering** (recommend media based on similar users' interests)
-- **Content-Based Filtering** (recommend similar media based on genres and tags)
-- **Basic "Like" Button** (gather user preferences for recommendations)
+### `npm test`
 
-### 4. **Social & Follower System**
-- **Follow/Unfollow Users** (follow other users and see their activity)
-- **User Activity Feed** (see recently watched media by followed users)
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### 5. **Backend & Data Handling**
-- **Database Setup** (PostgreSQL for users, ratings, followers; MongoDB for media metadata)
-- **API Routes** (using Django REST Framework to serve data)
+### `npm run build`
 
-### 6. **Bug Reporting**
-- **Bug Description** (problem encountered during web app use)
-- **Steps to reproduce** (process of replicating problem)
-- **Image input** (OPTIONAL. provide screenshot of problem)
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
----
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-## Long Term Goals
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### 1. **Random Suggestion**
-### 2. **Profile Link Sharing**
-### 3. **Content Filtering**
+### `npm run eject`
 
-## Target Audience
-All ages - Individuals who seek to ease the process of finding new material to experience.
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
