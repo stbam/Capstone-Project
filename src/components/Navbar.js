@@ -8,8 +8,8 @@ import { Avatar } from "@mui/material";
 import UserIcon from "./userIcon";
 import AutocompleteSearchBar from '../components/SearchBar';
 
-function Navbar() {
-    const [query, setQuery] = useState("");
+function Navbar({query,setQuery}) {
+   /* const [query, setQuery] = useState("");*/
     const [results, setResults] = useState([]);
     return (
         <div>

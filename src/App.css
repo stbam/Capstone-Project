@@ -278,7 +278,7 @@ a.bingr {
   font-size: 36px; 
   color: #ffffff; 
   text-align: center; 
-  margin-top: 130px; 
+  /*margin-top: 130px; */
 }
 
 /* SIGN IN PAGE */
@@ -564,4 +564,7 @@ a.bingr {
 .hover-box-wrapper{
   overflow: visible !important;
 }
+
+
+
 
