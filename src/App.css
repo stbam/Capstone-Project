@@ -434,7 +434,7 @@ a.bingr {
 .image-container img { /* actual images INSIDE the slides */
   width: 100%;
   height: 100%;
-  border: 2px solid blueviolet; /* Helps in debugging layout issues */
+  /* border: 2px solid blueviolet; /* Helps in debugging layout issues */
   transform: translateX(0px);
   position: relative;
   overflow: visible;
@@ -491,18 +491,14 @@ a.bingr {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  border: 2px solid red;
+  /* border: 2px solid red; */
   position: relative;
   overflow: visible;
 }
 
 .swiper-slides-container {
   border: 2px solid blue; 
-  overflow: hidden; /* problem, goes outside container. if off, hover box wont be visible */
-}
-
-.hover-box {
-  border: 2px solid green;
+  overflow: visible !important; /* problem, goes outside container. if off, hover box wont be visible */
 }
 
 /* movie stuff */
@@ -510,6 +506,7 @@ a.bingr {
 .movies-container{
   transform: translateY(160px);
   display: block;
+  border: 2px solid blueviolet;
 }
 .foryou-moviebox {
   width: 100%;
@@ -520,15 +517,16 @@ a.bingr {
   overflow: visible !important;
 }
 .swiper-slides-container-movie {
-  border: 2px solid rgb(0, 225, 255); 
   overflow: visible !important; /* problem, goes outside container. if off, hover box wont be visible */
+  /* border: 2px solid orange; */
+  transform: translateY(10px);
 }
 .swiper-slide-movie {
   margin: 15px 0 !important;
   padding: 0 !important;
-  border: 2px solid yellow;
   position: relative;
   overflow: visible;
+  /* border: 2px solid red; */
 }
 .swiper-slide-movie:hover .hover-box {
   opacity: 1; /* Make the box visible on hover */
@@ -547,6 +545,7 @@ a.bingr {
   color: white;
   font-weight: bold;
   z-index: 990;
+  overflow: visible !important;
 }
 /* end movie stuff */
 

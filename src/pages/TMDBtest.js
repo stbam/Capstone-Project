@@ -7,6 +7,8 @@ function TMDBtest() {
     const [movies, setMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState(null); // Store the detailed movie info
     const [error, setError] = useState(null);
+    const [selectedMovieImages, setSelectedMovieImages] = useState(null);
+    const [credits, setCredits] = useState(null);
 
     // Fetch movies by name
     const fetchMovies = async () => {
@@ -33,6 +35,8 @@ function TMDBtest() {
             const data = await response.json();
             if (response.ok) {
                 setSelectedMovie(data);
+                fetchMovieImages(id); // Fetch images after setting movie details
+                fetchMovieCredits(id); // Fetch movie credits using id
             } else {
                 setError(data.error || "Failed to fetch movie details");
             }
@@ -40,6 +44,37 @@ function TMDBtest() {
             setError("Failed to fetch movie details");
         }
     };
+    
+
+    const fetchMovieImages = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:5002/movie/${id}/images`);
+            const data = await response.json();
+            if (response.ok) {
+                setSelectedMovieImages(data); // Store images data to display
+            } else {
+                setError(data.error || "Failed to fetch movie images");
+            }
+        } catch (err) {
+            setError("Failed to fetch movie images");
+        }
+    };
+
+    const fetchMovieCredits = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:5002/movie/${id}/credits`);
+            const data = await response.json();
+            if (response.ok) {
+                setCredits(data); // Store credits data
+            } else {
+                setError(data.error || "Failed to fetch movie credits");
+            }
+        } catch (err) {
+            setError("Failed to fetch movie credits");
+        }
+    };
+    
+    
 
     // Styles
     const containerStyle = {
@@ -122,8 +157,9 @@ function TMDBtest() {
                             </h3>
                             {movie.poster_path && (
                                 <img
-                                    src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                                    src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
                                     alt={movie.title}
+                                    style={{width: "290px", height: "435px"}}
                                 />
                             )}
                         </div>
@@ -135,25 +171,62 @@ function TMDBtest() {
 
             {/* Display selected movie details */}
             <div style={movieDetailsContainerStyle}>
-                {selectedMovie && (
-                    <div>
-                        <h2>{selectedMovie.title}</h2>
-                        {selectedMovie.poster_path && (
-                            <img
-                                src={`https://image.tmdb.org/t/p/w200${selectedMovie.poster_path}`}
-                                alt={selectedMovie.title}
+    {selectedMovie && (
+        <div>
+            <h2>{selectedMovie.title}</h2>
+            {selectedMovie.poster_path && (
+                <img
+                    src={`https://image.tmdb.org/t/p/original${selectedMovie.poster_path}`}
+                    alt={selectedMovie.title}
+                    style={{width: "290px", height: "435px"}}
+                />
+            )}
+            <p><strong style={{color: "#905ca0"}}>Overview:</strong> {selectedMovie.overview}</p>
+            <p><strong style={{color: "905ca0"}}>Genres:</strong> {selectedMovie.genres.map((genre) => genre.name).join(", ")}</p>
+            <p><strong style={{color: "#905ca0"}}>Budget:</strong> ${selectedMovie.budget.toLocaleString()}</p>
+            <p><strong style={{color: "#905ca0"}}>Revenue:</strong> ${selectedMovie.revenue.toLocaleString()}</p>
+            <p><strong style={{color: "#905ca0"}}>Runtime:</strong> {selectedMovie.runtime} minutes</p>
+            <p><strong style={{color: "#905ca0"}}>Tagline:</strong> {selectedMovie.tagline}</p>
+            <p><strong style={{color: "#905ca0"}}>IMDB ID:</strong> {selectedMovie.imdb_id}</p>
+
+
+            <p><strong style={{ color: "#905ca0" }}>Credits:</strong>{" "}{credits?.cast?.map((member) => (
+                <span key={member.id}>
+                    {member.name} ({member.original_name}) - {member.known_for_department} as {member.character}{", "}
+                </span>
+                ))}
+            </p>
+
+            
+
+            {/* Movie Images (Posters & Backdrops) */}
+            {selectedMovieImages && (
+                <div>
+                    <h3>Images</h3>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                        {selectedMovieImages.posters && selectedMovieImages.posters.map((poster) => (
+                            <img 
+                                key={poster.file_path} 
+                                src={`https://image.tmdb.org/t/p/original${poster.file_path}`} /* possible placement for original image qualities? */
+                                alt="Movie Poster"
+                                style={{width: "290px", height: "435px"}} 
                             />
-                        )}
-                        <p><strong>Overview:</strong> {selectedMovie.overview}</p>
-                        <p><strong>Genres:</strong> {selectedMovie.genres.map((genre) => genre.name).join(", ")}</p>
-                        <p><strong>Budget:</strong> ${selectedMovie.budget.toLocaleString()}</p>
-                        <p><strong>Revenue:</strong> ${selectedMovie.revenue.toLocaleString()}</p>
-                        <p><strong>Runtime:</strong> {selectedMovie.runtime} minutes</p>
-                        <p><strong>Tagline:</strong> {selectedMovie.tagline}</p>
-                        <p><strong>IMDB ID:</strong> {selectedMovie.imdb_id}</p>
+                        ))}
+                        
+                        {selectedMovieImages.backdrops && selectedMovieImages.backdrops.map((backdrop) => (
+                            <img 
+                                key={backdrop.file_path} 
+                                src={`https://image.tmdb.org/t/p/w500${backdrop.file_path}`} 
+                                alt="Movie Backdrop" 
+                            />
+                        ))}
                     </div>
-                )}
-            </div>
+                </div>
+            )}
+        </div>
+    )}
+</div>
+
         </div>
     );
 }

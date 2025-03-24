@@ -44,7 +44,9 @@ async function fetchSteamGameDetails(appid) {
                     mac: gameDetails.platforms?.mac ?? false,
                     linux: gameDetails.platforms?.linux ?? false,
                 },
-                genres: gameDetails.genres ? gameDetails.genres.map((g) => g.description) : ["Unknown"],
+                genres: gameDetails.genres 
+                ? gameDetails.genres.map((g) => ({ id: g.id, name: g.description })) 
+                : [],
                 screenshots: gameDetails.screenshots ? gameDetails.screenshots.map((s) => s.path_full) : [],
                 movies: gameDetails.movies ? gameDetails.movies.map((m) => m.webm.max || m.mp4.max) : [],
                 release_date: gameDetails.release_date ? gameDetails.release_date.date : "Unknown",

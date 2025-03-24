@@ -75,7 +75,7 @@ app.get("/genres", async (req, res) => {
 app.get("/poster", (req, res) => {
     const { path } = req.query;
     if (!path) return res.status(400).json({ error: "Poster path is required" });
-
+    console.log(`POSTER ENDPOINT BEING CALLED WITH ORIGINAL IMAGES: ${path} `);
     const posterUrl = `https://image.tmdb.org/t/p/original${path}`;
     res.json({ posterUrl });
 });
@@ -83,17 +83,69 @@ app.get("/poster", (req, res) => {
 // Fetch movie details by ID
 app.get("/movie/:id", async (req, res) => {
     const { id } = req.params;
+    console.log(`Fetching movie details for ID: ${id}`);
+
     if (!id || isNaN(id)) {
         return res.status(400).json({ error: "Valid movie ID is required" });
     }
 
     const data = await tmdbRequest(`movie/${id}`);
     if (data) {
-        res.json(data); // Returning detailed movie data
+        res.json({
+            title: data.title,
+            overview: data.overview,
+            release_date: data.release_date,
+            poster_path: data.poster_path,
+            genres: data.genres.map((genre) => genre.name),
+            budget: data.budget,
+            revenue: data.revenue,
+            runtime: data.runtime,
+            tagline: data.tagline,
+            imdb_id: data.imdb_id,
+        });
     } else {
         res.status(500).json({ error: "Failed to fetch movie details" });
     }
 });
+
+// Fetch movie images by ID
+app.get("/movie/:id/images", async (req, res) => {
+    const { id } = req.params;
+    console.log(`ORIGINAL IMAGE ENDPOINT CALLED USING ID: ${id}`);
+    if (!id || isNaN(id)) {
+        return res.status(400).json({ error: "Valid movie ID is required" });
+    }
+
+    const data = await tmdbRequest(`movie/${id}/images`);
+    if (data) {
+        res.json(data); // Return movie images data
+    } else {
+        res.status(500).json({ error: "Failed to fetch movie images" });
+    }
+});
+
+app.get("/movie/:id/credits", async (req, res) => {
+    const {id} = req.params;
+    console.log(`credits called with id: ${id}`);
+    if(!id || isNaN(id)){
+        return res.status(400).json({error: "Valid movie ID is required"});
+    }
+    const data = await tmdbRequest(`movie/${id}/credits`);
+    if(data){
+        res.json(data);
+    } else{
+        res.status(500).json({error: "Failed to fetch movie credits"});
+    }
+})
+
+const genres = require('./movieGenres');
+
+// Example route to fetch genres (if needed)
+app.get("/genres", (req, res) => {
+    res.json({ genres });
+});
+
+
 
 // Start server
 app.listen(PORT, () => console.log(`TMDB API server running on port ${PORT}`));
