@@ -419,6 +419,237 @@ a.bingr {
   height: 100%;
   object-fit: cover;
 }
+
+/*PROFILE PAGE STARTS HERE*/
+.profile-page{ /*background*/
+  /*background-image: url('./assets/images/Web_App_Bg_Transparent.png');*/
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 50vh;
+  width: 100vw;
+  }
+  .profile-banner{
+    display: flex;
+    height: 200px;
+    width: 100%;
+    flex-direction: column;
+  }
+  .profile-user-container{
+    display: flex;
+    position: relative;
+    top: -100px;
+    justify-content: space-between;
+    padding-left: 40px;
+  }
+  .profile-content{
+    font-size: 14px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 20px;
+    color: white;
+  }
+  .profile-lists{
+    display: block;
+    block-size: 300px;
+    background-color: #222222;
+  }
+  .profile-activity{
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    background-color: #222222;
+  }
+  .user-activity{
+    display: flex;
+    padding-top: 10px;
+    padding-left: 20px;
+  }
+  .user-activity-date{
+    font-size: 15px;
+    width: 70px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    text-align: right;
+  }
+  .user-activity-icon{
+    padding-left: 30px;
+  }
+  .user-activity-name{
+    padding-left: 10px;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: darkorchid;
+  }
+  .user-activity-log{
+    padding-left: 10px;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+  }
+  .page-counter{
+    /*display: flex;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: row;*/
+    padding-bottom: 5px;
+    justify-content: center;
+    align-items: flex-end;
+  }
+  .profile-stats{
+    display: flex;
+    margin-top: 100px;
+    margin-right: 10px;
+    background-color: #222222;
+  }
+  .media-type{
+    flex: 50%;
+    font-size: 9px;
+    color: darkorchid;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .amount-read{
+    flex: 50%;
+    text-align: right;
+    color: #ffffff;
+    font-size: 9px;
+    padding-left: 10px;
+    padding-right: 30px;
+  }
+  .profile-displayboard-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-left: 30px;
+    width: 500px;
+  }
+  .profile-displayboard{
+    width: 150px;
+    height: 200px;
+    background-color: #202020;
+    border: 2px solid #505050;
+    border-radius: 10%;
+  }
+  .profile-details{
+    display: flex;
+    width: 100vw;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    border-bottom: solid #505050;
+    position: absolute;
+    top: 325px;
+  }
+  .profile-name{
+    font-size: 14px;
+    color: white;
+    text-align: center;
+  }
+  .profile-name a{
+    font-size: 14px;
+    color: white;
+  }
+  .profile-name b{
+    font-size: 14px;
+    color: white];
+  }
+  /*End of Profile Page*/
+
+  /*Customization Page Starts Here*/
+  .edit-page-content{
+    display: flex;
+    flex-direction: row;
+    margin-left: 30px;
+    color:white;
+    font-size: 28px;
+  }
+  .edit-examples{
+    display: flex;
+    width: 50vw;
+    flex-direction: column;
+    padding-top: 160px;
+    padding-left: 20px;
+  }
+  .edit-incoming{
+    display: flex;
+    width: 50vw;
+    flex-direction: column;
+  }
+  /*Customization Page Ends Here*/
+
+  /*Extra Buttons for various uses*/
+.edit-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 30px;
+}
+.edit-button-custom{
+  background-color: #505050 !important;
+  color: white !important;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 10px;
+  text-align: center;
+}
+.edit-button-custom:hover{
+  background-color: blueviolet;
+  color: white;
+}
+.page-button-container{
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.page-button-outline{
+  background-color: transparent;
+  color: white !important;
+  display: inline-block;
+  text-align: center;
+}
+.follow-button-contained{
+  background-color: darkorchid !important;
+  color: white !important;
+  text-align: center;
+}
+.display-button-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 30vw;
+}
+.dropdown-container{
+  display: flex;
+  flex-direction: column;
+}
+.dropdown-custom{
+  background-color: #505050 !important;
+  color: white !important;
+  font-size: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+.dropdown-custom-content{
+  display: none;
+  background-color: #3F2A52 !important;
+  height: 30px;
+  text-align: center;
+  justify-content: center;
+}
+.dropdown-custom-content a{
+  color: white !important;
+  display: block;
+  font-size: 15px;
+  text-align: center;
+  justify-content: center;
+}
+
+.dropdown-container:hover .dropdown-custom-content{
+  display: block;
+}
+
 /* action games stuff */
 .image-container {
   width: auto;

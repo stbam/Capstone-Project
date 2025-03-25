@@ -13,6 +13,9 @@ import Profile from "./pages/profile";
 import BugReport from "./pages/bugreport";
 import SignIn from "./pages/signin";
 import Register from "./pages/register";
+import FollowersPage from "./pages/followers";
+import FollowingPage from "./pages/following";
+import EditPage from "./pages/edit";
 import SteamGameSearchPage from "./pages/SteamGameSearchPage"; /* this is here for debugging */
 import TMDBtest from "./pages/TMDBtest"; /* this is here for debugging */
 /* End pages */
@@ -46,6 +49,9 @@ function App() {
         <Route path="/bugreport" element={<BugReport />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/followers" element={<FollowersPage />} />
+        <Route path="/following" element={<FollowingPage />} />
+        <Route path="/edit" element={<EditPage />} />
         <Route path="/steam-search" element={<SteamGameSearchPage/>}/>
         <Route path="/tmdb-search" element={<TMDBtest/>}/>
         <Route path="/book/:id" element={<BookDetailsPage />} /> 
