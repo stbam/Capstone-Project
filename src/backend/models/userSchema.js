@@ -1,45 +1,49 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 const userSchema = new mongoose.Schema({
     
+    // User and email are unique
+    // user, email, password and dateOfBirth are required
+
     userName: {
         type: String,
         required: true,
-        trim: true,
+        unique: true,
+        trim: true
     },
     email: {
         type: String,
         required: true,
         unique: true,
         lowercase: true,
-        trim: true,
+        trim: true
     },
     password: {
         type: String,
         required: true,
         trim: true,
-        minlength: [8, 'Password must be 8 characters long'],
+        minlength: [8, 'Password must be 8 characters long']
     },
     dateOfBirth: {
-        type: date,
-        required: true,
+        type: Date,
+        required: true
     },
     likedItems: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Like', // Reference to the 'Like' model
+        ref: 'Like' // Reference to the 'Like' model
     }],
     favoriteGenres: {
-        type: [string], // Array of strings to store multiple genres
+        type: [String] // Array of strings to store multiple genres
     },
     gender: {
         type: String,
         enum: ['male', 'female', 'other'],
-        trim: true,
+        trim: true
     },
     location: {
         type: String,
-        trim: true,
-    },
-});
+        trim: true
+    }
+})
 
-const User = mongoose.model('User', userSchema);
-module.exports = User;
+const User = mongoose.model('User', userSchema)
+module.exports = User
