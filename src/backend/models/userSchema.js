@@ -1,10 +1,10 @@
-const mongoose = require("mongoose")
-const userSchema = new mongoose.Schema({
-    
+const mongoose = require('mongoose')
+
+const userSchema = new mongoose.Schema({ 
     // User and email are unique
     // user, email, password and dateOfBirth are required
 
-    userName: {
+    username: {
         type: String,
         required: true,
         unique: true,
@@ -23,8 +23,8 @@ const userSchema = new mongoose.Schema({
         trim: true,
         minlength: [8, 'Password must be 8 characters long']
     },
-    dateOfBirth: {
-        type: Date,
+    age: {
+        type: Number,
         required: true
     },
     likedItems: [{
@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     }
-})
+ })
 
-const User = mongoose.model('User', userSchema)
-module.exports = User
+ const User = mongoose.model('User', userSchema)    // User represents the whole schema now
+ module.exports = User  // to be able to use this in any other file
