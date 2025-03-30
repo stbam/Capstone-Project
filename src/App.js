@@ -17,6 +17,8 @@ import SteamGameSearchPage from "./pages/SteamGameSearchPage"; /* this is here f
 import TMDBtest from "./pages/TMDBtest"; /* this is here for debugging */
 /* End pages */
 import BookDetailsPage from './pages/bookDetailsPage'
+import MovieDetailsPage from "./pages/movieDetailsPage";
+import GameDetailsPage from "./pages/gameDetailsPage";
 
 import ScrollToTop from "./ScrollToTop";
 
@@ -49,7 +51,8 @@ function App() {
         <Route path="/steam-search" element={<SteamGameSearchPage/>}/>
         <Route path="/tmdb-search" element={<TMDBtest/>}/>
         <Route path="/book/:id" element={<BookDetailsPage />} /> 
-
+        <Route path="/movie/:id" element={<MovieDetailsPage/>}/>
+        <Route path="/game/:id" element={<GameDetailsPage/>}/>
       </Routes>
     </Router>
   );

@@ -1,570 +1,643 @@
+/* Ensure the Swiper container has appropriate spacing and z-index */
+.swiper-wrapper-container {
+  position: relative;
+  z-index: 2;
+  padding-top: 20px; /* Add padding to create space above the Swiper container */
+  margin-top: 20px; /* Additional margin if needed */
+}
+
+/* Adjust the foryou container's z-index */
+.foryou-box {
+  position: relative;
+  z-index: 1;
+}
+
+/* Existing CSS */
 .App {
-  text-align: center;
+text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+height: 40vmin;
+pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+}
 }
 body {
-  background-color: #303030;
-  margin: 0;
-  padding: 0;
+background-color: #303030;
+margin: 0;
+padding: 0;
 }
 .App-header {
-  background-color: #303030;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: rgb(30, 30, 30);
+background-color: #303030;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+font-size: calc(10px + 2vmin);
+color: rgb(30, 30, 30);
 }
 
 .App-link {
-  color: #ae5de1; /* #61dafb */
+color: #ae5de1; /* #61dafb */
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(360deg);
+}
 }
 
 .top-bar {
-  background-color: #222222;
-  height: 60px;
-  width: 100%; 
-  position: relative; 
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between; 
-  align-items: center; 
-  padding: 0 20px; 
-  z-index: 999; 
+background-color: #222222;
+height: 60px;
+width: 100%; 
+position: relative; 
+top: 0;
+left: 0;
+display: flex;
+justify-content: space-between; 
+align-items: center; 
+padding: 0 20px; 
+z-index: 999; 
 }
 .under-bar {
-  background-color: #3F2A52;
-  height: 60px; 
-  width: 100%; 
-  top: 0px; 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  position: relative; 
+background-color: #3F2A52;
+height: 60px; 
+width: 100%; 
+top: 0px; 
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0 20px;
+position: relative; 
 }
 /* Center the category text */
 .category h2 {
-    text-align: center; /* Center the h2 text */
-    color: white;
-    margin: 10px;
-    padding: 10px 0; /* Add spacing inside the header */
+  text-align: center; /* Center the h2 text */
+  color: white;
+  margin: 10px;
+  padding: 10px 0; /* Add spacing inside the header */
 }
 
 /* Make sure the boxes are not affected */
 .foryou-box {
-  width: 100%;
-  background-color: #222222; /* Background color for visibility */
-  height: 370px; /* Height for the foryou-box */
-  position: relative;
-  border: 2px solid black;
-  overflow: visible;
+width: 100%;
+background-color: #222222; /* Background color for visibility */
+height: 370px; /* Height for the foryou-box */
+position: relative;
+border: 2px solid black;
+overflow: visible;
 }
 
 .divider {
-  width: 100%; 
-  height: 2px;  /* Line thickness */
-  background-color: rgb(11, 11, 11);
-  position: absolute;
-  top: 120px; 
-  left: 0;
+width: 100%; 
+height: 2px;  /* Line thickness */
+background-color: rgb(11, 11, 11);
+position: absolute;
+top: 120px; 
+left: 0;
 }
 .top-line{
-  top: 58px;
+top: 58px;
 }
 .bottom-line{
-  bottom:10px;
+bottom:10px;
 }
 
 .foryou-divider{
-  width: 100%;  /* Make it span the entire width */
-  height: 2px;  /* Line thickness */
-  background-color: rgb(11, 11, 11); 
-  position: absolute;
-  top: 120px; 
-  left: 0;
+width: 100%;  /* Make it span the entire width */
+height: 2px;  /* Line thickness */
+background-color: rgb(11, 11, 11); 
+position: absolute;
+top: 120px; 
+left: 0;
 }
 .foryou-topline{
-  top:237px;
+top:237px;
 }
 .foryou-bottomline{
-  top:607px;
+top:607px;
 }
 
 .link{
-  color:white;
-  text-decoration: none;
-  font-size: 18px;
+color:white;
+text-decoration: none;
+font-size: 18px;
 }
 .link:hover{
-  text-decoration: none;
+text-decoration: none;
 }
 
 nav {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+display: flex;
+justify-content: space-between;
+width: 100%;
 }
 
 .navbar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100%;
 
-  padding: 20px 0;
+padding: 20px 0;
 }
 
 .nav-links {
-  display: flex;
-  justify-content: space-between;
-  width: 80%; 
+display: flex;
+justify-content: space-between;
+width: 80%; 
 }
 
 a {
-  color: rgb(255, 255, 255);
-  text-decoration: none;
-  margin-right: 20px;
-  display: inline;
+color: rgb(255, 255, 255);
+text-decoration: none;
+margin-right: 20px;
+display: inline;
 }
 
 a:visited {
-  color: rgb(255, 255, 255); /* Color for visited links */
+color: rgb(255, 255, 255); /* Color for visited links */
 }
 
 a:hover {
-  color: rgb(255, 255, 255); /* Color when hovered */
+color: rgb(255, 255, 255); /* Color when hovered */
 }
 
 a:active {
-  color: rgb(255, 255, 255); /* Color when clicked */
+color: rgb(255, 255, 255); /* Color when clicked */
 }
 
 a.bingr {
-  font-size: 39px; /* Make "bingr" link bigger */
-  font-weight: bold; /* Optional: Make it stand out more */
-  position: absolute;
-  top: 10px; /* Adjust as needed */
-  left: 30px; /* Adjust as needed */
+font-size: 39px; /* Make "bingr" link bigger */
+font-weight: bold; /* Optional: Make it stand out more */
+position: absolute;
+top: 10px; /* Adjust as needed */
+left: 30px; /* Adjust as needed */
 }
 .right-links a {
-  color: lightgray;
-  align-items: center;
-  font-size: 19px;
-  font-weight: 400;
-  text-decoration: none;
-  margin-left: auto;
-  margin-right: 50px;
-  gap: 20px;
+color: lightgray;
+align-items: center;
+font-size: 19px;
+font-weight: 400;
+text-decoration: none;
+margin-left: auto;
+margin-right: 50px;
+gap: 20px;
 }
 .left-links a {
-  color: lightgray;
-  font-size: 19px;
-  font-weight: 400;
-  text-decoration: none; 
-  margin-right: 50px;
-  margin-left: auto;
+color: lightgray;
+font-size: 19px;
+font-weight: 400;
+text-decoration: none; 
+margin-right: 50px;
+margin-left: auto;
 }
 
 /* BUTTONS CSS */
 .buttons-container {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-end; 
-  padding-right:40px; /* Ensures they don’t go off-screen */
-  width: 100%; 
+display: flex;
+gap: 10px;
+align-items: center;
+justify-content: flex-end; 
+padding-right:40px; /* Ensures they don’t go off-screen */
+width: 100%; 
 }
 .custom-contained {
-  background-color: #5e3d7b !important;
-  color: rgb(255, 255, 255) !important;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  display: inline-block;
-  text-align: center;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
-  transition: all 0.2s ease-in-out; 
+background-color: #5e3d7b !important;
+color: rgb(255, 255, 255) !important;
+padding: 10px 20px;
+cursor: pointer;
+font-size: 16px;
+display: inline-block;
+text-align: center;
+box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+transition: all 0.2s ease-in-out; 
 }
 .custom-outlined {
-  background-color: transparent;
-  color: white !important;
-  border: 2px solid darkorchid;
-  display: inline-block;
-  text-align: center;
-  margin: 0;
+background-color: transparent;
+color: white !important;
+border: 2px solid darkorchid;
+display: inline-block;
+text-align: center;
+margin: 0;
 }
 .custom-contained:hover {
-  background-color: #805ca0 !important;
-  color: white;
+background-color: #805ca0 !important;
+color: white;
 }
 .custom-outlined:hover {
-  border-color: aquamarine;
-  color: aliceblue;
+border-color: aquamarine;
+color: aliceblue;
 }
 /* AVATAR / USER ICON */
 .avatar-container {
-  display: flex;
-  justify-content: center; 
-  align-items: center; 
-  width: 100px; 
-  height: 100px; 
-  margin-right: 10px;
+display: flex;
+justify-content: center; 
+align-items: center; 
+width: 100px; 
+height: 100px; 
+margin-right: 10px;
 }
 .avatar-container .MuiAvatar-root {
-  width: 62px;  
-  height: 62px; 
-  cursor: pointer; /* Makes the avatar clickable */
+width: 62px;  
+height: 62px; 
+cursor: pointer; /* Makes the avatar clickable */
 }
 .page-content {
-  position: relative;
-  margin-left: 30px;
-  color:white;
-  font-size: 28px;
+position: relative;
+margin-left: 30px;
+color:white;
+font-size: 28px;
 }
 .fixed-textrea{
-  width: 400px;
-  height: 100px;
-  resize: none;
+width: 400px;
+height: 100px;
+resize: none;
 }
 .signin-form{
-  width: 340px;
-  height: 430px;
-  padding: 20px;
-  background-color: #222222;
-  color: white; 
-  border-radius: 20px; 
-  
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+width: 340px;
+height: 430px;
+padding: 20px;
+background-color: #222222;
+color: white; 
+border-radius: 20px; 
+
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
 }
 .centered-form {
-  width: 650px;
-  padding: 20px;
-  background-color: #222222;
-  color: white; 
-  border-radius: 8px; /* Rounded corners for a smooth look */
-  
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+width: 650px;
+padding: 20px;
+background-color: #222222;
+color: white; 
+border-radius: 8px; /* Rounded corners for a smooth look */
+
+position: absolute;
+top: 70%;
+left: 50%;
+transform: translate(-50%, -50%);
 }
 .bugtitle {
-  font-size: 36px; 
-  color: #ffffff; 
-  text-align: center; 
-  /*margin-top: 130px; */
+font-size: 36px; 
+color: #ffffff; 
+text-align: center; 
+/*margin-top: 130px; */
 }
 
 /* SIGN IN PAGE */
 .signin-title{
-  font:menu;
-  font-size: 32px; 
-  color: #ffffff; 
-  text-align: center; /* Centers the title horizontally */
+font:menu;
+font-size: 32px; 
+color: #ffffff; 
+text-align: center; /* Centers the title horizontally */
 }
 .signin-content{
-  font-size: 23px;
-  display:flex;
-  justify-content: center;
-  align-items: center;
+font-size: 23px;
+display:flex;
+justify-content: center;
+align-items: center;
 }
 .signin-input {
-  height: 15px;
-  padding: 10px;
-  font-size: 16px;
-  border: 2px solid #555;
-  border-radius: 8px;
-  outline: none;
+height: 15px;
+padding: 10px;
+font-size: 16px;
+border: 2px solid #555;
+border-radius: 8px;
+outline: none;
 }
 
 .signin-input:focus {
-  border-color: #007bff; /* Highlight when selected */
+border-color: #007bff; /* Highlight when selected */
 }
 .custom-signin-contained {
-  background-color: #2a79ba !important; 
-  color: rgb(255, 255, 255) !important;
-  padding: 10px 20px;
-  width:240px;
-  cursor: pointer;
-  font-size: 16px;
-  display: inline-block; 
-  text-align: center;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
-  transition: all 0.2s ease-in-out; 
+background-color: #2a79ba !important; 
+color: rgb(255, 255, 255) !important;
+padding: 10px 20px;
+width:240px;
+cursor: pointer;
+font-size: 16px;
+display: inline-block; 
+text-align: center;
+box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+transition: all 0.2s ease-in-out; 
 }
 .custom-signin-contained:hover {
-  background-color: #48a7cd !important;
-  color: white;
+background-color: #48a7cd !important;
+color: white;
 }
 .sign-in-page { /* For background */
-  background-image: url('./assets/images/Web_App_Bg_Transparent.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh; /* Full-screen height */
-  width: 100vw;
+background-image: url('./assets/images/Web_App_Bg_Transparent.png');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+height: 100vh; /* Full-screen height */
+width: 100vw;
 }
 /* END SIGN IN PAGE */
 
 /* CAROUSEL CSS */
 .details-box {
-  background-color: #171020; 
-  height: 218px; 
-  width: 450px; 
-  position: relative;
-  left: 774px;
-  top: 72px;
-  z-index: 1000;
-  filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.6));
+background-color: #171020; 
+height: 218px; 
+width: 450px; 
+position: relative;
+left: 774px;
+top: 72px;
+z-index: 1000;
+filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.6));
 }
 
 .swiper {
-  position: relative;
-  transform: translateY(-145px);
+position: relative;
+transform: translateY(-145px);
 }
 
 .game-carousel {
-  position: relative;
-  transform: translateY(-170px);
-  border: 2px solid greenyellow;
+position: relative;
+transform: translateY(-170px);
+border: 2px solid greenyellow;
 }
 .game-carousel .swiper-slide {
-  border: 4px solid orangered;
-  right: 155px;
+border: 4px solid orangered;
+right: 155px;
 }
 .game-carousel .swiper-slide img {
-  filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 1.6));
+filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 1.6));
 }
 .game-carousel .swiper-slide-active img {
-  transform: translateX(0px); /* affects slide before current displayed */
-  border: 2px solid cyan;
+transform: translateX(0px); /* affects slide before current displayed */
+border: 2px solid cyan;
 }
 
 .game-carousel .swiper-slide-next img {
-  border: 2px solid salmon; /* This css effects the slide before currently displayed slide */
-  transform: translateX(0px);
+border: 2px solid salmon; /* This css effects the slide before currently displayed slide */
+transform: translateX(0px);
 }
 
 .game-carousel .swiper-slide-next + .swiper-slide img {
-  transform: translateX(55%); /* AFFECTS CAROUSEL AND SLIDES */
-  border: 2px solid purple;
+transform: translateX(55%); /* AFFECTS CAROUSEL AND SLIDES */
+border: 2px solid purple;
 }
 .swiper-pagination {
-  color: #ffffff !important;
-  bottom: 0px !important;
+color: #ffffff !important;
+bottom: 0px !important;
 }
 .profile-picture {
-  width: 230px;
-  height: 230px;
-  left: 30px;
-  top: 30px;
-  border-radius: 90%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #333333;
-  cursor: pointer;
-  position: relative;
+width: 230px;
+height: 230px;
+left: 30px;
+top: 30px;
+border-radius: 90%;
+overflow: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: #333333;
+cursor: pointer;
+position: relative;
 }
 .profile-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+width: 100%;
+height: 100%;
+object-fit: cover;
 }
 .banner-picture {
-  width: 100vw;
-  height: 330px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #7e7d7d;
-  cursor: pointer;
-  position: fixed;
-  left: 0;
-  top: 120px; 
-  margin: 0;
-  padding: 0;
+width: 100vw;
+height: 330px;
+overflow: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: #7e7d7d;
+cursor: pointer;
+position: fixed;
+left: 0;
+top: 120px; 
+margin: 0;
+padding: 0;
 }
 
 .banner-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+width: 100%;
+height: 100%;
+object-fit: cover;
 }
 /* action games stuff */
 .image-container {
-  width: auto;
-  height: auto;
-  display: flex;
-  overflow: visible;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 999;
+width: auto;
+height: auto;
+display: flex;
+overflow: visible;
+justify-content: center;
+align-items: center;
+position: relative;
+z-index: 999;
 
 }
 .image-container img { /* actual images INSIDE the slides */
-  width: 100%;
-  height: 100%;
-  /* border: 2px solid blueviolet; /* Helps in debugging layout issues */
-  transform: translateX(0px);
-  position: relative;
-  overflow: visible;
+width: 100%;
+height: 100%;
+/* border: 2px solid blueviolet; /* Helps in debugging layout issues */
+transform: translateX(0px);
+position: relative;
+overflow: visible;
 }
 
 .swiper-slide:hover .image-container img {
-  transform: scale(1.15); /* Slightly scale the image inside the slide */
+transform: scale(1.15); /* Slightly scale the image inside the slide */
 }
 .image-container:hover .hover-box {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.3s ease, visibility 0s linear 0s; /* Make hover effect smooth */
+visibility: visible;
+opacity: 1;
+transition: opacity 0.3s ease, visibility 0s linear 0s; /* Make hover effect smooth */
 }
 
 .swiper-slide {
-  position: relative;
-  z-index: 1; /* Default z-index */
-  transition: transform 0.3s ease-in-out, z-index 0s 0.3s; /* Delay z-index reset */
-  transform: translateX(0px);/* adjusts position of slides, NOT carousel */
+position: relative;
+z-index: 1; /* Default z-index */
+transition: transform 0.3s ease-in-out, z-index 0s 0.3s; /* Delay z-index reset */
+transform: translateX(0px);/* adjusts position of slides, NOT carousel */
 }
 
 .swiper-slide:hover {
-  z-index: 10; /* Bring the hovered slide to the front */
-  transform: scale(1.10);
+z-index: 10; /* Bring the hovered slide to the front */
+transform: scale(1.10);
 }
 
 
 .swiper-slide:hover .hover-box {
-  opacity: 1; /* Make the box visible on hover */
-  transform: scale(1); /* Optionally scale the box when hovered */
+opacity: 1; /* Make the box visible on hover */
+transform: scale(1); /* Optionally scale the box when hovered */
 }
 
 .hover-box {
-  position: absolute;
-  width: 350px;
-  height: 400px;
-  top: -408px; /* Position the hover box above the image */
-  left: 0%; /* Center it horizontally */
-  transform: translateX(-50%); /* Adjust position for centering */
-  border: 2px solid blueviolet; /* Box border */
-  background-color: #2c162e;
-  opacity: 0; /* Initially hidden */
-  color: white;
-  font-weight: bold;
-  z-index: 990;
+position: absolute;
+width: 350px;
+height: 400px;
+top: -408px; /* Position the hover box above the image */
+left: 0%; /* Center it horizontally */
+transform: translateX(-50%); /* Adjust position for centering */
+border: 2px solid blueviolet; /* Box border */
+background-color: #2c162e;
+opacity: 0; /* Initially hidden */
+color: white;
+font-weight: bold;
+z-index: 990;
 }
 .games-slider{
-  transform: translateY(160px);
-  overflow: visible;
+transform: translateY(160px);
+overflow: visible;
 }
 .swiper-slide {
-  margin: 15px 0 !important;
-  padding: 0 !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  /* border: 2px solid red; */
-  position: relative;
-  overflow: visible;
+margin: 15px 0 !important;
+padding: 0 !important;
+display: flex !important;
+justify-content: center !important;
+align-items: center !important;
+/* border: 2px solid red; */
+position: relative;
+overflow: visible;
 }
 
 .swiper-slides-container {
-  border: 2px solid blue; 
-  overflow: visible !important; /* problem, goes outside container. if off, hover box wont be visible */
+border: 2px solid blue; 
+overflow: visible !important; /* problem, goes outside container. if off, hover box wont be visible */
 }
 
 /* movie stuff */
 
 .movies-container{
-  transform: translateY(160px);
-  display: block;
-  border: 2px solid blueviolet;
+transform: translateY(160px);
+display: block;
+border: 2px solid blueviolet;
 }
 .foryou-moviebox {
-  width: 100%;
-  background-color: #222222; /* Background color for visibility */
-  height: 960px; /* Adjust height for movie posters */
-  position: relative;
-  border: 2px solid black;
-  overflow: visible !important;
+width: 100%;
+background-color: #222222; /* Background color for visibility */
+height: 960px; /* Adjust height for movie posters */
+position: relative;
+border: 2px solid black;
+overflow: visible !important;
 }
+/* Outer wrapper container */
+.swiper-wrapper-container {
+overflow: hidden; /* Prevent overflow beyond the container */
+position: relative;
+width: 100%; /* Ensure it takes full width of the parent */
+}
+
+/* Inner container with scaling effect */
 .swiper-slides-container-movie {
-  overflow: visible !important; /* problem, goes outside container. if off, hover box wont be visible */
-  /* border: 2px solid orange; */
-  transform: translateY(10px);
+overflow: visible !important; /* Allow overflow for scaling effect */
+/* border: 2px solid orange; */
+transform: translateY(10px) scale(0.95);
+position: relative; /* Establish positioning context */
+transition: transform 0.3s ease; /* Add transition for smooth effect */
 }
-.swiper-slide-movie {
-  margin: 15px 0 !important;
-  padding: 0 !important;
-  position: relative;
+
+.swiper-wrapper-container {
+overflow: hidden; /* Prevent overflow beyond the container */
+position: relative;
+width: 100%; /* Ensure it takes full width of the parent */
+}
+.image-container {
+overflow: visible;
+position: relative;
+z-index: 1; /* Ensure image container is on top */
+border: 2px solid red;
+}
+
+.image-container-game {
   overflow: visible;
-  /* border: 2px solid red; */
+  position: relative;
+  z-index: 1; /* Ensure image container is on top */
+  border: 2px solid red;
+  }
+
+
+/* Game poster with scaling effect */
+.game-poster {
+width: 100%;
+height: auto;
+cursor: pointer;
+transition: transform 0.3s ease; /* Add transition for smooth effect */
+z-index: 2; /* Ensure image is on top when scaled */
+border: 2px solid orange;
+}
+
+.game-poster:hover {
+transform: scale(1.05); /* Scale up on hover */
+z-index: 9999; /* Bring the image to the front */
+}
+
+
+.swiper-slide-movie {
+margin: 15px 0 !important;
+padding: 0 !important;
+position: relative;
+overflow: visible !important;
+/* border: 2px solid red; */
 }
 .swiper-slide-movie:hover .hover-box {
-  opacity: 1; /* Make the box visible on hover */
-  transform: scale(1); /* Optionally scale the box when hovered */
+opacity: 1; /* Make the box visible on hover */
+transform: scale(1); /* Optionally scale the box when hovered */
 }
+
 .hover-box-movie {
-  position: absolute;
-  width: 350px;
-  height: 400px;
-  top: -408px; /* Position the hover box above the image */
-  left: 0%; /* Center it horizontally */
-  transform: translateX(-50%); /* Adjust position for centering */
-  border: 2px solid blueviolet; /* Box border */
-  background-color: #2c162e;
-  opacity: 0; /* Initially hidden */
-  color: white;
-  font-weight: bold;
-  z-index: 990;
-  overflow: visible !important;
+position: absolute;
+width: 350px;
+height: 400px;
+top: -408px; /* Position the hover box above */
+left: 50%; /* Center horizontally */
+transform: translateX(-50%); /* Fine-tuning */
+border: 2px solid blueviolet;
+background-color: #2c162e;
+opacity: 0; /* Initially hidden */
+color: white;
+font-weight: bold;
+z-index: 9999; /* Ensure it's on top */
+pointer-events: none; /* Prevent flicker on hover */
 }
 /* end movie stuff */
 
 .see-more {
-  cursor: pointer;
-  text-align: center; /* Centers inline elements like text */
-  display: block; /* Ensures the div takes full width for centering */
-  margin: 20px auto; /* Adds spacing and centers horizontally */
+cursor: pointer;
+text-align: center; /* Centers inline elements like text */
+display: block; /* Ensures the div takes full width for centering */
+margin: 20px auto; /* Adds spacing and centers horizontally */
 }
 
 
 .see-more:hover {
-  text-decoration: none;
-  color: darkblue; /* Optional: Change color on hover */
+text-decoration: none;
+color: darkblue; /* Optional: Change color on hover */
 }
 .hover-box-wrapper{
-  overflow: visible !important;
+overflow: visible !important;
 }
 
+.game-image {
+  width: 150px; /* Set the desired width */
+  height: 200px; /* Set the desired height */
+  object-fit: cover; /* Ensures the image fits within the dimensions */
+  border-radius: 8px; /* Optional: Keep the rounded corners */
+}
+.swiper-slides-container-game {
+  border: 2px solid yellow; 
+  overflow: visible !important; /* problem, goes outside container. if off, hover box wont be visible */
+  margin-top: 130px;
+  }
 
-
-
+  

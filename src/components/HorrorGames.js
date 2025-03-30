@@ -46,37 +46,40 @@ function HorrorGames() {
 
     return (
         <div>
-            <Swiper className="swiper-slides-container"
-                spaceBetween={10}
-                slidesPerView={5}
-                grid={{ rows: 2, fill: "row" }} // Ensure row-wise filling
-                modules={[Navigation, Grid, Pagination]}
-                navigation={true}
-                pagination={{ clickable: true }}
-                style={{ width: "100%" }}
-            >
-                {paths.map((item, index) => (
-                    <SwiperSlide key={index}>
-                        <div
-                            className="image-container"
-                            style={{ width: "100%" }}
-                            onClick={() => handleClick(index)} // Add click handler
-                        >
-                            <img src={item.path} alt={item.title} />
-                            {activeIndex === index && (
-                                <div className="hover-box">
-                                    <p>{item.title}</p>
-                                    <p>{item.description}</p>
-                                    <p>{item.developer}</p>
-                                    <p>{item.publisher}</p>
-                                    <p>{item.review}</p>
-                                    <p>{item.reviewCount}</p>
-                                </div>
-                            )}
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+            <div className="swiper-wrapper-container">
+                <Swiper className="swiper-slides-container"
+                    spaceBetween={10}
+                    slidesPerView={5}
+                    grid={{ rows: 2, fill: "row" }} // Ensure row-wise filling
+                    modules={[Navigation, Grid, Pagination]}
+                    navigation={true}
+                    pagination={{ clickable: true }}
+                    style={{ width: "100%" }}
+                >
+                    {paths.map((item, index) => (
+                        <SwiperSlide key={index}>
+                            <div
+                                className="image-container"
+                                style={{ width: "100%" }}
+                                onClick={() => handleClick(index)} // Add click handler
+                            >
+                                <img src={item.path} className="game-poster" alt={item.title} />
+                                {activeIndex === index && (
+                                    <div className="hover-box">
+                                        <p>{item.title}</p>
+                                        <p>{item.description}</p>
+                                        <p>{item.developer}</p>
+                                        <p>{item.publisher}</p>
+                                        <p>{item.review}</p>
+                                        <p>{item.reviewCount}</p>
+                                    </div>
+                                )}
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+
         </div>
     );
 }

@@ -5,12 +5,12 @@ import { Navigation, Grid, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/grid";
+import { useNavigate } from "react-router-dom";
 import genres from "../movieGenres"; // Ensure correct path
 
 function shuffleArray(array) {
   return [...array].sort(() => Math.random() - 0.5);
 }
-
 
 function Movies() {
   const [moviesByGenre, setMoviesByGenre] = useState({});
@@ -19,6 +19,7 @@ function Movies() {
   const [shuffledGenres] = useState(() => shuffleArray(genres));
 
   const movieRefs = useRef({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -66,7 +67,6 @@ function Movies() {
               }
             }) || []
           );
-          
 
           movies[genre.name] = moviePosters;
         }
@@ -81,32 +81,30 @@ function Movies() {
     fetchMovies();
   }, [shuffledGenres]);
 
-  const calculateHoverBoxPosition = (event, movieId) => {
+  const calculateHoverBoxPosition = (movieId) => {
     const movieElement = movieRefs.current[movieId];
+    if (!movieElement) return {}; // Return an empty object if the element is not found
+  
     const movieRect = movieElement.getBoundingClientRect();
     const screenWidth = window.innerWidth;
-    const movieCenter = movieRect.left + movieRect.width / 2;
+    const hoverBoxWidth = 400; // Width of the hover box
+    const hoverBoxMargin = 10; // Margin between the hover box and the movie item
   
-    // Adjust hover box further left if the poster is too close to the right edge
-    const hoverBoxOffset = 400; // Hover box width
-  
-    // Determine if the hover box should appear to the left or right
-    if (movieCenter < screenWidth / 2) {
-      // Poster is on the left of the screen, hover box goes to the right
-      return { left: "100%", transform: "translateX(10px)" }; // Move to the right
+    // Determine if the movie item is on the left or right side of the screen
+    if (movieRect.left + movieRect.width / 2 < screenWidth / 2) {
+      // Movie is on the left side of the screen, hover box goes to the right
+      return {
+        left: `${movieRect.right + hoverBoxMargin}px`, // Position to the right of the movie item
+        top: `${movieRect.top + window.scrollY}px`, // Align vertically with the movie item
+      };
     } else {
-      // Poster is on the right of the screen, hover box goes to the left
-      const distanceToRightEdge = screenWidth - movieRect.right; // Distance to the right edge of the screen
-      if (distanceToRightEdge < hoverBoxOffset) {
-        // If the hover box is too close to the right edge, move it further to the left
-        return { right: "100%", transform: `translateX(-${hoverBoxOffset + 45}px)` }; // Move more to the left
-      } else {
-        // Default case, move the hover box to the left with a slight offset
-        return { right: "100%", transform: "translateX(-10px)" }; // Move to the left
-      }
+      // Movie is on the right side of the screen, hover box goes to the left
+      return {
+        left: `${movieRect.left - hoverBoxWidth - hoverBoxMargin}px`, // Position to the left of the movie item
+        top: `${movieRect.top + window.scrollY}px`, // Align vertically with the movie item
+      };
     }
   };
-  
 
   return (
     <div>
@@ -121,56 +119,92 @@ function Movies() {
           <div className="category" key={name}>
             <h2>{name}</h2>
             <div className="foryou-moviebox">
-              <Swiper
-                className="swiper-slides-container-movie"
-                spaceBetween={10}
-                slidesPerView={5}
-                grid={{ rows: 2, fill: "row" }}
-                modules={[Navigation, Grid, Pagination]}
-                navigation={true}
-                pagination={{ clickable: true }}
-                style={{ width: "100%" }}
-              >
-                {moviesByGenre[name]?.map((movie) => (
-                  <SwiperSlide key={movie.id} className="swiper-slide-movie">
-                    <div
-                      className="image-container"
-                      ref={(el) => movieRefs.current[movie.id] = el}
-                      onClick={() => setSelectedMovieId(selectedMovieId === movie.id ? null : movie.id)}
-                      style={{ position: "relative" }}
-                    >
-                      <img
-                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                        alt={movie.title}
-                        style={{ width: "100%", height: "auto", cursor: "pointer" }}
-                      />
-                      {selectedMovieId === movie.id && (
+              <div className="swiper-wrapper-container">
+                <Swiper
+                  className="swiper-slides-container-movie"
+                  spaceBetween={10}
+                  slidesPerView={5}
+                  grid={{ rows: 2, fill: "row" }}
+                  modules={[Navigation, Grid, Pagination]}
+                  navigation={true}
+                  pagination={{ clickable: true }}
+                  style={{ width: "100%" }}
+                >
+                  {moviesByGenre[name]?.map((movie) => (
+                    <SwiperSlide key={movie.id} className="swiper-slide-movie">
                       <div
-                        className="hover-box"
-                        style={{
-                          ...hoverBoxStyle,
-                          ...calculateHoverBoxPosition(null, movie.id), // Adjust hover box position
-                        }}
+                        className="image-container"
+                        ref={(el) => (movieRefs.current[movie.id] = el)}
+                        onClick={() => setSelectedMovieId(selectedMovieId === movie.id ? null : movie.id)}
+                        style={{ position: "relative" }}
                       >
-                        <p style={{ fontSize: "24px", fontWeight: "bold", color: "#89CFF0", textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)" }}>
-                          <strong>{movie.title}</strong>
-                        </p>
-                        {movie.tagline && <p style={{ fontStyle: "italic", opacity: 0.8 }}>{movie.tagline}</p>}
-                        <p><strong>Rating:</strong> {movie.vote_average} / 10</p>
-                        <p><strong>Genres:</strong> {movie.genre_ids.map(id => genres.find(g => g.id === id)?.name).join(", ")}</p>
-                        <p><strong>Popularity:</strong> {movie.popularity}</p>
-                        <p><strong>Language:</strong> {movie.original_language.toUpperCase()}</p>
-                        <p><strong>Release:</strong> {movie.release_date}</p>
-                        <p><strong>Runtime:</strong> {movie.runtime !== "N/A" ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m` : "N/A"}</p>
-                        <p>{movie.overview}</p>
-
+                        <img
+                          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                          alt={movie.title}
+                          className="movie-poster" // Add a class to the img element
+                        />
+                        {selectedMovieId === movie.id && (
+                          <div
+                            className="hover-box"
+                            style={{
+                              ...hoverBoxStyle,
+                              ...calculateHoverBoxPosition(null, movie.id), // Adjust hover box position
+                            }}
+                          >
+                            <p
+                              style={{
+                                fontSize: "24px",
+                                fontWeight: "bold",
+                                color: "#B200ED",
+                                textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)",
+                                cursor: "pointer" // Add cursor pointer style
+                              }}
+                              onClick={() => navigate(`/movie/${movie.id}`)} // Navigate to movie details page
+                            >
+                              <strong>{movie.title}</strong>
+                            </p>
+                            {movie.tagline && (
+                              <p style={{ fontStyle: "italic", opacity: 0.8, color: "white" }}> {/* Change text color to white */}
+                                {movie.tagline}
+                              </p>
+                            )}
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              <strong style={{color: "#89CFF0"}}>Rating:</strong> {movie.vote_average} / 10
+                            </p>
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              <strong style={{color: "#89CFF0"}}>Genres:</strong>{" "}
+                              {movie.genre_ids
+                                .map((id) => genres.find((g) => g.id === id)?.name)
+                                .join(", ")}
+                            </p>
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              <strong style={{color: "#89CFF0"}}>Popularity:</strong> {movie.popularity}
+                            </p>
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              <strong style={{color: "#89CFF0"}}>Language:</strong>{" "}
+                              {movie.original_language.toUpperCase()}
+                            </p>
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              <strong style={{color: "#89CFF0"}}>Release:</strong> {movie.release_date}
+                            </p>
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              <strong style={{color: "#89CFF0"}}>Runtime:</strong>{" "}
+                              {movie.runtime !== "N/A"
+                                ? `${Math.floor(movie.runtime / 60)}h ${
+                                    movie.runtime % 60
+                                  }m`
+                                : "N/A"}
+                            </p>
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              {movie.overview}
+                            </p>
+                          </div>
+                        )}
                       </div>
-                    )}
-
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
             </div>
           </div>
         ))
@@ -193,6 +227,5 @@ const hoverBoxStyle = {
   wordWrap: "break-word", // Allow breaking long words
   overflowY: "auto", // Enable vertical scrolling if content exceeds maxHeight
 };
-
 
 export default Movies;

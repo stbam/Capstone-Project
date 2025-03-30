@@ -13,6 +13,7 @@ async function fetchSteamGameDetails(appid) {
 
         console.log("Raw API response:", data);
 
+        // Check if data for the appid exists and is successful
         if (data[appid]?.success) {
             const gameDetails = data[appid].data;
             return {
@@ -52,11 +53,11 @@ async function fetchSteamGameDetails(appid) {
                 release_date: gameDetails.release_date ? gameDetails.release_date.date : "Unknown",
             };
         } else {
-            throw new Error("Game details not found.");
+            throw new Error(`Game details not found for appid: ${appid}`);
         }
     } catch (error) {
-        console.error("Error fetching game details:", error.message);
-        throw new Error(error.message);
+        console.error(`Error fetching game details for appid: ${appid}:`, error.message);
+        throw new Error(`Failed to fetch details for game ${appid}: ${error.message}`);
     }
 }
 

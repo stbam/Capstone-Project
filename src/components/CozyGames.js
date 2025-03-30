@@ -33,8 +33,8 @@ const paths = [
     { title: "Little Kitty Big City", description: "game description" ,developer: "game dev", publisher: "game publisher", review: "game view", reviewCount: "review count", path: img10 },
     { title: "Loddlenaut", description: "game description" ,developer: "game dev", publisher: "game publisher", review: "game view", reviewCount: "review count", path: img11 },
     { title: "Ropuka's Idle Island", description: "game description" ,developer: "game dev", publisher: "game publisher", review: "game view", reviewCount: "review count", path: img12 },
-    {title: "Melatonin", description: "game description" ,developer: "game dev", publisher: "game publisher", review: "game view", reviewCount: "review count", path: img13},
-    {title: "A Little to the Left", description: "game description" ,developer: "game dev", publisher: "game publisher", review: "game view", reviewCount: "review count", path: img14}
+    { title: "Melatonin", description: "game description" ,developer: "game dev", publisher: "game publisher", review: "game view", reviewCount: "review count", path: img13 },
+    { title: "A Little to the Left", description: "game description" ,developer: "game dev", publisher: "game publisher", review: "game view", reviewCount: "review count", path: img14 }
 ];
 
 function CozyGames(){
@@ -46,33 +46,35 @@ function CozyGames(){
 
     return (
         <div>
-            <Swiper className="swiper-slides-container"
-                spaceBetween={10}
-                slidesPerView={5}
-                grid={{ rows: 2, fill: "row" }}
-                modules={[Navigation, Grid, Pagination]}
-                navigation={true}
-                pagination={{ clickable: true }}
-                style={{ width: "100%" }}
-            >
-                {paths.map((item, index) => (
-                    <SwiperSlide key={index}>
-                        <div className="image-container" onClick={() => handleClick(index)}>
-                            <img src={item.path} />
-                            {activeIndex === index && (
-                                <div className="hover-box">
-                                    <p>{item.title}</p>
-                                    <p>{item.description}</p>
-                                    <p>{item.developer}</p>
-                                    <p>{item.publisher}</p>
-                                    <p>{item.review}</p>
-                                    <p>{item.reviewCount}</p>
-                                </div>
-                            )}
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+            <div className="swiper-wrapper-container">
+                <Swiper className="swiper-slides-container"
+                    spaceBetween={10}
+                    slidesPerView={5}
+                    grid={{ rows: 2, fill: "row" }}
+                    modules={[Navigation, Grid, Pagination]}
+                    navigation={true}
+                    pagination={{ clickable: true }}
+                    style={{ width: "100%" }}
+                >
+                    {paths.map((item, index) => (
+                        <SwiperSlide key={index}>
+                            <div className="image-container" onClick={() => handleClick(index)}>
+                                <img src={item.path} className="game-poster" alt={item.title} />
+                                {activeIndex === index && (
+                                    <div className="hover-box">
+                                        <p>{item.title}</p>
+                                        <p>{item.description}</p>
+                                        <p>{item.developer}</p>
+                                        <p>{item.publisher}</p>
+                                        <p>{item.review}</p>
+                                        <p>{item.reviewCount}</p>
+                                    </div>
+                                )}
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
         </div>
     );
 }

@@ -46,6 +46,7 @@ function HandDrawnGames(){
 
     return (
         <div>
+            <div className="swiper-wrapper-container">
             <Swiper className="swiper-slides-container"
                 spaceBetween={10}
                 slidesPerView={5}
@@ -58,7 +59,7 @@ function HandDrawnGames(){
                 {paths.map((item, index) => (
                     <SwiperSlide key={index}>
                         <div className="image-container" onClick={() => handleClick(index)}>
-                            <img src={item.path} />
+                            <img src={item.path} className="game-poster" alt={item.title}/>
                             {activeIndex === index && (
                                 <div className="hover-box">
                                     <p>{item.title}</p>
@@ -73,6 +74,8 @@ function HandDrawnGames(){
                     </SwiperSlide>
                 ))}
             </Swiper>
+            </div>
+
         </div>
     );
 };
