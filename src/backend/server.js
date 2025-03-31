@@ -13,7 +13,7 @@ const User = require('./models/userSchema')  // to user schema user
 const SECRET_KEY = 'super-secret-key'
 
 // *** UserRoutes file
-//const users = require("./userRoutes")
+const users = require("./userRoutes")
 
 require("dotenv").config({path: "./config.env"})
 
@@ -30,16 +30,16 @@ mongoose.connect(process.env.ATLAS_URI)
 // Enable CORS for Frontend
 
 // *** User Routes
-//app.use(users)
+app.use(users)
 
 // *** Replaced this by Martin's Middleware
-/*
+
 app.use(cors({
   origin: 'http://localhost:3001', // Frontend URL
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-*/
+
 
 mongoose
 .connect(process.env.ATLAS_URI, {           //these two help with the connection
@@ -47,7 +47,7 @@ mongoose
     useUnifiedTopology: true
 })
 .then(() => {
-    app.listen(3003, () => {        // Use this port 3001
+    app.listen(3003, () => {        // Use this port 3003
         console.log('Server connected to port 3003 and MongoDb')
     })
 })
@@ -74,7 +74,7 @@ app.post('/register', async (req, res) => {
         const { email, username, password, age, gender, favoriteGenres, location } = req.body      // To request info we want from the user
         const hashedPassword = await bcrypt.hash(password, 10)  // Hash password, 10 is difficulty
         const newUser = new User({ email, username, password: hashedPassword, age, gender, favoriteGenres, location }) 
-        await newUser.save()    // Basically I create a new schema with this info and save it
+        await newUser.save()    // Basically it creates a new schema with this info and save it
         res.status(201).json({ message: 'User created successfully' })
     } catch (error) {
         res.status(500).json({ error: 'Error signing up' })
@@ -136,6 +136,6 @@ app.use((req, res, next) => {
 // Route for Bug Report sends file data to controllers folder bugReportController.js to process the data and do specific actions
 app.post('/bugreport', upload.single('file'), bugReportController.updateBugReport);
 
-// *** Replaced this with Martin's
+// *** Replaced this with Martin's code
 // Start the server 
 //app.listen(3003, () => console.log('✅ Server running on http://localhost:3000'));
