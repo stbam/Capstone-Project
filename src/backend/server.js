@@ -7,53 +7,37 @@ const jwt = require('jsonwebtoken') // follows the user for the session
 const multer = require('multer');
 const bugReportController = require('./controllers/bugReportController');
 
-const User = require('./models/userSchema')  // to user schema user
-
-// *** Move it to confiv.env
-const SECRET_KEY = 'super-secret-key'
-
 // *** UserRoutes file
 const users = require("./userRoutes")
 
 require("dotenv").config({path: "./config.env"})
 
+// *** Moved to config.env. Delete these commented lines if everything works well
+//const SECRET_KEY = 'super-secret-key'
+const SECRET_KEY = process.env.SECRET_KEY;
+
 // connect to express app
 const app = express();
 
-// *** Replaced this with Martin's code
+const User = require('./models/userSchema')  // to use userschema
+
+// *** Replaced this with Martin's code for User Authentication
 /*
 // Connect to MongoDB
 mongoose.connect(process.env.ATLAS_URI)
-*/
-
 //process.env.ATLAS_URI
-// Enable CORS for Frontend
+*/
 
 // *** User Routes
 app.use(users)
 
-// *** Replaced this by Martin's Middleware
-
+// *** User Authentication part (Martin's Middleware) already uses cors. Make sure they don't conflict.
+// Enable CORS for Frontend
 app.use(cors({
   origin: 'http://localhost:3001', // Frontend URL
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
-
-mongoose
-.connect(process.env.ATLAS_URI, {           //these two help with the connection
-    useNewUrlParser: true, 
-    useUnifiedTopology: true
-})
-.then(() => {
-    app.listen(3003, () => {        // Use this port 3003
-        console.log('Server connected to port 3003 and MongoDb')
-    })
-})
-.catch((error) => {
-    console.log('Unable to connect to Server and/or MongoDB', error)
-})
 
 // Middleware for User Authentication
 app.use(bodyParser.json())
@@ -112,11 +96,6 @@ app.post('/login', async (req, res) => {
     }
 })
 
-
-
-
-
-
 // Multer setup for file uploads
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage }); // Store files in the 'uploads' folder
@@ -136,6 +115,20 @@ app.use((req, res, next) => {
 // Route for Bug Report sends file data to controllers folder bugReportController.js to process the data and do specific actions
 app.post('/bugreport', upload.single('file'), bugReportController.updateBugReport);
 
-// *** Replaced this with Martin's code
+// *** Old Stanislav's code replaced with Martin's code. Left in case it needs to be reactivated.
 // Start the server 
 //app.listen(3003, () => console.log('✅ Server running on http://localhost:3000'));
+
+mongoose
+.connect(process.env.ATLAS_URI, {           //these two help with the connection
+    useNewUrlParser: true, 
+    useUnifiedTopology: true
+})
+.then(() => {
+    app.listen(3003, () => {        // Use this port 3003
+        console.log('Server connected to port 3003 and MongoDb')
+    })
+})
+.catch((error) => {
+    console.log('Unable to connect to Server and/or MongoDB', error)
+})
