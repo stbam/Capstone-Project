@@ -1,29 +1,121 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
+const express = require('express') // setups server
+const cors = require('cors') // Helps minimize errors when connecting to database or API
+const mongoose = require('mongoose') //makes it easy to connect to MongoDB and make schemas
+const bodyParser = require('body-parser') // helps parse data into json
+const bcrypt = require('bcrypt') // hash passwords
+const jwt = require('jsonwebtoken') // follows the user for the session
 const multer = require('multer');
 const bugReportController = require('./controllers/bugReportController');
 
-const users = require("./userRoutes")
+const User = require('./models/userSchema')  // to user schema user
+
+// *** Move it to confiv.env
+const SECRET_KEY = 'super-secret-key'
+
+// *** UserRoutes file
+//const users = require("./userRoutes")
 
 require("dotenv").config({path: "./config.env"})
 
-
+// connect to express app
 const app = express();
 
+// *** Replaced this with Martin's code
+/*
 // Connect to MongoDB
 mongoose.connect(process.env.ATLAS_URI)
+*/
+
 //process.env.ATLAS_URI
 // Enable CORS for Frontend
 
-app.use(users)
+// *** User Routes
+//app.use(users)
 
-
+// *** Replaced this by Martin's Middleware
+/*
 app.use(cors({
   origin: 'http://localhost:3001', // Frontend URL
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+*/
+
+mongoose
+.connect(process.env.ATLAS_URI, {           //these two help with the connection
+    useNewUrlParser: true, 
+    useUnifiedTopology: true
+})
+.then(() => {
+    app.listen(3003, () => {        // Use this port 3001
+        console.log('Server connected to port 3003 and MongoDb')
+    })
+})
+.catch((error) => {
+    console.log('Unable to connect to Server and/or MongoDB', error)
+})
+
+// Middleware for User Authentication
+app.use(bodyParser.json())
+app.use(cors())
+
+//Routes
+
+// Create   // POST REQUEST
+// Read     // GET Request
+// Update   //PUT or PATCH REQUEST
+// Delete   // DELETE Request
+
+// REGISTER
+// USER REGISTRATION
+// POST REGISTER
+app.post('/register', async (req, res) => {
+    try {
+        const { email, username, password, age, gender, favoriteGenres, location } = req.body      // To request info we want from the user
+        const hashedPassword = await bcrypt.hash(password, 10)  // Hash password, 10 is difficulty
+        const newUser = new User({ email, username, password: hashedPassword, age, gender, favoriteGenres, location }) 
+        await newUser.save()    // Basically I create a new schema with this info and save it
+        res.status(201).json({ message: 'User created successfully' })
+    } catch (error) {
+        res.status(500).json({ error: 'Error signing up' })
+    }
+})
+
+//GET Registered Users
+app.get('/register', async (req, res) => {  // To get
+    try {
+        const users = await User.find() // Attach schema (user) to find method and save it in users
+        res.status(201).json(users) // Instead of rendering a message will render the users
+        
+    } catch (error) {
+        res.status(500).json({ error: 'Unable to get users' })
+    }
+})
+
+//GET LOGIN
+
+app.post('/login', async (req, res) => {
+    try {
+        const { username, password } = req.body
+        const user = await User.findOne({ username })   // Using the schema it finds the username
+        if (!user) {    // making sure the user is created
+            return res.status(401).json({ error: 'Invalid credentials'})
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password) // Compare password in database with password that user input
+        if(!isPasswordValid) {
+            return res.status(401).json({ error: 'Invalid credentials' })
+        }
+        const token = jwt.sign({ userId: user._id }, SECRET_KEY, { expiresIn: '1hr' }) // When using json web token for user authentication it has to have a secret key
+        res.json({ message: 'Login successful' })
+    } catch (error) {
+        res.status(500).json({ error: 'Error logging in' })
+    }
+})
+
+
+
+
+
 
 // Multer setup for file uploads
 const storage = multer.memoryStorage();
@@ -44,6 +136,6 @@ app.use((req, res, next) => {
 // Route for Bug Report sends file data to controllers folder bugReportController.js to process the data and do specific actions
 app.post('/bugreport', upload.single('file'), bugReportController.updateBugReport);
 
-// Start the server
-app.listen(3003, () => console.log('✅ Server running on http://localhost:3000'));
-
+// *** Replaced this with Martin's
+// Start the server 
+//app.listen(3003, () => console.log('✅ Server running on http://localhost:3000'));
