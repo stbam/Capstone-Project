@@ -1,134 +1,127 @@
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import "../App.css";
-
 import { Link } from 'react-router-dom';
 
-function Register() {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const [location, setLocation] = useState("");
-    
+import { useNavigate } from "react-router-dom";  // Import useNavigate
 
-    
-      // Handle input changes
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      if (name === "email") setEmail(value);
-      else if (name === "username") setUsername(value);
-      else if (name === "password") setPassword(value);
-      else if (name === "age") setAge(value);
-      else if (name === "gender") setGender(value);
-      else if (name === "location") setLocation(value);
+
+import React, { useState } from "react";
+
+export default function BasicForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+
+  });
+  const navigate = useNavigate();  // Initialize the navigate function
+
+  
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, file: e.target.files[0] });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    const data = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
     };
+  
+    try {
+      const response = await fetch("http://localhost:3002/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",  // ✅ Ensure JSON is sent
+        },
+        body: JSON.stringify(data),  // ✅ Convert object to JSON
+      });
+  
+      if (response.ok) {
+        console.log("Form submitted successfully!");
+        
+        setFormData({ name: "", email: "", password: "" });
+        navigate('/'); // Redirect to the homepage
+      } else {
+        console.log("Error frontend");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while submitting the form.");
+    }
+  };
+  
 
-    return (
-      <div>
-          <div className="top-bar">
-              <nav>
-                  <Link to="/home" className="bingr">bingr</Link>
-              </nav>
-          </div>
-          
-          <div className="sign-in-page">  {/* This applies the background */}
-              <div className="register-form">
-                  <div className="recover-title">
-                      <h2>Register</h2>
-               </div>
-
-               <div className="recover-content">
-                      <label className="register-label"> 
-                          <input
-                              placeholder="Enter Username"
-                              type="text"
-                              name="username"
-                              className="signin-input"
-                              value={username}
-                              onChange={handleChange}
-                          />
-                      </label>
-                  </div>
-
-                  <div className="recover-content">
-                      <label className="register-label"> 
-                          <input
-                              placeholder="Enter Email"
-                              type="email"
-                              name="email"
-                              className="signin-input"
-                              value={email}
-                              onChange={handleChange}
-                          />
-                      </label>
-                  </div>
-
-                  <div className="recover-content">
-                      <label className="register-label"> 
-                          <input
-                              placeholder="Enter Password"
-                              type="text"
-                              name="password"
-                              className="signin-input"
-                              value={password}
-                              onChange={handleChange}
-                          />
-                      </label>
-                  </div>
-
-                  <div className="recover-content">
-                      <label className="register-label"> 
-                          <input
-                              placeholder="Enter Age"
-                              type="text"
-                              name="age"
-                              className="signin-input"
-                              value={age}
-                              onChange={handleChange}
-                          />
-                      </label>
-                  </div>
-
-                  <div className="recover-content">
-                      <label className="register-label"> 
-                          <input
-                              placeholder="Enter Location"
-                              type="text"
-                              name="location"
-                              className="signin-input"
-                              value={location}
-                              onChange={handleChange}
-                          />
-                      </label>
-                  </div>
-
-                  <div className="gender">
-                      <label> Gender: </label>
-                      <input type="radio" value="Male" name="gender" defaultChecked /> Male  
-                      <input type="radio" value="Female" name="gender" /> Female  
-                      <input type="radio" value="Other" name="gender" /> Other 
-                      
-                  </div>
-                  
-                  <br/>
-
-                  <div className="recover-content">
-                      <Button className="custom-register-contained"> SUBMIT </Button>
-                  </div>
-
-               
-                <div className="recover-content">
-                      <p style={{ textAlign: "center", fontSize: "14px", marginTop: "20px", marginBottom: "10px" }}>
-                          Have an account? <a href="/signin" style={{ textDecoration: "underline" }}>Sign In</a>
-                      </p>
-                  </div>
-          </div>
-          </div>
+  return (
+    <>
+      <div className="report-form">
+        <div className="bugtitle">
+          <div>Register</div>
+        </div>
       </div>
 
-    );
-  }
-  
-  export default Register;
+      <div className="form-container">
+        <h2 className="form-questions">Welcome to Bingr</h2>
+        <form onSubmit={handleSubmit}>
+          
+          <div className="outer-input">
+            <p id="title-label" className="form-questions">Name</p>
+            <input 
+              type="text" 
+              name="name" 
+              value={formData.name} 
+              onChange={handleChange} 
+              className="bug-report-input"
+              list="title-suggestions" // Link to the datalist
+              placeholder="Title of the issue"
+            />
+            <datalist id="title-suggestions">
+              <option value="Bug in Login" />
+              <option value="Page Not Found" />
+              <option value="Feature Request" />
+              <option value="Performance Issue" />
+            </datalist>
+          </div>
+
+
+          <div className="outer-input">
+            <p id="description-label" className="form-questions">Email</p>
+            <input 
+              type="email" 
+              name="email" 
+              value={formData.email} 
+              onChange={handleChange} 
+               
+              className="bug-report-input"
+              placeholder="Enter Your Email"
+            
+            />
+          </div>
+
+
+          <div className="outer-input">
+            <p id="description-label" className="form-questions">Password</p>
+            <input 
+              
+              name="password" 
+              type="text" 
+              value={formData.password} 
+              onChange={handleChange}      
+              className="bug-report-input"
+              placeholder="Password"
+             
+            />
+          </div>
+
+
+          <button className="submit-button" type="submit">Sign Up</button>
+        </form>
+
+    
+      </div>
+    </>
+  );
+}
