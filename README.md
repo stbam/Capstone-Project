@@ -1,5 +1,3 @@
-update this read me and include steps to run node server.js for steam backend and node tmdbserver.js for the movie database backend. they must be ran in separate terminals
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -39,17 +37,33 @@ If you aren't satisfied with the build tool and configuration choices, you can `
 
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However, we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ### `npm install`
 
 This installs all dependencies listed in the package.json file into the node_modules folder.
 
-In the backend directory, you can run:
+## Running the Backend Servers
 
-### `npx nodemon server`
+The project has two backend servers that need to be run separately in different terminals.
 
-This runs the server.js file and automatically restarts it whenever code changes are detected.
+### Running the Steam Backend
+
+1. Open a terminal and navigate to the backend directory.
+2. Run the following command:
+   ```sh
+   node server.js
+   ```
+3. This will start the Steam backend server.
+
+### Running the Movie Database Backend
+
+1. Open another terminal and navigate to the backend directory.
+2. Run the following command:
+   ```sh
+   node tmdbserver.js
+   ```
+3. This will start the Movie Database backend server.
 
 ## Learn More
 
@@ -80,3 +94,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
