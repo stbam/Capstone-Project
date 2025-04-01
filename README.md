@@ -39,6 +39,16 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
+### `npm install`
+
+This installs all dependencies listed in the package.json file into the node_modules folder.
+
+In the backend directory, you can run:
+
+### `npx nodemon server`
+
+This runs the server.js file and automatically restarts it whenever code changes are detected.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
