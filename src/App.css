@@ -265,8 +265,8 @@ height: 100px;
 resize: none;
 }
 .signin-form{
-width: 340px;
-height: 430px;
+width: 360px;
+height: 500px;
 padding: 20px;
 background-color: #222222;
 color: white; 
@@ -303,7 +303,7 @@ font-size: 32px;
 color: #ffffff; 
 text-align: center; /* Centers the title horizontally */
 }
-.signin-content{
+.signin-content{ 
 font-size: 23px;
 display:flex;
 justify-content: center;
@@ -334,7 +334,7 @@ box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 transition: all 0.2s ease-in-out; 
 }
 .custom-signin-contained:hover {
-background-color: #48a7cd !important;
+background-color: #9932cc !important;
 color: white;
 }
 .sign-in-page { /* For background */
@@ -344,6 +344,9 @@ background-position: center;
 background-repeat: no-repeat;
 height: 100vh; /* Full-screen height */
 width: 100vw;
+}
+.signin-label{
+  margin-left: -30px;
 }
 /* END SIGN IN PAGE */
 
@@ -871,3 +874,141 @@ overflow: visible !important;
   margin-top: 130px;
   }
 
+/* Recovery Page */
+.recover-form{
+  width: 400px;
+  height: 340px;
+  padding: 20px;
+  background-color: #222222;
+  color: white; 
+  border-radius: 20px; 
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.recover-title{
+  font:menu;
+  font-size: 32px; 
+  color: #ffffff; 
+  text-align: center; /* Centers the title horizontally */
+}
+.recover-content{
+  font-size: 23px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+  
+.recover-input:focus {
+  border-color: #007bff; /* Highlight when selected */
+}
+.custom-recover-contained {
+  background-color: #2a79ba !important; 
+  color: rgb(255, 255, 255) !important;
+  padding: 10px 20px;
+  width:210px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block; 
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+  transition: all 0.2s ease-in-out; 
+}
+.custom-recover-contained:hover {
+  background-color: #9932cc !important;
+  color: white;
+}
+.sign-in-page { /* For background */
+  background-image: url('./assets/images/Web_App_Bg_Transparent.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; /* Full-screen height */
+  width: 100vw;
+}
+
+.email-label {
+  min-width: 280px; /* Ensures it doesn’t shrink */
+  white-space: nowrap; /* Prevents text from wrapping */
+}
+/* Recovery Page ends */
+
+/* Register page Starts */
+.register-form{
+  width: 500px;
+  height: 800px;
+  padding: 20px;
+  background-color: #222222;
+  color: white; 
+  border-radius: 20px; 
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.register-label {
+  min-width: 400px; /* Ensures it doesn’t shrink */
+  white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.custom-register-contained {
+  background-color: #2a79ba !important; 
+  color: rgb(255, 255, 255) !important;
+  padding: 10px 20px;
+  width:230px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block; 
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+  transition: all 0.2s ease-in-out; 
+}
+
+.custom-register-contained:hover {
+  background-color: #9932cc !important;
+  color: white;
+}
+
+input[type="text"], input[type="email"] {  
+  width: 100%;  
+  padding: 15px;  
+  margin: 5px 0 22px 0;  
+  display: inline-block;  
+  border: none;  
+  background: #f1f1f1;  
+}  
+
+input[type="text"]:focus, input[type="email"]:focus {  
+  background-color: rgb(240, 239, 236);  
+  outline: none;  
+}  
+
+register-button {  
+  background-color: #4CAF50;  
+  color: white;  
+  padding: 16px 20px;  
+  border: none;  
+  cursor: pointer;  
+  margin: 8px 0;  
+  width: 100%;  
+  opacity: 0.9;  
+}  
+
+register-button:hover {  
+  opacity: 1;  
+}  
+
+hr {  
+  border: 1px solid #f1f1f1;  
+  margin-bottom: 25px;  
+} 
+
+.gender {
+  margin-left: 60px;
+}
+/* Register page Ends */

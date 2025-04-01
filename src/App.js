@@ -18,6 +18,7 @@ import FollowingPage from "./pages/following";
 import EditPage from "./pages/edit";
 import SteamGameSearchPage from "./pages/SteamGameSearchPage"; /* this is here for debugging */
 import TMDBtest from "./pages/TMDBtest"; /* this is here for debugging */
+import Recover from "./pages/recover";
 /* End pages */
 import BookDetailsPage from './pages/bookDetailsPage'
 import MovieDetailsPage from "./pages/movieDetailsPage";
@@ -59,6 +60,7 @@ function App() {
         <Route path="/book/:id" element={<BookDetailsPage />} /> 
         <Route path="/movie/:id" element={<MovieDetailsPage/>}/>
         <Route path="/game/:id" element={<GameDetailsPage/>}/>
+        <Route path="/recovery" element={<Recover />} />
       </Routes>
     </Router>
   );
@@ -68,7 +70,7 @@ function App() {
 function NavbarWrapper({query,setQuery}) {
   const location = useLocation();
   
-  if (location.pathname === '/signin' || location.pathname === '/register') {
+  if (location.pathname === '/signin' || location.pathname === '/register' || location.pathname === '/recovery') {
     return null; // Don't render Navbar on SignIn or Register pages
   }
 
