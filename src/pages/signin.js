@@ -29,8 +29,9 @@ function SignIn() {
                     </div>
 
                     <div className="signin-content">
-                        <label> Username <br/>
+                        <label className="signin-label"> Username: <br/>
                             <input
+                                placeholder="Username"
                                 type="text"
                                 name="username"
                                 className="signin-input"
@@ -41,9 +42,10 @@ function SignIn() {
                     </div>
                     <br/>
                     <div className="signin-content">
-                        <label> Password <br/>
+                        <label className="signin-label"> Password: <br/>
                             <input
-                                type="password"  // Changed type to password for security
+                                placeholder="Password"
+                                type="text"  // Changed type to password for security
                                 name="password"
                                 className="signin-input"
                                 value={signInData.password}  // Make it controlled
@@ -51,7 +53,7 @@ function SignIn() {
                             />
                         </label>
                     </div>
-                    <br/>
+                    
                     <div className="signin-content">
                         <Button className="custom-signin-contained">Sign In</Button>
                     </div>
@@ -60,6 +62,13 @@ function SignIn() {
                     <div className="signin-content">
                         <p style={{ textAlign: "center", fontSize: "14px", marginTop: "20px", marginBottom: "10px" }}>
                             Don't have an account? <a href="/register" style={{ textDecoration: "underline" }}>Register</a>
+                        </p>
+                    </div>
+
+                    {/* Recovery Prompt on the sign in page */}
+                    <div className="signin-content">
+                        <p style={{ textAlign: "center", fontSize: "14px", marginTop: "20px", marginBottom: "10px" }}>
+                            Forgot Password? <a href="/recovery" style={{ textDecoration: "underline" }}>Recover Now</a>
                         </p>
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 const express = require('express') // setups server
+const connect = require("./connect")
 const cors = require('cors') // Helps minimize errors when connecting to database or API
 const mongoose = require('mongoose') //makes it easy to connect to MongoDB and make schemas
 const bodyParser = require('body-parser') // helps parse data into json
@@ -24,7 +25,7 @@ const User = require('./models/userSchema')  // to use userschema
 // *** Replaced this with Martin's code for User Authentication
 /*
 // Connect to MongoDB
-mongoose.connect(process.env.ATLAS_URI)
+mongoose.connect(process.env.MONGO_URI)
 //process.env.ATLAS_URI
 */
 
