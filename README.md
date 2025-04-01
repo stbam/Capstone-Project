@@ -1,3 +1,5 @@
+update this read me and include steps to run node server.js for steam backend and node tmdbserver.js for the movie database backend. they must be ran in separate terminals
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
