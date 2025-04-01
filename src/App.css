@@ -946,5 +946,65 @@ overflow: visible !important;
     background-color: rgb(176, 147, 75);
   }
   
-  
+  /* Recovery Page */
+.recover-form{
+  width: 400px;
+  height: 340px;
+  padding: 20px;
+  background-color: #222222;
+  color: white; 
+  border-radius: 20px; 
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.recover-title{
+  font:menu;
+  font-size: 32px; 
+  color: #ffffff; 
+  text-align: center; /* Centers the title horizontally */
+}
+.recover-content{
+  font-size: 23px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.recover-input:focus {
+  border-color: #007bff; /* Highlight when selected */
+}
+.custom-recover-contained {
+  background-color: #2a79ba !important; 
+  color: rgb(255, 255, 255) !important;
+  padding: 10px 20px;
+  width:210px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block; 
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+  transition: all 0.2s ease-in-out; 
+}
+.custom-recover-contained:hover {
+  background-color: #9932cc !important;
+  color: white;
+}
+.sign-in-page { /* For background */
+  background-image: url('./assets/images/Web_App_Bg_Transparent.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; /* Full-screen height */
+  width: 100vw;
+}
+
+.email-label {
+  min-width: 280px; /* Ensures it doesn’t shrink */
+  white-space: nowrap; /* Prevents text from wrapping */
+}
+/* Recovery Page ends */
   

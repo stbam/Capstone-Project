@@ -1,4 +1,5 @@
 const express = require('express');
+const connect = require("./connect")
 const cors = require('cors');
 const mongoose = require('mongoose');
 const multer = require('multer');
@@ -12,7 +13,7 @@ require("dotenv").config({path: "./config.env"})
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect(process.env.ATLAS_URI)
+mongoose.connect(process.env.MONGO_URI)
 //process.env.ATLAS_URI
 // Enable CORS for Frontend
 
