@@ -65,73 +65,22 @@ function Profile() {
     <div className="profile-content">
       <h1>Bharat's Lists</h1>
       <div className="profile-lists">
+        <div className="created-lists">
+          <div className="list-thumbnail">
+            <img src={testimg} height='100%'></img>
+          </div>
+          <div className="list-details">
+            <p>Beginner Friendly</p>
+          </div>
+        </div>
       </div>
       <h1>Timeline</h1>
-      <div className="profile-activity">{/*
-        <div className="user-activity">
-          <div className="user-activity-date">
-            <p>3/4/2025</p>
-          </div>
-          <div className="user-activity-icon">
-            <img src="https://avatars.githubusercontent.com/u/19550456" height={50} width={50} style={{borderRadius: "50%",}}/>
-          </div>
-          <div className="user-activity-name">
-            <p>Bharat</p>
-          </div>
-          <div className="user-activity-log">
-            <p>started playing Fallout 2.</p>
-          </div>
-        </div>
-        <div className="user-activity">
-          <div className="user-activity-date">
-            <p>3/4/2025</p>
-          </div>
-          <div className="user-activity-icon">
-            <img src="https://avatars.githubusercontent.com/u/19550456" height={50} width={50} style={{borderRadius: "50%",}}/>
-          </div>
-          <div className="user-activity-name">
-            <p>Bharat</p>
-          </div>
-          <div className="user-activity-log">
-            <p>started reading <i>What the Thunder Said.</i></p>
-          </div>
-        </div>
-        
-        <div className="user-activity">
-          <div className="user-activity-date">
-            <p>2/28/2025</p>
-          </div>
-          <div className="user-activity-icon">
-            <img src="https://avatars.githubusercontent.com/u/19550456" height={50} width={50} style={{borderRadius: "50%",}}/>
-          </div>
-          <div className="user-activity-name">
-            <p>Bharat</p>
-          </div>
-          <div className="user-activity-log">
-            <p>started watching <i>No Country for Old Men.</i></p>
-          </div>
-        </div>
-        <div className="user-activity">
-          <div className="user-activity-date">
-            <p>2/20/2025</p>
-          </div>
-          <div className="user-activity-icon">
-            <img src="https://avatars.githubusercontent.com/u/19550456" height={50} width={50} style={{borderRadius: "50%",}}/>
-          </div>
-          <div className="user-activity-name">
-            <p>Bharat</p>
-          </div>
-          <div className="user-activity-log">
-            <p>started reading <i>The Sympathizer.</i></p>
-          </div>
-        </div>*/}
-        
-          <PageButton></PageButton>
-        
-        </div>
+      <div className="profile-activity">
+        <PageButton></PageButton>
       </div>
     </div>
-    );
-  }
+  </div>
+  );
+}
   
   export default Profile;
