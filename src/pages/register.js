@@ -1,20 +1,15 @@
 import { Link } from 'react-router-dom';
-
 import { useNavigate } from "react-router-dom";  // Import useNavigate
-
-
 import React, { useState } from "react";
 
 export default function BasicForm() {
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",  // Changed 'name' to 'username'
     email: "",
     password: "",
-
   });
   const navigate = useNavigate();  // Initialize the navigate function
 
-  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -24,26 +19,25 @@ export default function BasicForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const data = {
-      name: formData.name,
+      username: formData.username,  // Changed 'name' to 'username'
       email: formData.email,
       password: formData.password,
     };
-  
+
     try {
-      const response = await fetch("http://localhost:3002/register", {
+      const response = await fetch("http://localhost:3003/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",  // ✅ Ensure JSON is sent
         },
         body: JSON.stringify(data),  // ✅ Convert object to JSON
       });
-  
+
       if (response.ok) {
         console.log("Form submitted successfully!");
-        
-        setFormData({ name: "", email: "", password: "" });
+        setFormData({ username: "", email: "", password: "" });
         navigate('/'); // Redirect to the homepage
       } else {
         console.log("Error frontend");
@@ -53,7 +47,6 @@ export default function BasicForm() {
       alert("An error occurred while submitting the form.");
     }
   };
-  
 
   return (
     <>
@@ -68,24 +61,16 @@ export default function BasicForm() {
         <form onSubmit={handleSubmit}>
           
           <div className="outer-input">
-            <p id="title-label" className="form-questions">Name</p>
+            <p id="title-label" className="form-questions">Username</p>  {/* Changed from "Name" to "Username" */}
             <input 
               type="text" 
-              name="name" 
-              value={formData.name} 
+              name="username"  
+              value={formData.username} 
               onChange={handleChange} 
               className="bug-report-input"
-              list="title-suggestions" // Link to the datalist
-              placeholder="Title of the issue"
+              placeholder="Enter your username"
             />
-            <datalist id="title-suggestions">
-              <option value="Bug in Login" />
-              <option value="Page Not Found" />
-              <option value="Feature Request" />
-              <option value="Performance Issue" />
-            </datalist>
           </div>
-
 
           <div className="outer-input">
             <p id="description-label" className="form-questions">Email</p>
@@ -94,33 +79,25 @@ export default function BasicForm() {
               name="email" 
               value={formData.email} 
               onChange={handleChange} 
-               
               className="bug-report-input"
               placeholder="Enter Your Email"
-            
             />
           </div>
-
 
           <div className="outer-input">
             <p id="description-label" className="form-questions">Password</p>
             <input 
-              
               name="password" 
               type="text" 
               value={formData.password} 
               onChange={handleChange}      
               className="bug-report-input"
               placeholder="Password"
-             
             />
           </div>
 
-
           <button className="submit-button" type="submit">Sign Up</button>
         </form>
-
-    
       </div>
     </>
   );

@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs') // hash passwords
 const jwt = require('jsonwebtoken') // follows the user for the session
 const multer = require('multer');
 const bugReportController = require('./controllers/bugReportController');
+const registerController= require('./controllers/registerController')
 
 // *** UserRoutes file
 const users = require("./userRoutes")
@@ -35,14 +36,14 @@ app.use(users)
 // *** User Authentication part (Martin's Middleware) already uses cors. Make sure they don't conflict.
 // Enable CORS for Frontend
 app.use(cors({
-  origin: 'http://localhost:3001', // Frontend URL
+  origin: 'http://localhost:3000', // Frontend URL
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Middleware for User Authentication
 app.use(bodyParser.json())
-app.use(cors())
+
 
 //Routes
 
@@ -54,15 +55,25 @@ app.use(cors())
 // REGISTER
 // USER REGISTRATION
 // POST REGISTER
+
 app.post('/register', async (req, res) => {
+  console.log("test")
     try {
-        const { email, username, password, age, gender, favoriteGenres, location } = req.body      // To request info we want from the user
+        const { email, username, password } = req.body      // To request info we want from the user
         const hashedPassword = await bcrypt.hash(password, 10)  // Hash password, 10 is difficulty
-        const newUser = new User({ email, username, password: hashedPassword, age, gender, favoriteGenres, location }) 
+        const newUser = new User({ email, username, password: hashedPassword }) 
+        console.log(newUser)
         await newUser.save()    // Basically it creates a new schema with this info and save it
+
+  
+
+
+
         res.status(201).json({ message: 'User created successfully' })
     } catch (error) {
+      console.log("error")
         res.status(500).json({ error: 'Error signing up' })
+        
     }
 })
 
@@ -115,6 +126,9 @@ app.use((req, res, next) => {
 
 // Route for Bug Report sends file data to controllers folder bugReportController.js to process the data and do specific actions
 app.post('/bugreport', upload.single('file'), bugReportController.updateBugReport);
+
+//app.post('/register',registerController.register);
+
 
 // *** Old Stanislav's code replaced with Martin's code. Left in case it needs to be reactivated.
 // Start the server 

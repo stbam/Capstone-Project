@@ -6,42 +6,16 @@ const userSchema = new mongoose.Schema({
 
     username: {
         type: String,
-        required: true,
-        unique: true,
-        trim: true
+      
     },
     email: {
         type: String,
-        required: true,
-        unique: true,
-        lowercase: true,
-        trim: true
+     
     },
     password: {
         type: String,
-        required: true,
-        trim: true,
-        minlength: [8, 'Password must be 8 characters long']
-    },
-    age: {
-        type: Number,
-        required: true
-    },
-    likedItems: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Like' // Reference to the 'Like' model
-    }],
-    favoriteGenres: {
-        type: [String] // Array of strings to store multiple genres
-    },
-    gender: {
-        type: String,
-        enum: ['male', 'female', 'other'],
-        trim: true
-    },
-    location: {
-        type: String,
-        trim: true
+      
+      //  minlength: [8, 'Password must be 8 characters long']
     }
  })
 
