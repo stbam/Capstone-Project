@@ -3,7 +3,7 @@ const connect = require("./connect")
 const cors = require('cors') // Helps minimize errors when connecting to database or API
 const mongoose = require('mongoose') //makes it easy to connect to MongoDB and make schemas
 const bodyParser = require('body-parser') // helps parse data into json
-const bcrypt = require('bcrypt') // hash passwords
+const bcrypt = require('bcryptjs') // hash passwords
 const jwt = require('jsonwebtoken') // follows the user for the session
 const multer = require('multer');
 const bugReportController = require('./controllers/bugReportController');
@@ -121,7 +121,7 @@ app.post('/bugreport', upload.single('file'), bugReportController.updateBugRepor
 //app.listen(3003, () => console.log('✅ Server running on http://localhost:3000'));
 
 mongoose
-.connect(process.env.ATLAS_URI, {           //these two help with the connection
+.connect(process.env.MONGO_URI, {           //these two help with the connection
     useNewUrlParser: true, 
     useUnifiedTopology: true
 })

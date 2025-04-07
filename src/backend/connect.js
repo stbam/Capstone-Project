@@ -2,7 +2,7 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
 //Hiding the password of the mongodb cluster using the dotenv file config.envs
-require("dotenv").config({path: "./configTwo.env"})
+require("dotenv").config({path: "./config.env"})
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.MONGO_URI, {
