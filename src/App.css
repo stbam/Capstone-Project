@@ -486,15 +486,17 @@ object-fit: cover;
   }
   .created-lists:hover .list-thumbnail{
     opacity: 0.5;
+
   }
   .created-lists:hover .list-details{
     opacity: 1;
   }
   .list-thumbnail{
-    width: 200px;
+    width: 150px;
     height: 150px;
     opacity: 1;
     transition: .5s ease;
+ 
   }
   .list-details{
     position: absolute;
@@ -624,8 +626,22 @@ object-fit: cover;
   }
   .profile-name b{
     font-size: 14px;
-    color: white];
+    color: white;
   }
+/**/ 
+/*Stan added stuff*/
+.profile-lists{
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+#profileImg{
+  height: 150px;
+  width: 150px;
+}
+
   /*End of Profile Page*/
 
   /*Customization Page Starts Here*/

@@ -8,6 +8,8 @@ const jwt = require('jsonwebtoken') // follows the user for the session
 const multer = require('multer');
 const bugReportController = require('./controllers/bugReportController');
 const addBookController= require('./controllers/addBookController')
+const getUserBooksController=require('./controllers/getUserBooksController')
+
 const User = require('./models/userSchema')  // to use userschema
 
 // *** UserRoutes file
@@ -148,7 +150,7 @@ app.post('/bugreport', upload.single('file'), bugReportController.updateBugRepor
 //app.listen(3003, () => console.log('✅ Server running on http://localhost:3000'));
 
 app.post('/want-to-read',addBookController.BookAdd);
-
+app.get("/:username/books",getUserBooksController.getUserBook )
 
 
 mongoose

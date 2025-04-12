@@ -10,6 +10,8 @@ import Books from "./pages/books";
 import Movies from "./pages/movies";
 import Games from "./pages/games";
 import Profile from "./pages/profile";
+import Profilev2 from "./pages/profilev2";//new profile
+
 import BugReport from "./pages/bugreport";
 import SignIn from "./pages/signin";
 import Register from "./pages/register";
@@ -45,7 +47,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Home query={query} setQuery={setQuery} />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />//replaced profile
         <Route path="/books" element={<Books query={query} setQuery={setQuery} />} />
         <Route path="/movies" element={<Movies />} />
         <Route path="/games" element={<Games />} />

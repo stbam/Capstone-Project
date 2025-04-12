@@ -18,6 +18,7 @@ function Profile() {
 }
 
 export default Profile;*/
+import { useEffect, useState } from "react";
 
 import React from "react";
 import "../App.css";
@@ -30,6 +31,26 @@ import ProfilePictureUploader from "../components/profileIcon";
 import BannerUploader from "../components/banner";
 
 function Profile() {
+
+  const [userBooks, setUserBooks] = useState([]);
+  const username = localStorage.getItem("username");
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch(`http://localhost:3003/${username}/books`);
+        const data = await response.json();
+        setUserBooks(data);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    if (username) fetchBooks();
+  }, [username]);
+  console.log(username)
+
+
   return (
     <div className="profile-page">
       <div className="profile-banner">
@@ -63,17 +84,24 @@ function Profile() {
         </div>
     </div>
     <div className="profile-content">
-      <h1>Bharat's Lists</h1>
-      <div className="profile-lists">
-        <div className="created-lists">
-          <div className="list-thumbnail">
-            <img src={testimg} height='100%'></img>
-          </div>
-          <div className="list-details">
-            <p>Beginner Friendly</p>
-          </div>
+    <h2>{username}'s Books</h2>
+            <div className="profile-lists">
+              {userBooks.length > 0 ? (
+                userBooks.map((book, index) => (
+                  <div className="created-lists" key={index}>
+                    <div className="list-thumbnail">
+                      <img id="profileImg" src={book.thumbnail} alt={book.title} />
+                    </div>
+                    <div className="list-details">
+                      <p>{book.title}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>No books added yet.</p>
+              )}
         </div>
-      </div>
+
       <h1>Timeline</h1>
       <div className="profile-activity">
         <PageButton></PageButton>
