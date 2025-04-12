@@ -39,6 +39,18 @@ export default function SignInForm() {
       localStorage.setItem("userId", result.userId);
       localStorage.setItem("username", formData.username); // Store the username
 
+      // Fetch profile picture using the userId
+      const picRes = await fetch(`http://localhost:3003/user/profile-picture/${result.userId}`);
+      if (picRes.ok) {
+        const picData = await picRes.json();
+        const base64Image = `data:${picData.contentType};base64,${picData.data}`;
+        localStorage.setItem("avatar", base64Image);
+      } else {
+        localStorage.removeItem("avatar"); // fallback if image not found
+      }
+
+      console.log(localStorage.avatar,"here it is ")
+
 
         setFormData({ username: "", password: "" });
         

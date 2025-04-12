@@ -10,7 +10,9 @@ exports.BookAdd = async(req,res)=>{
             genre,
             description,
             author,
-            thumbnail
+            thumbnail,
+         
+
         }
         const user = await User.findById(userId);  // Assuming 'userId' is a valid field in the User model
         if (!user) {

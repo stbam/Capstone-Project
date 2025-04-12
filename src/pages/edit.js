@@ -19,6 +19,7 @@ const [profilePicPreview, setProfilePicPreview] = useState(avatar);
         formData.append('profile_picture', userProfilePic);  // If using base64, you can send it directly
         formData.append('banner_image', userBanner);  // Same for the banner
         formData.append('userId', userId);
+        
    console.log(userBanner);
 
         fetch("http://localhost:3003/user-banner", {
@@ -28,8 +29,10 @@ const [profilePicPreview, setProfilePicPreview] = useState(avatar);
           .then((res) => res.json())
           .then((data) => {
             console.log("Image update response:", data);
+            console.log(formData,"here")
           })
           .catch((err) => {
+            
             console.log(err);
             console.error("Error updating images:", err);
           });
@@ -68,14 +71,14 @@ const [profilePicPreview, setProfilePicPreview] = useState(avatar);
                 <div className="edit-button-container">
                     <Button className="edit-button-custom" component="label" role={undefined} variants="contained" tabIndex={-1}>
                         Upload Profile Image
-                        <VisuallyHiddenInput type="file" accept="image/*" onChange={handleProfilePicUpload} />
+                        <VisuallyHiddenInput type="file" onChange={handleProfilePicUpload} />
                     </Button>
                 </div>
                 <h3><br /><br />Customize Banner</h3>
                 <div className="edit-button-container">
                     <Button className="edit-button-custom" component="label" role={undefined} variants="contained" tabIndex={-1}>
                         Upload Banner
-                        <VisuallyHiddenInput type="file" accept="image/*" onChange={handleBannerUpload} />
+                        <VisuallyHiddenInput type="file" onChange={handleBannerUpload} />
                     </Button>
                 </div>
                 <p style={{ fontSize: 15 }}>Recommended dimensions are 885 x 200</p>

@@ -7,7 +7,6 @@ import '../App.css'
 function CustomButtons(){
     const [username, setUsername] = useState(localStorage.getItem('username')); // Get username from localStorage on initial load
 
-
     return (
        <div className="buttons-container">
             {/* If username exists in localStorage, show the username */}

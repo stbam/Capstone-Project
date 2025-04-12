@@ -26,6 +26,15 @@ const userSchema = new mongoose.Schema({
             thumbnail: { type: String } // Optional description
             // Add any other fields you need for each book
         }],
+        profile_picture: {
+            data: Buffer,
+            contentType: String,
+            
+          },
+          banner_image: { 
+            data: Buffer,
+            contentType: String,
+          },
  })
 
  const User = mongoose.models.User || mongoose.model('User', userSchema);

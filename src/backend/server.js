@@ -152,6 +152,7 @@ app.post('/bugreport', upload.single('file'), bugReportController.updateBugRepor
 
 app.post('/want-to-read',BookController.BookAdd);
 app.get("/:username/books",BookController.getUserBook )
+app.get("/user/profile-picture/:userId",UserController.userProfileGet)
 
 
 app.put('/user-banner', upload.fields([
