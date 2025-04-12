@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import '../App.css';
@@ -14,12 +14,38 @@ const [profilePicPreview, setProfilePicPreview] = useState(avatar);
 
     const userId= localStorage.getItem('userId');
 
+
+    useEffect(() => {
+        async function fetchProfilePic() {
+          try {
+            const picRes = await fetch(`http://localhost:3003/user/profile-picture/${userId}`);
+            if (picRes.ok) {
+              const picData = await picRes.json();
+              const base64Image = `data:${picData.contentType};base64,${picData.data}`;
+              setProfilePicPreview(base64Image);
+              localStorage.setItem("avatar", base64Image);
+            } else {
+              localStorage.removeItem("avatar");
+              setProfilePicPreview(avatar); // fallback to default
+            }
+          } catch (error) {
+            console.error("Failed to fetch profile image:", error);
+            setProfilePicPreview(avatar); // fallback
+          }
+        }
+      
+        if (userId) {
+          fetchProfilePic();
+        }
+      }, [userId]);
+
+
     const saveImagesToMongo = () => {
         const formData = new FormData();
         formData.append('profile_picture', userProfilePic);  // If using base64, you can send it directly
         formData.append('banner_image', userBanner);  // Same for the banner
         formData.append('userId', userId);
-        
+
    console.log(userBanner);
 
         fetch("http://localhost:3003/user-banner", {

@@ -18,7 +18,10 @@ function CustomButtons(){
                         onClick={() => {
                             // Remove username from localStorage and reload page to reflect changes
                             localStorage.removeItem('username');
+                            localStorage.removeItem('avatar');
+                            
                             setUsername(null);  // Clear the username from state
+                            window.location.reload();
                           
                         }}
 

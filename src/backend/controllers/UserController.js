@@ -55,19 +55,32 @@ exports.UserProfileAdd = async (req, res) => {
     res.status(500).json({ error: "Server error updating profile" });
   }
 };
-exports.userProfileGet = async(req,res)=>{
-    const userId = req.params.userId;
+// In src/backend/controllers/UserController.js
 
-    const user = await User.findById(userId);
-    if (!user || !user.profile_picture) {
-      return res.status(404).json({ error: "Profile picture not found" });
+// In src/backend/controllers/UserController.js
+
+exports.userProfileGet = async (req, res) => {
+    const userId = req.params.userId; // Or however you get the userId
+    try {
+        const user = await User.findById(userId);  // Using async/await to get the user
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Debug: Log the user profile picture
+        console.log(user.profile_picture);
+
+        if (user.profile_picture && user.profile_picture.data) {
+            // Only proceed if profile_picture exists and has data
+            const base64Image = user.profile_picture.data.toString("base64");
+            res.json({ contentType: user.profile_picture.contentType, data: base64Image });
+        } else {
+            // If profile picture is not found or has no data
+            res.status(404).json({ message: "Profile picture not found" });
+        }
+    } catch (error) {
+        console.error("Error fetching user profile:", error);
+        res.status(500).json({ message: "Error fetching user profile" });
     }
-
-    const base64Image = user.profile_picture.data.toString("base64");
-
-    res.json({
-      contentType: user.profile_picture.contentType,
-      data: base64Image,
-    });
-
 };
+
