@@ -61,6 +61,7 @@ const [profilePicPreview, setProfilePicPreview] = useState(avatar);
           .then((data) => {
             console.log("Image update response:", data);
             console.log(formData,"here")
+            window.location.reload()
           })
           .catch((err) => {
             
