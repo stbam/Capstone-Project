@@ -30,10 +30,16 @@ import testimg from "../assets/movies_posters/28 Days Later (2002).png"
 import ProfilePictureUploader from "../components/profileIcon";
 import BannerUploader from "../components/banner";
 
-function Profile() {
 
+function Profile() {
   const [userBooks, setUserBooks] = useState([]);
+  const [userProfilePic, setProfilePic] = useState(null);
+  const [userBanner, setBanner] = useState(null);
   const username = localStorage.getItem("username");
+
+
+  
+
 
   useEffect(() => {
     const fetchBooks = async () => {

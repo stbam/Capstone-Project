@@ -7,8 +7,8 @@ const bcrypt = require('bcryptjs') // hash passwords
 const jwt = require('jsonwebtoken') // follows the user for the session
 const multer = require('multer');
 const bugReportController = require('./controllers/bugReportController');
-const addBookController= require('./controllers/addBookController')
-const getUserBooksController=require('./controllers/getUserBooksController')
+const BookController= require('./controllers/BookController')
+const UserController = require('./controllers/UserController')
 
 const User = require('./models/userSchema')  // to use userschema
 
@@ -43,7 +43,7 @@ app.use(users)
 // Enable CORS for Frontend
 app.use(cors({
   origin: 'http://localhost:3000', // Frontend URL
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST','PUT'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
@@ -136,6 +136,7 @@ app.use((req, res, next) => {
   console.log('Incoming Request:', req.method, req.url);
   console.log('Request Body:', req.body); // Log form fields
   console.log('Uploaded File:', req.file); // Log uploaded file
+  
   next();
 });
 
@@ -149,9 +150,14 @@ app.post('/bugreport', upload.single('file'), bugReportController.updateBugRepor
 // Start the server 
 //app.listen(3003, () => console.log('✅ Server running on http://localhost:3000'));
 
-app.post('/want-to-read',addBookController.BookAdd);
-app.get("/:username/books",getUserBooksController.getUserBook )
+app.post('/want-to-read',BookController.BookAdd);
+app.get("/:username/books",BookController.getUserBook )
 
+
+app.put('/user-banner', upload.fields([
+  { name: 'profile_picture', maxCount: 1 },
+  { name: 'banner_image', maxCount: 1 }
+]), UserController.UserProfileAdd);
 
 mongoose
 .connect(process.env.MONGO_URI, {           //these two help with the connection
