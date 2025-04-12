@@ -8,9 +8,9 @@ function UserIcon() {
     const [avatar, setAvatar] = useState(localStorage.getItem('avatar') || usericon);
     const userId = localStorage.getItem('userId');
     const username = localStorage.getItem('username');
-    console.log(userId);
+   // console.log(userId);
 
-    console.log("trigger")
+    //console.log("trigger")
 
     useEffect(() => {
         if (!username) {

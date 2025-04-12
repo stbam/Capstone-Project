@@ -49,6 +49,7 @@ export default function SignInForm() {
         localStorage.removeItem("avatar"); // fallback if image not found
       }*/
 
+      
       console.log(localStorage.avatar,"here it is ")
 
 

@@ -84,3 +84,30 @@ exports.userProfileGet = async (req, res) => {
     }
 };
 
+exports.userBannerGet = async (req, res) => {
+    const userId = req.params.userId; // Or however you get the userId
+    console.log("test banner")
+    try {
+        const user = await User.findById(userId); // Using async/await to get the user
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Debug: Log the user's banner image
+        console.log(user.banner_image);
+
+        if (user.banner_image && user.banner_image.data) {
+            // Only proceed if banner_image exists and has data
+            const base64Image = user.banner_image.data.toString("base64");
+            res.json({ contentType: user.banner_image.contentType, data: base64Image });
+        } else {
+            // If banner image is not found or has no data
+            res.status(404).json({ message: "Banner image not found" });
+        }
+    } catch (error) {
+        console.error("Error fetching user banner:", error);
+        res.status(500).json({ message: "Error fetching user banner" });
+    }
+};
+
+

@@ -28,7 +28,9 @@ const [profilePicPreview, setProfilePicPreview] = useState(avatar);
               localStorage.removeItem("avatar");
               setProfilePicPreview(avatar); // fallback to default
             }
-          } catch (error) {
+          
+        
+        } catch (error) {
             console.error("Failed to fetch profile image:", error);
             setProfilePicPreview(avatar); // fallback
           }
@@ -38,6 +40,9 @@ const [profilePicPreview, setProfilePicPreview] = useState(avatar);
           fetchProfilePic();
         }
       }, [userId]);
+
+      
+      
 
 
     const saveImagesToMongo = () => {

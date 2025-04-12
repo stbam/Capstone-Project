@@ -33,9 +33,52 @@ import BannerUploader from "../components/banner";
 
 function Profile() {
   const [userBooks, setUserBooks] = useState([]);
-  const [userProfilePic, setProfilePic] = useState(null);
-  const [userBanner, setBanner] = useState(null);
+  const [userProfilePic, setProfilePic] = useState(localStorage.getItem('avatar'));
+  const [userBanner, setBanner] = useState(localStorage.getItem('banner'));
   const username = localStorage.getItem("username");
+  const userId = localStorage.getItem("userId"); // instead of "username"
+
+
+  
+console.log(userBanner,"hers banner")
+
+
+
+  //const [avatar, setAvatar] = useState(localStorage.getItem('avatar') || usericon);
+
+ /* useEffect(() => {
+  async function fetchBannerImage() {
+    // If there's already a banner in localStorage, use it
+    if (localStorage.getItem('banner')) {
+      setBanner(localStorage.getItem('banner'));
+      return;
+    } try {
+      // Fetch banner from server
+      const bannerRes = await fetch(`http://localhost:3003/user/banner-image/${userId}`);
+      console.log(bannerRes,"here is banner ");
+      if (bannerRes.ok) {
+        const bannerData = await bannerRes.json();
+        const base64Image = `data:${bannerData.contentType};base64,${bannerData.data}`;
+        setBanner(base64Image);
+        localStorage.setItem("banner", base64Image);
+      } else {
+        // If fetch fails, use default banner
+        localStorage.removeItem("banner");
+        setBanner(banner); // Set default
+      }
+    } catch (error) {
+      console.error("Failed to fetch banner image:", error);
+      setBanner(banner); // Set default if fetch fails
+    }
+  }
+  // Only fetch banner image if username is available
+  if (username) {
+    fetchBannerImage();
+  } else {
+    // Fallback to default banner if username is not found
+    setBanner(banner);
+  }
+}, [username, userId]);*/
 
 
   
@@ -60,10 +103,10 @@ function Profile() {
   return (
     <div className="profile-page">
       <div className="profile-banner">
-        <img src={banner} height='100%' width='100%'></img>
+      <img src={userBanner || banner} height="100%" width="100%" />
       </div>
       <div className="profile-user-container">
-        <img src="https://avatars.githubusercontent.com/u/19550456" height={150} width={150} style={{borderRadius: "50%", border: "15px solid #303030",}}/>
+        <img src={userProfilePic|| "https://avatars.githubusercontent.com/u/19550456"} height={150} width={150} style={{borderRadius: "50%", border: "15px solid #303030",}}/>
         
         <div className="profile-stats">
           <div className="media-type">
