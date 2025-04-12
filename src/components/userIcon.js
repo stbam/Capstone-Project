@@ -7,11 +7,18 @@ import '../App.css';
 function UserIcon() {
     const [avatar, setAvatar] = useState(localStorage.getItem('avatar') || usericon);
     const userId = localStorage.getItem('userId');
+    const username = localStorage.getItem('username');
     console.log(userId);
 
     console.log("trigger")
 
     useEffect(() => {
+        if (!username) {
+            setAvatar(usericon); // Fallback to default avatar
+            return;  // Exit early, no need to fetch image
+        }
+
+
         async function fetchProfilePic() {
             try {
                 const picRes = await fetch(`http://localhost:3003/user/profile-picture/${userId}`);
