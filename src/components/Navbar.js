@@ -37,6 +37,7 @@ function Navbar({query,setQuery}) {
                 <div className="right-links">
                     <Link to="bugreport">Bug Reporting</Link>
                     <a href="https://discord.gg/nCGYy8HC">Discord</a>
+                   
                 </div>
             </div>
         </div>

@@ -16,8 +16,19 @@ const userSchema = new mongoose.Schema({
         type: String,
       
       //  minlength: [8, 'Password must be 8 characters long']
-    }
+    }, 
+    favorite_books: [
+        {
+            title: { type: String }, // Book title
+            author: { type: String }, // Book author
+            genre: { type: String }, // Genre of the book
+            description: { type: String },
+            thumbnail: { type: String } // Optional description
+            // Add any other fields you need for each book
+        }],
  })
 
- const User = mongoose.model('User', userSchema)    // User represents the whole schema now
+ const User = mongoose.models.User || mongoose.model('User', userSchema);
+
+ //const User = mongoose.model('User', userSchema)    // User represents the whole schema now
  module.exports = User  // to be able to use this in any other file

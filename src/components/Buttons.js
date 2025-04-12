@@ -1,18 +1,49 @@
-import React from "react";
 import Button from "@mui/material/Button";
+import React, { useState, useEffect } from "react";
+
 import { Link } from "react-router-dom";
 import '../App.css'
 
 function CustomButtons(){
-    return (
-        <div className="buttons-container">
-            <Link to="/signin">
-                <Button className="custom-contained">Sign In</Button>
-            </Link>
+    const [username, setUsername] = useState(localStorage.getItem('username')); // Get username from localStorage on initial load
 
-            <Link to="/register">
-                <Button className="custom-outlined">Register</Button>
-            </Link>
+
+    return (
+       <div className="buttons-container">
+            {/* If username exists in localStorage, show the username */}
+            {username ? (
+                <>
+                    <h2 className="custom-heading" >{username}</h2>
+                    <Button
+                        className="custom-outlined"
+                        onClick={() => {
+                            // Remove username from localStorage and reload page to reflect changes
+                            localStorage.removeItem('username');
+                            setUsername(null);  // Clear the username from state
+                          
+                        }}
+
+                        sx={{
+                            position: 'relative', // Make the button position relative
+                            top: '2px', // Apply top positioning
+                        }}
+                   
+                    >
+                        Log Out
+                    </Button>
+                </>
+            ) : (
+                // If no username in localStorage, show Sign In and Register buttons
+                <>
+                    <Link to="/signin">
+                        <Button className="custom-contained">Sign In</Button>
+                    </Link>
+
+                    <Link to="/register">
+                        <Button className="custom-outlined">Register</Button>
+                    </Link>
+                </>
+            )}
         </div>
     );
 }

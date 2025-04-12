@@ -1,82 +1,101 @@
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import "../App.css";
-
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
-function SignIn() {
-    const [signInData, setSignInData] = useState({
-        username: "",
-        password: "",
-    });
+export default function SignInForm() {
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+  const navigate = useNavigate();
 
-    // Handle input changes
-    const handleChange = (e) => {
-        setSignInData({ ...signInData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      username: formData.username,
+      password: formData.password,
     };
 
-    return (
-        <div>
-            <div className="top-bar">
-                <nav>
-                    <Link to="/home" class="bingr">bingr</Link>
-                </nav>
-            </div>
-            <div className="sign-in-page">  {/* This applies the background */}
-                <div className="signin-form">
-                    <div className="signin-title">
-                        <h1>Sign In</h1>
-                    </div>
+    try {
+      const response = await fetch("http://localhost:3003/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const  result = await response.json();
 
-                    <div className="signin-content">
-                        <label className="signin-label"> Username: <br/>
-                            <input
-                                placeholder="Username"
-                                type="text"
-                                name="username"
-                                className="signin-input"
-                                value={signInData.username}
-                                onChange={handleChange}  // Make it controlled
-                            />
-                        </label>
-                    </div>
-                    <br/>
-                    <div className="signin-content">
-                        <label className="signin-label"> Password: <br/>
-                            <input
-                                placeholder="Password"
-                                type="text"  // Changed type to password for security
-                                name="password"
-                                className="signin-input"
-                                value={signInData.password}  // Make it controlled
-                                onChange={handleChange}  // Make it controlled
-                            />
-                        </label>
-                    </div>
-                    
-                    <div className="signin-content">
-                        <Button className="custom-signin-contained">Sign In</Button>
-                    </div>
-                    
-                    {/* Registration prompt on the sign in page */}
-                    <div className="signin-content">
-                        <p style={{ textAlign: "center", fontSize: "14px", marginTop: "20px", marginBottom: "10px" }}>
-                            Don't have an account? <a href="/register" style={{ textDecoration: "underline" }}>Register</a>
-                        </p>
-                    </div>
+      if (response.ok) {
+        console.log("Logged in successfully!");
+        console.log('User ID:', result.userId);
 
-                    {/* Recovery Prompt on the sign in page */}
-                    <div className="signin-content">
-                        <p style={{ textAlign: "center", fontSize: "14px", marginTop: "20px", marginBottom: "10px" }}>
-                            Forgot Password? <a href="/recovery" style={{ textDecoration: "underline" }}>Recover Now</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+     // Store the userId in localStorage
+      localStorage.setItem("userId", result.userId);
+      localStorage.setItem("username", formData.username); // Store the username
 
+
+        setFormData({ username: "", password: "" });
+        
+        navigate('/'); // Redirect after login
+      } else {
+        console.log("Login failed.");
+        alert("Invalid credentials. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred during sign in.");
+    }
+  };
+
+  return (
+    <>
+      <div className="report-form">
+        <div className="bugtitle">
+          <div>Sign In</div>
         </div>
+      </div>
 
-    );
+      <div className="form-container">
+        <h2 className="form-questions">Welcome Back to Bingr</h2>
+        <form onSubmit={handleSubmit}>
+
+          <div className="outer-input">
+            <p className="form-questions">Username</p>
+            <input 
+              type="text" 
+              name="username" 
+              value={formData.username} 
+              onChange={handleChange} 
+              className="bug-report-input"
+              placeholder="Enter Your Username"
+            />
+          </div>
+
+          <div className="outer-input">
+            <p className="form-questions">Password</p>
+            <input 
+              name="password" 
+              type="password" 
+              value={formData.password} 
+              onChange={handleChange}      
+              className="bug-report-input"
+              placeholder="Enter Your Password"
+            />
+          </div>
+
+          <button className="submit-button" type="submit">Sign In</button>
+        </form>
+
+        <p style={{ marginTop: "10px", color: "white"}}>
+          Don't have an account? <Link to="/register" style={{color: "red"}} >Register here</Link>
+        </p>
+      </div>
+    </>
+  );
 }
-
-export default SignIn;

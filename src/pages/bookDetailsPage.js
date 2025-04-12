@@ -1,11 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Container, ButtonGroup, Card, CardMedia, Typography, Button, Rating } from '@mui/material';
 import { useParams } from 'react-router-dom';
+
 import Books from './books';
 
 const BookDetails = () => {
+
+  const userId = localStorage.getItem('userId');  // Retrieve userId from localStorage
+  const name = localStorage.getItem('username')
+
+  console.log(name," heres the name")
+
   const { id } = useParams(); // Get the book id from the URL
   const [book, setBook] = useState(null);
+  //const [userId, setUserId] = useState(null); // Add state for userId
+
+  const handleWantToRead = async()=>{
+      const bookData = {
+         title: book.title,
+            genre:book.genre,
+            description:book.description,
+            author:book.author,
+            userId,
+            thumbnail: book.imageLinks?.thumbnail
+      }
+      try{
+
+        //console.log(localStorage.getItem("userId"));
+
+        const response = await fetch("http://localhost:3003/want-to-read",{
+          method:'POST',
+
+          headers:{
+            'Content-Type': 'application/json',
+          },
+          body:JSON.stringify(bookData)
+        })
+
+          if(response.ok){
+           // alert('Book added to your Want To Read list!');
+          }else{
+            console.error('Failed to add book.');
+          }
+      }
+      catch(error){
+        console.log("here is the error")
+      }
+
+  }
+
+
+
+
+
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -44,7 +91,7 @@ const BookDetails = () => {
             />
           </Card>
           <ButtonGroup sx={{ mt: 2 }} >
-            <Button variant="contained" color="primary">Want To Read </Button> 
+            <Button variant="contained" color="primary" onClick={handleWantToRead}>Want To Read </Button> 
             <a href={book.infoLink} target="_blank" rel="noopener noreferrer">
               <Button variant="contained" color="primary">
                 More Info

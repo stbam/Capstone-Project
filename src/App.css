@@ -157,6 +157,12 @@ display: flex;
 justify-content: space-between;
 width: 80%; 
 }
+.custom-heading {
+  color: whitesmoke;
+  font-size: 24px;
+  font-weight: bold;
+}
+
 
 a {
 color: rgb(255, 255, 255);
