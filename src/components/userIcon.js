@@ -28,6 +28,7 @@ function UserIcon() {
                     const base64Image = `data:${picData.contentType};base64,${picData.data}`;
                     setAvatar(base64Image);
                     localStorage.setItem("avatar", base64Image);
+
                 } else {
                     localStorage.removeItem("avatar");
                     setAvatar(usericon); // fallback to default avatar
@@ -44,6 +45,9 @@ function UserIcon() {
             setAvatar(usericon); // if no user, show default
         }
     }, [userId]);
+
+
+    
 
     return (
         <div className="avatar-container">

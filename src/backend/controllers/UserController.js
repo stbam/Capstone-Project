@@ -34,7 +34,7 @@ exports.UserProfileAdd = async (req, res) => {
       // Replace the old profile_picture with the new one
       user.profile_picture = { data: profilePicBuffer, contentType: profilePicContentType };
     }
-  console.log(user.profile_picture)
+  //console.log(user.profile_picture)
     // Replace the banner_image if it's provided
     if (req.files["banner_image"]) {
       const bannerBuffer = req.files["banner_image"][0].buffer;
@@ -68,7 +68,7 @@ exports.userProfileGet = async (req, res) => {
         }
 
         // Debug: Log the user profile picture
-        console.log(user.profile_picture);
+      //  console.log(user.profile_picture);
 
         if (user.profile_picture && user.profile_picture.data) {
             // Only proceed if profile_picture exists and has data
@@ -85,6 +85,7 @@ exports.userProfileGet = async (req, res) => {
 };
 
 exports.userBannerGet = async (req, res) => {
+    console.log("bann")
     const userId = req.params.userId; // Or however you get the userId
     console.log("test banner")
     try {
@@ -94,7 +95,7 @@ exports.userBannerGet = async (req, res) => {
         }
 
         // Debug: Log the user's banner image
-        console.log(user.banner_image);
+       // console.log(user.banner_image);
 
         if (user.banner_image && user.banner_image.data) {
             // Only proceed if banner_image exists and has data

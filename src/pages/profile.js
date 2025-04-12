@@ -32,6 +32,7 @@ import BannerUploader from "../components/banner";
 
 
 function Profile() {
+  const defaultBanner = banner; // imported banner ima
   const [userBooks, setUserBooks] = useState([]);
   const [userProfilePic, setProfilePic] = useState(localStorage.getItem('avatar'));
   const [userBanner, setBanner] = useState(localStorage.getItem('banner'));
@@ -39,47 +40,53 @@ function Profile() {
   const userId = localStorage.getItem("userId"); // instead of "username"
 
 
-  
-console.log(userBanner,"hers banner")
+  console.log(username);
+//console.log(userBanner,"hers banner")
 
-
+//console.log(userProfilePic,"hers prof pic")
 
   //const [avatar, setAvatar] = useState(localStorage.getItem('avatar') || usericon);
 
- /* useEffect(() => {
-  async function fetchBannerImage() {
-    // If there's already a banner in localStorage, use it
-    if (localStorage.getItem('banner')) {
-      setBanner(localStorage.getItem('banner'));
-      return;
-    } try {
-      // Fetch banner from server
-      const bannerRes = await fetch(`http://localhost:3003/user/banner-image/${userId}`);
-      console.log(bannerRes,"here is banner ");
-      if (bannerRes.ok) {
-        const bannerData = await bannerRes.json();
-        const base64Image = `data:${bannerData.contentType};base64,${bannerData.data}`;
-        setBanner(base64Image);
-        localStorage.setItem("banner", base64Image);
-      } else {
-        // If fetch fails, use default banner
-        localStorage.removeItem("banner");
-        setBanner(banner); // Set default
-      }
-    } catch (error) {
-      console.error("Failed to fetch banner image:", error);
-      setBanner(banner); // Set default if fetch fails
-    }
-  }
-  // Only fetch banner image if username is available
-  if (username) {
-    fetchBannerImage();
-  } else {
-    // Fallback to default banner if username is not found
-    setBanner(banner);
-  }
-}, [username, userId]);*/
+  useEffect(() => {
+    async function fetchBannerImage() {
+      try {
+        
+        const bannerRes = await fetch(`http://localhost:3003/user/profile-banner/${userId}`); // updates bannere
+        //console.log(bannerRes)
+        if (bannerRes.ok) {
+          const bannerData = await bannerRes.json();
+  
+          const base64Image = `data:${bannerData.contentType};base64,${bannerData.data}`;
+          setBanner(base64Image);
+          localStorage.setItem("banner", base64Image);
 
+
+          if (bannerData && bannerData.data && bannerData.contentType) {
+            const base64Image = `data:${bannerData.contentType};base64,${bannerData.data}`;
+            setBanner(base64Image);
+            localStorage.setItem("banner", base64Image);
+         //   console.log(localStorage,"this is the storage!!1")
+          } else {
+            throw new Error("Invalid banner data");
+          }
+        } else {
+          throw new Error("Banner not found");
+        }
+      } catch (error) {
+        
+        console.error("Failed to fetch banner image:", error);
+        setBanner(banner); // fallback to default
+      }
+    }
+  
+    if (username && userId) {
+      fetchBannerImage();
+    } else {
+      setBanner(banner); // fallback to default
+    }
+  }, [username, userId]);
+  
+     
 
   
 
@@ -97,7 +104,7 @@ console.log(userBanner,"hers banner")
 
     if (username) fetchBooks();
   }, [username]);
-  console.log(username)
+  //console.log(username)
 
 
   return (

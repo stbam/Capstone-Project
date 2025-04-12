@@ -8,50 +8,20 @@ import avatar from "../assets/images/user-avatar.png"; // Default avatar image
 function EditPage() {
     const [userBanner, setBanner] = useState(banner); // Default banner set here
     const [userProfilePic, setProfilePic] = useState(avatar); // Default profile picture
-
-    const [bannerPreview, setBannerPreview] = useState(banner);
-const [profilePicPreview, setProfilePicPreview] = useState(avatar);
-
+    const [bannerPreview, setBannerPreview] = useState(localStorage.getItem('banner'));
+    const [profilePicPreview, setProfilePicPreview] = useState(localStorage.getItem('avatar'));
     const userId= localStorage.getItem('userId');
 
 
-    useEffect(() => {
-        async function fetchProfilePic() {
-          try {
-            const picRes = await fetch(`http://localhost:3003/user/profile-picture/${userId}`);
-            if (picRes.ok) {
-              const picData = await picRes.json();
-              const base64Image = `data:${picData.contentType};base64,${picData.data}`;
-              setProfilePicPreview(base64Image);
-              localStorage.setItem("avatar", base64Image);
-            } else {
-              localStorage.removeItem("avatar");
-              setProfilePicPreview(avatar); // fallback to default
-            }
-          
-        
-        } catch (error) {
-            console.error("Failed to fetch profile image:", error);
-            setProfilePicPreview(avatar); // fallback
-          }
-        }
-      
-        if (userId) {
-          fetchProfilePic();
-        }
-      }, [userId]);
+    //const [avatar, setAvatar] = useState(localStorage.getItem('avatar') || usericon);
 
-      
-      
-
-
-    const saveImagesToMongo = () => {
+     const saveImagesToMongo = () => {
         const formData = new FormData();
         formData.append('profile_picture', userProfilePic);  // If using base64, you can send it directly
         formData.append('banner_image', userBanner);  // Same for the banner
         formData.append('userId', userId);
 
-   console.log(userBanner);
+      //  console.log(userBanner,"user banner");
 
         fetch("http://localhost:3003/user-banner", {
           method: "PUT",

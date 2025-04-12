@@ -50,7 +50,7 @@ export default function SignInForm() {
       }*/
 
       
-      console.log(localStorage.avatar,"here it is ")
+     // console.log(localStorage.avatar,"here it is ")
 
 
         setFormData({ username: "", password: "" });
