@@ -7,17 +7,17 @@ import avatar from "../assets/images/user-avatar.png"; // Default avatar image
 
 function EditPage() {
     const [userBanner, setBanner] = useState(banner); // Default banner set here
-    const [userProfilePic, setProfilePic] = useState(avatar); // Default profile picture
     const [bannerPreview, setBannerPreview] = useState(localStorage.getItem('banner'));
+    const [userProfilePic, setProfilePic] = useState(avatar); // Default profile picture
     const [profilePicPreview, setProfilePicPreview] = useState(localStorage.getItem('avatar'));
     const userId= localStorage.getItem('userId');
 
 
-    //const [avatar, setAvatar] = useState(localStorage.getItem('avatar') || usericon);
-
-     const saveImagesToMongo = () => {
+    
+    const saveImagesToMongo = () => {
         const formData = new FormData();
         formData.append('profile_picture', userProfilePic);  // If using base64, you can send it directly
+        //const [avatar, setAvatar] = useState(localStorage.getItem('avatar') || usericon);
         formData.append('banner_image', userBanner);  // Same for the banner
         formData.append('userId', userId);
 
