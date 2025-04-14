@@ -23,23 +23,33 @@ function Movies() {
 
   useEffect(() => {
     const fetchMovies = async () => {
+      setIsLoading(true);
+  
       try {
+        // Check if data is already cached
+        const cachedData = localStorage.getItem("moviesByGenre");
+        if (cachedData) {
+          setMoviesByGenre(JSON.parse(cachedData));
+          setIsLoading(false);
+          return; // Don't fetch again
+        }
+  
         const movies = {};
         for (const genre of shuffledGenres) {
           const response = await axios.get("http://localhost:5002/genre", {
             params: { genreId: genre.id },
           });
-
+  
           const moviePosters = await Promise.all(
             response.data.results?.map(async (movie) => {
               try {
                 const detailsResponse = await axios.get(
-                  `http://localhost:5002/movie/${movie.id}` // Fetch movie details
+                  `http://localhost:5002/movie/${movie.id}`
                 );
                 return {
                   id: movie.id,
                   title: movie.title,
-                  tagline: detailsResponse.data.tagline || "", // Get tagline
+                  tagline: detailsResponse.data.tagline || "",
                   overview: movie.overview,
                   release_date: movie.release_date,
                   poster_path: movie.poster_path,
@@ -47,14 +57,14 @@ function Movies() {
                   popularity: movie.popularity || "N/A",
                   original_language: movie.original_language || "N/A",
                   genre_ids: movie.genre_ids || [],
-                  runtime: detailsResponse.data.runtime || "N/A", // Add runtime here
+                  runtime: detailsResponse.data.runtime || "N/A",
                 };
               } catch (error) {
                 console.error(`Error fetching details for movie ID ${movie.id}:`, error);
                 return {
                   id: movie.id,
                   title: movie.title,
-                  tagline: "", // If API fails, keep tagline empty
+                  tagline: "",
                   overview: movie.overview,
                   release_date: movie.release_date,
                   poster_path: movie.poster_path,
@@ -62,24 +72,27 @@ function Movies() {
                   popularity: movie.popularity || "N/A",
                   original_language: movie.original_language || "N/A",
                   genre_ids: movie.genre_ids || [],
-                  runtime: "N/A", // Set default if error fetching details
+                  runtime: "N/A",
                 };
               }
             }) || []
           );
-
+  
           movies[genre.name] = moviePosters;
         }
+  
         setMoviesByGenre(movies);
+        localStorage.setItem("moviesByGenre", JSON.stringify(movies)); // Store in localStorage
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching movies:", error);
         setIsLoading(false);
       }
     };
-
+  
     fetchMovies();
   }, [shuffledGenres]);
+  
 
   const calculateHoverBoxPosition = (movieId) => {
     const movieElement = movieRefs.current[movieId];

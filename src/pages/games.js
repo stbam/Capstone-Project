@@ -76,60 +76,72 @@ export const useGamesData = () => {
 function Games() {
   const [gamesByGenre, setGamesByGenre] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedGameId, setSelectedGameId] = useState(null); // Track the selected game for the details box
+  const [selectedGameId, setSelectedGameId] = useState(null);
   const [shuffledGenres] = useState(() => shuffleArray(genres));
-  const [gameDetails, setGameDetails] = useState({}); // To store the game details including header_image
-
+  const [gameDetails, setGameDetails] = useState({});
   const gameRefs = useRef({});
   const navigate = useNavigate();
 
+  // Load from localStorage on mount
   useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        const games = {};
-        const genrePromises = shuffledGenres.map((genre) =>
-          axios.get(`http://localhost:5001/api/games-by-tag/${genre.name}`).then((response) => {
-            const gamePosters = response.data
-              ? shuffleArray(response.data) // Shuffle the games array
-                  .slice(0, 16) // Take the first 16 random games
-                  .map((game) => ({
-                    id: game.appid,
-                    name: game.name,
-                  }))
-              : [];
-            games[genre.name] = gamePosters;
+    const cachedGames = localStorage.getItem("gamesByGenre");
+    const cachedDetails = localStorage.getItem("gameDetails");
 
-            // Prefetch game details for each game
-            gamePosters.forEach((game) => fetchGameDetails(game.id));
-          })
-        );
+    if (cachedGames && cachedDetails) {
+      setGamesByGenre(JSON.parse(cachedGames));
+      setGameDetails(JSON.parse(cachedDetails));
+      setIsLoading(false);
+    } else {
+      fetchGames();
+    }
+  }, []);
 
-        await Promise.all(genrePromises);
-        setGamesByGenre(games);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching games:", error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchGames();
-  }, [shuffledGenres]);
-
-  const fetchGameDetails = async (appid) => {
+  const fetchGames = async () => {
     try {
-      const response = await axios.get(`http://localhost:5001/api/game-details/${appid}`);
-      setGameDetails((prevDetails) => ({
-        ...prevDetails,
-        [appid]: response.data,
-      }));
+      const games = {};
+      const details = {};
+
+      const genrePromises = shuffledGenres.map((genre) =>
+        axios.get(`http://localhost:5001/api/games-by-tag/${genre.name}`).then(async (response) => {
+          const gamePosters = response.data
+            ? shuffleArray(response.data).slice(0, 16).map((game) => ({
+                id: game.appid,
+                name: game.name,
+              }))
+            : [];
+          games[genre.name] = gamePosters;
+
+          // Fetch game details for each
+          const detailPromises = gamePosters.map(async (game) => {
+            try {
+              const res = await axios.get(`http://localhost:5001/api/game-details/${game.id}`);
+              details[game.id] = res.data;
+            } catch (error) {
+              console.error("Error fetching game details:", error);
+            }
+          });
+
+          await Promise.all(detailPromises);
+        })
+      );
+
+      await Promise.all(genrePromises);
+
+      setGamesByGenre(games);
+      setGameDetails(details);
+      setIsLoading(false);
+
+      // Save to localStorage
+      localStorage.setItem("gamesByGenre", JSON.stringify(games));
+      localStorage.setItem("gameDetails", JSON.stringify(details));
     } catch (error) {
-      console.error("Error fetching game details:", error);
+      console.error("Error fetching games:", error);
+      setIsLoading(false);
     }
   };
 
   const handleGameClick = (gameId) => {
-    setSelectedGameId(selectedGameId === gameId ? null : gameId); // Toggle the details box
+    setSelectedGameId(selectedGameId === gameId ? null : gameId);
   };
 
   const calculateHoverBoxPosition = (gameId) => {
@@ -137,24 +149,22 @@ function Games() {
     const gameRect = gameElement.getBoundingClientRect();
     const screenWidth = window.innerWidth;
     const gameCenter = gameRect.left + gameRect.width / 2;
-
-    const hoverBoxOffset = 400; // Hover box width
+    const hoverBoxOffset = 400;
 
     if (gameCenter < screenWidth / 2) {
-      // Game is on the left side of the screen, hover box goes to the right
       return { left: "100%", transform: "translateX(10px)" };
-    } 
-    else {
+    } else {
       const distanceToRightEdge = screenWidth - gameRect.right;
       if (distanceToRightEdge < hoverBoxOffset) {
-
         return { right: "100%", transform: `translateX(-${hoverBoxOffset + 45}px)` };
       } else {
         return { right: "100%", transform: "translateX(-10px)" };
       }
     }
-    
   };
+
+  // ... rest of your component remains the same
+
 
   return (
     <div>
