@@ -118,6 +118,7 @@ function Movies() {
         shuffledGenres.map(({ name }) => (
           <div className="category" key={name}>
             <h2>{name}</h2>
+            <div className="outer-box">
             <div className="foryou-moviebox">
               <div className="swiper-wrapper-container">
                 <Swiper
@@ -206,6 +207,7 @@ function Movies() {
                 </Swiper>
               </div>
             </div>
+          </div>
           </div>
         ))
       )}

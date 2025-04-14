@@ -15,7 +15,7 @@ app.use(cors({
 }));
 
 // Helper function to fetch and format game details
-const fetchDetailedGames = async (games) => {
+/*const fetchDetailedGames = async (games) => {
   return await Promise.all(games.map(async (game) => {
     try {
       const gameDetails = await fetchSteamGameDetails(game.appid);
@@ -30,6 +30,7 @@ const fetchDetailedGames = async (games) => {
     }
   })).then(results => results.filter(game => game !== null));
 };
+*/
 
 /* Third party Steam API endpoint -- fetch by genre */
 app.get("/api/games-by-tag/:tag", async (req, res) => {

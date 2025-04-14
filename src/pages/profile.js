@@ -149,7 +149,7 @@ function Profile() {
                       <img id="profileImg" src={book.thumbnail} alt={book.title} />
                     </div>
                     <div className="list-details">
-                      <p>{book.title}</p>
+                      <p id="book-title">{book.title}</p>
                     </div>
                   </div>
                 ))
@@ -157,6 +157,7 @@ function Profile() {
                 <p>No books added yet.</p>
               )}
         </div>
+
 
       <h1>Timeline</h1>
       <div className="profile-activity">

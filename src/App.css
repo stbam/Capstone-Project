@@ -1,4 +1,6 @@
 /* Ensure the Swiper container has appropriate spacing and z-index */
+
+
 .swiper-wrapper-container {
   position: relative;
   z-index: 2;
@@ -501,13 +503,15 @@ object-fit: cover;
   .list-details{
     position: absolute;
     top: 89.5%;
-    width: 200px;
+    width: 150px;
     background-color: #505050;
     font-size: 15px;
     text-align: center;
     opacity: 0;
     transition: .5s ease;
+    
   }
+  
   .profile-activity{
     display: flex;
     flex-direction: column;
@@ -827,13 +831,16 @@ display: block;
 border: 2px solid blueviolet;
 }
 .foryou-moviebox {
-width: 100%;
+width: auto;
 background-color: #222222; /* Background color for visibility */
 height: 960px; /* Adjust height for movie posters */
 position: relative;
 border: 2px solid black;
 overflow: visible !important;
+display: flex;
+justify-content: center;
 }
+
 /* Outer wrapper container */
 .swiper-wrapper-container {
 overflow: hidden; /* Prevent overflow beyond the container */
