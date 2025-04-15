@@ -18,7 +18,7 @@ function Profile() {
 }
 
 export default Profile;*/
-import { useEffect, useState } from "react";
+import { useEffect, useState,query,setQuery } from "react";
 
 import React from "react";
 import "../App.css";
@@ -29,9 +29,11 @@ import banner from "../assets/images/Web_App_Bg_Transparent.png"
 import testimg from "../assets/movies_posters/28 Days Later (2002).png"
 import ProfilePictureUploader from "../components/profileIcon";
 import BannerUploader from "../components/banner";
+import { Link } from "react-router-dom";
 
 
-function Profile() {
+
+function Profile({ books,setBooks,maxResults=3}) {
   const defaultBanner = banner; // imported banner ima
   const [userBooks, setUserBooks] = useState([]);
   const [userProfilePic, setProfilePic] = useState(localStorage.getItem('avatar'));
@@ -46,7 +48,6 @@ function Profile() {
 //console.log(userProfilePic,"hers prof pic")
 
   //const [avatar, setAvatar] = useState(localStorage.getItem('avatar') || usericon);
-
   useEffect(() => {
     async function fetchBannerImage() {
       try {
@@ -93,6 +94,25 @@ function Profile() {
 
   useEffect(() => {
     const fetchBooks = async () => {
+      
+      try {
+        const searchQuery = query ? `q=${query}` : 'q=subject:books'; // Use query if available
+        const response = await fetch(`${API_URL}?${searchQuery}&maxResults=${maxResults}`);
+        const data = await response.json();
+        setBooks(data.items); // Handle case if no books are returned
+      } catch (error) {
+        console.log("Error fetching books:", error);
+      }
+    };
+  
+    fetchBooks();
+  }, [query, maxResults]); // Re-fetch when query or maxResults change
+  
+  
+  const API_URL = 'https://www.googleapis.com/books/v1/volumes';
+
+  useEffect(() => {
+    const fetchBooks = async () => {
       try {
         const response = await fetch(`http://localhost:3003/${username}/books`);
         const data = await response.json();
@@ -105,6 +125,13 @@ function Profile() {
     if (username) fetchBooks();
   }, [username]);
   //console.log(username)
+
+
+
+
+
+
+
 
 
   return (
@@ -140,30 +167,38 @@ function Profile() {
         </div>
     </div>
     <div className="profile-content">
-    <h2>{username}'s Books</h2>
-            <div className="profile-lists">
-              {userBooks.length > 0 ? (
-                userBooks.map((book, index) => (
-                  <div className="created-lists" key={index}>
-                    <div className="list-thumbnail">
-                      <img id="profileImg" src={book.thumbnail} alt={book.title} />
-                    </div>
-                    <div className="list-details">
-                      <p id="book-title">{book.title}</p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p>No books added yet.</p>
-              )}
-        </div>
+  <h2>{username}'s Books</h2>
+  <div className="profile-lists">
+    {userBooks.length > 0 ? (
+      userBooks.map((book, index) => (
+        <Link
+          key={book.id || index}
+          to={`/book/${book.id}`}
+          style={{ textDecoration: 'none' }}
+        >
+          {        console.log(book)}
+          <div className="created-lists">
+            <div className="list-thumbnail">
+              <img id="profileImg" src={book.thumbnail} alt={book.title} />
+            </div>
+            <div className="list-details">
+              <p id="book-title">{book.title}</p>
+            </div>
+          </div>
+        </Link>
+      ))
+    ) : (
+      <p>No books added yet.</p>
+    )}
+  </div>
+
+  <h1>Timeline</h1>
+  <div className="profile-activity">
+    <PageButton />
+  </div>
+</div>
 
 
-      <h1>Timeline</h1>
-      <div className="profile-activity">
-        <PageButton></PageButton>
-      </div>
-    </div>
   </div>
   );
 }

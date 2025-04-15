@@ -3,14 +3,18 @@ const User = require("../models/UserSchema")
 exports.BookAdd = async(req,res)=>{
     try{
         console.log("book added")
-        const { title,genre,description,author,userId,thumbnail } = req.body;
+        const { title,genre,description,author,userId,thumbnail,id } = req.body;
         console.log(userId+ "here");
+        console.log(id+ "book ID")
+        
         const newBook={
             title,
             genre,
             description,
             author,
             thumbnail,
+            id
+
          
 
         }

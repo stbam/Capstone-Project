@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema({
             author: { type: String }, // Book author
             genre: { type: String }, // Genre of the book
             description: { type: String },
-            thumbnail: { type: String } // Optional description
+            thumbnail: { type: String }, // Optional description
+            id:{type:String}
             // Add any other fields you need for each book
         }],
         profile_picture: {

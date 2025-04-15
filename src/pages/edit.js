@@ -114,11 +114,11 @@ function EditPage() {
             <div className="edit-examples">
                 <div className="user-activity-icon">
                     {/* Profile image */}
-                    <img src={profilePicPreview} alt="Profile Picture" height={150} width={150} style={{ borderRadius: "50%" }} />
+                    <img src={profilePicPreview || userProfilePic} alt="Profile Picture" height={150} width={150} style={{ borderRadius: "50%" }} />
                 </div>
                 <div className="profile-banner">
                     {/* Banner image */}
-                    <img src={bannerPreview} alt="Profile Banner" height="75%" width="75%" style={{ paddingTop: "60px" }} />
+                    <img src={bannerPreview || userBanner} alt="Profile Banner" height="75%" width="75%" style={{ paddingTop: "60px" }} />
                     {/* Hidden file input for banner upload */}
                     <VisuallyHiddenInput type="file" accept="image/*" onChange={handleBannerUpload} />
                 </div>

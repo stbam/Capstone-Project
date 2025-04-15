@@ -22,10 +22,11 @@ const BookDetails = () => {
             description:book.description,
             author:book.author,
             userId,
-            thumbnail: book.imageLinks?.thumbnail
+            thumbnail: book.imageLinks?.thumbnail,
+            id:book.id
       }
       try{
-
+        console.log(id,"this is the book id")
         //console.log(localStorage.getItem("userId"));
 
         const response = await fetch("http://localhost:3003/want-to-read",{
@@ -59,7 +60,11 @@ const BookDetails = () => {
       try {
         const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`);
         const data = await response.json();
-        setBook(data.volumeInfo); // Set the detailed book information
+       // setBook(data.volumeInfo); // Set the detailed book information
+       setBook({
+        id: data.id,
+        ...data.volumeInfo
+      });
       } catch (error) {
         console.log('Error fetching book details:', error);
       }

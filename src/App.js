@@ -34,6 +34,7 @@ function App() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [selectedAppId, setSelectedAppId] = useState(null);
+  const [books, setBooks] = useState([]);
 
   useEffect(() => {
     setResults(dummyData);
@@ -46,9 +47,9 @@ function App() {
       <NavbarWrapper query={query} setQuery={setQuery}/>
       <Routes>
       <Route path="/" element={<Home query={query} setQuery={setQuery} />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<Home books={books} setBooks={setBooks} />} />
         <Route path="/profile" element={<Profile />} />//replaced profile
-        <Route path="/books" element={<Books query={query} setQuery={setQuery} />} />
+        <Route path="/books" element={<Books query={query} setQuery={setQuery} books={books} setBooks={setBooks} />} />
         <Route path="/movies" element={<Movies />} />
         <Route path="/games" element={<Games />} />
         <Route path="/bugreport" element={<BugReport />} />
