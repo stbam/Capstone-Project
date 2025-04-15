@@ -36,7 +36,23 @@ const userSchema = new mongoose.Schema({
             data: Buffer,
             contentType: String,
           },
- })
+          favorite_movies: [
+            {
+                title: { type: String }, // Movie title
+                genre: {type:Number}, // Genre of the book
+                description: { type: String },
+                thumbnail: { type: String }, // Optional description
+                id:{type:Number}
+                // Add any other fields you need for each book
+            }]
+        
+          })
+
+
+
+   
+ 
+ 
 
  const User = mongoose.models.User || mongoose.model('User', userSchema);
 

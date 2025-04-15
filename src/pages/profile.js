@@ -36,6 +36,7 @@ import { Link } from "react-router-dom";
 function Profile({ books,setBooks,maxResults=3}) {
   const defaultBanner = banner; // imported banner ima
   const [userBooks, setUserBooks] = useState([]);
+  const [userMovies, setUserMovies] = useState([]);
   const [userProfilePic, setProfilePic] = useState(localStorage.getItem('avatar'));
   const [userBanner, setBanner] = useState(localStorage.getItem('banner'));
   const username = localStorage.getItem("username");
@@ -128,6 +129,21 @@ function Profile({ books,setBooks,maxResults=3}) {
 
 
 
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await fetch(`http://localhost:3003/${username}/movies`);
+        const data = await response.json();
+        setUserMovies(data);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    if (username) fetchMovies();
+  }, [username]);
+  //console.log(username)
+
 
 
 
@@ -191,6 +207,31 @@ function Profile({ books,setBooks,maxResults=3}) {
       <p>No books added yet.</p>
     )}
   </div>
+  
+  <h2>{username}'s Movies</h2>
+<div className="profile-lists">
+  {userMovies.length > 0 ? (
+    userMovies.map((movie, index) => (
+      <Link
+        key={movie.id || index}
+        to={`/movie/${movie.id}`}
+        style={{ textDecoration: 'none' }}
+      >
+        <div className="created-lists">
+          <div className="list-thumbnail">
+            <img id="profileImg" src={movie.thumbnail} alt={movie.title} />
+          </div>
+          <div className="list-details">
+            <p id="movie-title">{movie.title}</p>
+          </div>
+        </div>
+      </Link>
+    ))
+  ) : (
+    <p>No movies added yet.</p>
+  )}
+</div>
+
 
   <h1>Timeline</h1>
   <div className="profile-activity">
