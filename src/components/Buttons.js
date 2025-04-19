@@ -13,7 +13,7 @@ function CustomButtons(){
             {username ? (
                 <>
                     <h2 className="custom-heading" >{username}</h2>
-                    <Button
+                  <Link>  <Button
                         className="custom-outlined"
                         onClick={() => {
                             // Remove username from localStorage and reload page to reflect changes
@@ -32,7 +32,7 @@ function CustomButtons(){
                    
                     >
                         Log Out
-                    </Button>
+                    </Button> </Link> 
                 </>
             ) : (
                 // If no username in localStorage, show Sign In and Register buttons

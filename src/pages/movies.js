@@ -12,7 +12,7 @@ function shuffleArray(array) {
   return [...array].sort(() => Math.random() - 0.5);
 }
 
-function Movies() {
+function Movies({query,setQuery}) {
   const [moviesByGenre, setMoviesByGenre] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [selectedMovieId, setSelectedMovieId] = useState(null);

@@ -50,7 +50,7 @@ function App() {
         <Route path="/home" element={<Home books={books} setBooks={setBooks} />} />
         <Route path="/profile" element={<Profile />} />//replaced profile
         <Route path="/books" element={<Books query={query} setQuery={setQuery} books={books} setBooks={setBooks} />} />
-        <Route path="/movies" element={<Movies />} />
+        <Route path="/movies" element={<Movies query={query} setQuery={setQuery} />} />
         <Route path="/games" element={<Games />} />
         <Route path="/bugreport" element={<BugReport />} />
         <Route path="/signin" element={<SignIn />} />

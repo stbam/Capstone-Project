@@ -6,7 +6,7 @@ exports.BookAdd = async(req,res)=>{
         const { title,genre,description,author,userId,thumbnail,id } = req.body;
         console.log(userId+ "here");
         console.log(id+ "book ID")
-        
+
         const newBook={
             title,
             genre,
@@ -14,9 +14,6 @@ exports.BookAdd = async(req,res)=>{
             author,
             thumbnail,
             id
-
-         
-
         }
         const user = await User.findById(userId);  // Assuming 'userId' is a valid field in the User model
         if (!user) {

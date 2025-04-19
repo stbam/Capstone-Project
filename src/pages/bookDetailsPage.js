@@ -9,8 +9,6 @@ const BookDetails = () => {
   const userId = localStorage.getItem('userId');  // Retrieve userId from localStorage
   const name = localStorage.getItem('username')
 
-  console.log(name," heres the name")
-
   const { id } = useParams(); // Get the book id from the URL
   const [book, setBook] = useState(null);
   //const [userId, setUserId] = useState(null); // Add state for userId
