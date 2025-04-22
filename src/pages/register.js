@@ -40,7 +40,7 @@ export default function BasicForm() {
       if (response.ok) {
         console.log("Form submitted successfully!");
         setFormData({ username: "", email: "", password: "", age: "" });
-        navigate('/'); // Redirect to the homepage
+        navigate('/signin'); // Redirect to sign in page
       } else {
         console.log("Error frontend");
       }
@@ -53,13 +53,13 @@ export default function BasicForm() {
   return (
     <>
       <div className="report-form">
-        <div className="bugtitle">
-          <div>Register</div>
-        </div>
+      <div className="bugtitle">
+        <div style={{ fontSize: "36px", paddingTop: "15px", marginBottom: "15px" }}>Create Your Account</div>
+      </div>
       </div>
 
       <div className="form-container">
-        <h2 className="form-questions">Welcome to Bingr</h2>
+        
         <form onSubmit={handleSubmit}>
           
           <div className="outer-input">

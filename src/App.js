@@ -73,7 +73,9 @@ function App() {
 function NavbarWrapper({query,setQuery}) {
   const location = useLocation();
   
-  if (location.pathname === '/signin' || location.pathname === '/register' || location.pathname === '/recovery') {
+  // Old Line commented by Martin. Deleted signin and register so the navbar is visible in those pages now
+  //if (location.pathname === '/signin' || location.pathname === '/register' || location.pathname === '/recovery') {
+  if (location.pathname === '/recovery') {
     return null; // Don't render Navbar on SignIn or Register pages
   }
 
