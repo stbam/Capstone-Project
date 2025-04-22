@@ -66,9 +66,9 @@ app.use(cors({
 app.post('/register', async (req, res) => {
   console.log("test")
     try { 
-        const { email, username, password } = req.body      // To request info we want from the user
+        const { email, username, password, age } = req.body      // To request info we want from the user
         const hashedPassword = await bcrypt.hash(password, 10)  // Hash password, 10 is difficulty
-        const newUser = new User({ email, username, password: hashedPassword }) 
+        const newUser = new User({ email, username, password: hashedPassword, age }) 
         console.log(newUser)
         await newUser.save()    // Basically it creates a new schema with this info and save it
 

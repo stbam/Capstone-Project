@@ -7,6 +7,7 @@ export default function BasicForm() {
     username: "",  // Changed 'name' to 'username'
     email: "",
     password: "",
+    age:"",
   });
   const navigate = useNavigate();  // Initialize the navigate function
 
@@ -24,6 +25,7 @@ export default function BasicForm() {
       username: formData.username,  // Changed 'name' to 'username'
       email: formData.email,
       password: formData.password,
+      age: formData.age,
     };
 
     try {
@@ -37,7 +39,7 @@ export default function BasicForm() {
 
       if (response.ok) {
         console.log("Form submitted successfully!");
-        setFormData({ username: "", email: "", password: "" });
+        setFormData({ username: "", email: "", password: "", age: "" });
         navigate('/'); // Redirect to the homepage
       } else {
         console.log("Error frontend");
@@ -93,6 +95,18 @@ export default function BasicForm() {
               onChange={handleChange}      
               className="bug-report-input"
               placeholder="Password"
+            />
+          </div>
+
+          <div className="outer-input">
+            <p id="description-label" className="form-questions">Age</p>
+            <input 
+              type="number" 
+              name="age" 
+              value={formData.age} 
+              onChange={handleChange} 
+              className="bug-report-input"
+              placeholder="Age"
             />
           </div>
 

@@ -16,7 +16,11 @@ const userSchema = new mongoose.Schema({
         type: String,
       
       //  minlength: [8, 'Password must be 8 characters long']
+    },
+    age: {
+      type: Number,
     }, 
+    
     favorite_books: [
         {
             title: { type: String }, // Book title
