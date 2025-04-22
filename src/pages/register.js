@@ -90,7 +90,7 @@ export default function BasicForm() {
             <p id="description-label" className="form-questions">Password</p>
             <input 
               name="password" 
-              type="text" 
+              type="password" 
               value={formData.password} 
               onChange={handleChange}      
               className="bug-report-input"
