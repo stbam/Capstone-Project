@@ -866,14 +866,14 @@ width: 100%; /* Ensure it takes full width of the parent */
 overflow: visible;
 position: relative;
 z-index: 1; /* Ensure image container is on top */
-border: 2px solid red;
+/*border: 2px solid red;*/
 }
 
 .image-container-game {
   overflow: visible;
   position: relative;
   z-index: 1; /* Ensure image container is on top */
-  border: 2px solid red;
+  /*border: 2px solid red;*/
   }
 
 
@@ -945,13 +945,11 @@ overflow: visible !important;
   border-radius: 8px; /* Optional: Keep the rounded corners */
 }
 .swiper-slides-container-game {
-  border: 2px solid yellow; 
+  /* border: 2px solid yellow; */
   overflow: visible !important; /* problem, goes outside container. if off, hover box wont be visible */
   margin-top: 130px;
   }
 
-
-  /*New Bug FORM below here*/
   .form-container {
     width: 600px;
     height: 770px;
@@ -1086,4 +1084,72 @@ overflow: visible !important;
   white-space: nowrap; /* Prevents text from wrapping */
 }
 /* Recovery Page ends */
+
+
+  .card-dark {
+    background-color: #303030 !important;
+    position: relative;
+    overflow: visible !important;
+  }
+  /* Add an image in the top-right corner */
+.card-dark .card-icon {
+  position: absolute;
+  top: -20px; /* Adjust the position from the top */
+  right: 300px; /* Adjust the position from the right */
+  width: 130px; /* Set the width of the image */
+  height: 130px; /* Set the height of the image */
+  object-fit: contain; /* Ensure the image fits within the container */
+  z-index: 1; /* Ensure the image is above other content */
+}
   
+  .card-dark h2 {
+    color: white;
+  }
+
+  .option-card {
+    width: 250px; /* Set a fixed width */
+    height: 200px; /* Set a fixed height to make it square */
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    text-align: center;
+    border: 2px solid transparent; /* Remove the red border */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #303030 !important; 
+  }
+  
+  .option-card:hover {
+    transform: scale(1.05);
+    background-color: #505050;
+    border: 1px solid #8c48b7
+  }
+  
+  .option-card.selected {
+    background-color: #505050 !important;
+    border: 1px solid #ae5de1; /* Highlight selected cards */
+  }
+  
+  .option-card img {
+    width: 80px; /* Smaller image size */
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .option-card p {
+    margin-top: 10px;
+    font-size: 20px;
+    color: white;
+  }
+  
+  .option-card-container {
+    display: flex !important; /* Align cards horizontally */
+    justify-content: center; /* Center the cards */
+    gap: 20px; /* Add spacing between cards */
+  }
+  /* Remove drop shadows for all Material-UI Cards */
+.MuiPaper-root {
+  box-shadow: none !important; /* Remove all shadows */
+}
+

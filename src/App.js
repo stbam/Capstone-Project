@@ -28,6 +28,8 @@ import GameDetailsPage from "./pages/gameDetailsPage";
 
 import ScrollToTop from "./ScrollToTop";
 
+import OnboardingSurvey from "./pages/survery";
+
 
 function App() {
   
@@ -64,6 +66,7 @@ function App() {
         <Route path="/movie/:id" element={<MovieDetailsPage/>}/>
         <Route path="/game/:id" element={<GameDetailsPage/>}/>
         <Route path="/recovery" element={<Recover />} />
+        <Route path="/onboarding-survey" element={<OnboardingSurvey />} />
       </Routes>
     </Router>
   );

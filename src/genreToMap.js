@@ -10,7 +10,6 @@ const genreToMap = [
     {id: 4182, name: "Singleplayer"},
     {id: 5186, name: "Psychological"},
     {id: 1662, name: "Survival"},
-    {id: 3871, name: "2D"}
 ];
 
 module.exports = genreToMap;
