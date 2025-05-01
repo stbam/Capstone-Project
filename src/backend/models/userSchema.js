@@ -48,15 +48,16 @@ const userSchema = new mongoose.Schema({
                 thumbnail: { type: String }, // Optional description
                 id:{type:Number}
                 // Add any other fields you need for each book
-            }]
-        
-          })
-
-
-
-   
- 
- 
+            }],
+            survey: {
+                selectedMedia: [String],
+                selectedGenres: [String],
+                preferred_language: { type: String, default: null },
+                movie_length: { type: String, default: null },
+                period: { type: String, default: null },
+                try_new: { type: String, default: null },
+              },
+});
 
  const User = mongoose.models.User || mongoose.model('User', userSchema);
 

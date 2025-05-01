@@ -166,6 +166,27 @@ app.put('/user-banner', upload.fields([
   { name: 'banner_image', maxCount: 1 }
 ]), UserController.UserProfileAdd);
 
+// PUT Survey
+app.put('/user/survey/:userId', async (req, res) => {
+  const { userId } = req.params;
+  const surveyData = req.body;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { survey: surveyData },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "Survey updated", user: updatedUser });
+  } catch (error) {
+    console.error("Error updating survey:", error);
+    res.status(500).json({ error: "Failed to update survey" });
+  }
+});
+
+
+
 mongoose
 .connect(process.env.MONGO_URI, {           //these two help with the connection
   //  useNewUrlParser: true, //Not Needed 
