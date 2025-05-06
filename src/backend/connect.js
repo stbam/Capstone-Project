@@ -1,10 +1,6 @@
-
 const { MongoClient, ServerApiVersion } = require('mongodb');
+require("dotenv").config({ path: "./config.env" });
 
-//Hiding the password of the mongodb cluster using the dotenv file config.envs
-require("dotenv").config({path: "./config.env"})
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.MONGO_URI, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -13,32 +9,27 @@ const client = new MongoClient(process.env.MONGO_URI, {
   }
 });
 
-let database 
+let database;
 
 module.exports = {
-
-  //creates the initial connection between the code and the database
-  connectToServer: () => {
-    database = client.db("userData")
+  connectToServer: async () => {
+    try {
+      console.log("Connecting to MongoDB...");
+      await client.connect();
+      database = client.db("test"); // Whatever string is in here is the database it works with
+      console.log("Successfully connected to MongoDB");
+    } catch (err) {
+      console.error("MongoDB connection failed:", err);
+      throw err;
+    }
   },
 
   getDb: () => {
-    return database
+    if (!database) {
+      console.error("Database is not initialized. Did you call connectToServer?");
+      throw new Error("Database not initialized. Call connectToServer first.");
+    }
+    console.log("Returning database instance");
+    return database;
   }
-}
-
-/*
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
-*/
+};
