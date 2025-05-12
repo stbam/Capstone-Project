@@ -119,8 +119,9 @@ function Movies({query,setQuery}) {
 
   const sendMoviesToBackend = async (moviesData) => {
     try {
-      await axios.post("http://localhost:5002/batch-movie-upload", { movies: moviesData });
-      console.log("Batch of movies sent to backend successfully.");
+      // Send movie data to the backend for precomputing vectors
+      await axios.post("http://localhost:5002/precompute-movie-vectors", { movies: moviesData });
+      console.log("Batch of movies sent to backend successfully for precomputing vectors.");
     } catch (error) {
       console.error("Error sending batch movie data to backend:", error);
     }
@@ -182,11 +183,13 @@ function Movies({query,setQuery}) {
                         ref={(el) => (movieRefs.current[movie.id] = el)}
                         onClick={() => {
                           const isSelected = selectedMovieId === movie.id;
+                          console.log("Clicked movie ID:", movie.id, "Selected:", !isSelected);
                           setSelectedMovieId(isSelected ? null : movie.id);
                           if (!isSelected) {
                             sendMovieDataToBackend(movie);
                           }
                         }}
+                        
                         style={{ position: "relative" }}
                       >
                         <img
@@ -199,7 +202,8 @@ function Movies({query,setQuery}) {
                             className="hover-box"
                             style={{
                               ...hoverBoxStyle,
-                              ...calculateHoverBoxPosition(movie.id),
+                              left: "100px",
+                              top: "100px",
                             }}
                           >
                             <p

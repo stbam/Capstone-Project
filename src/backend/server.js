@@ -144,4 +144,55 @@ const startServer = async () => {
   }
 };
 
+
+/* ADDED BY GABE */
+app.post("/precompute-movie-vectors", async (req, res) => {
+  try {
+    const movies = req.body.movies; // Array of movies sent from the frontend
+
+    // Loop through each movie and process it
+    for (const movie of movies) {
+      // Call the Python script to compute the movie vector
+      const movieVector = await runPythonScript("./src/movieVectors.py", [JSON.stringify(movie)]);
+
+      // Store the movie vector in the database
+      await Movie.updateOne(
+        { tmdb_id: movie.id }, // Match by TMDB ID
+        {
+          $set: {
+            title: movie.title,
+            vector: JSON.parse(movieVector), // Store the computed vector
+            genres: movie.genres,
+            runtime: movie.runtime,
+            release_date: movie.release_date,
+            language: movie.original_language,
+          },
+        },
+        { upsert: true } // Insert if it doesn't exist
+      );
+
+      console.log(`Processed and stored movie: ${movie.title}`);
+    }
+
+    res.status(200).send("Movie vectors precomputed and stored successfully.");
+  } catch (error) {
+    console.error("Error precomputing movie vectors:", error);
+    res.status(500).send("Error precomputing movie vectors.");
+  }
+});
+
+// Helper function to run Python scripts
+function runPythonScript(scriptPath, args) {
+  return new Promise((resolve, reject) => {
+    execFile("python3", [scriptPath, ...args], (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error running ${scriptPath}:`, stderr);
+        reject(error);
+      } else {
+        resolve(stdout.trim());
+      }
+    });
+  });
+}
+
 startServer();
