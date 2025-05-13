@@ -67,6 +67,7 @@ function App() {
         <Route path="/game/:id" element={<GameDetailsPage/>}/>
         <Route path="/recovery" element={<Recover />} />
         <Route path="/onboarding-survey" element={<OnboardingSurvey />} />
+        
       </Routes>
     </Router>
   );

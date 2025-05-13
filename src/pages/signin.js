@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
 export default function SignInForm() {
@@ -34,13 +33,13 @@ export default function SignInForm() {
 
       if (response.ok) {
         console.log("Logged in successfully!");
-        console.log('User ID:', result.userId);
+        console.log("User ID:", result.userId);
 
         // Store the userId and username
         localStorage.setItem("userId", result.userId);
         localStorage.setItem("username", formData.username);
 
-        // Optionally fetch and store profile picture
+        // Optional: fetch and store profile picture
         /*
         const picRes = await fetch(`http://localhost:3003/user/profile-picture/${result.userId}`);
         if (picRes.ok) {
@@ -54,16 +53,16 @@ export default function SignInForm() {
 
         setFormData({ username: "", password: "" });
 
-        // Redirect based on user status
+        // Redirect based on new user status
         if (result.isNewUser) {
-          navigate("/onboarding-survey");
+          navigate("/onboarding-survey"); // Redirect to survey
         } else {
-          navigate("/home");  // returning user
+          navigate("/home"); // Redirect to home/dashboard
         }
 
       } else {
         console.log("Login failed.");
-        alert("Invalid credentials. Please try again.");
+        alert(result.message || "Invalid credentials. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);

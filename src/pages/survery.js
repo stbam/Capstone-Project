@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import genres from "../movieGenres";
 import movieimg from "../assets/images/cinema.png";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function OnboardingSurvey() {
   const [selectedMedia, setSelectedMedia] = useState([]);
@@ -14,16 +15,17 @@ export default function OnboardingSurvey() {
   const [movieLength, setMovieLength] = useState("");
   const [period, setPeriod] = useState("");
   const [tryNew, setTryNew] = useState("");
+  const navigate = useNavigate();
 
-useEffect(() => {
-  const userId = localStorage.getItem("userId");
-  if (!userId) {
-    alert("No user ID found. Please sign in first.");
-    window.location.href = "/signin";
-  }
-}, []);
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("No user ID found. Please sign in first.");
+      window.location.href = "/signin";
+    }
+  }, []);
 
-const [activeCard, setActiveCard] = useState(0);
+  const [activeCard, setActiveCard] = useState(0);
 
   const toggleSelection = (value, setFunction, stateArray) => {
     setFunction(
@@ -40,25 +42,24 @@ const [activeCard, setActiveCard] = useState(0);
       return;
     }
 
-  // 🔒 Validation: Ensure all required fields are filled
-  if (
-    selectedMedia.length === 0 ||
-    selectedGenres.length === 0 ||
-    !preferredLanguage ||
-    !movieLength ||
-    !period ||
-    !tryNew
-  ) {
-    alert("Please complete all questions before submitting.");
-    return;
-  }
+    if (
+      selectedMedia.length === 0 ||
+      selectedGenres.length === 0 ||
+      !preferredLanguage ||
+      !movieLength ||
+      !period ||
+      !tryNew
+    ) {
+      alert("Please complete all questions before submitting.");
+      return;
+    }
 
     const surveyData = {
-      selectedMedia: selectedMedia,
-      selectedGenres: selectedGenres,
+      selectedMedia,
+      selectedGenres,
       preferred_language: preferredLanguage,
       movie_length: movieLength,
-      period: period,
+      period,
       try_new: tryNew,
     };
 
@@ -73,6 +74,16 @@ const [activeCard, setActiveCard] = useState(0);
       console.error("Error submitting survey:", error);
       alert("Failed to submit survey.");
     }
+
+    // Try to update isNewUser flag, but navigate regardless of result
+    try {
+      await axios.patch(`http://localhost:3003/users/${userId}/not-new`);
+    } catch (error) {
+      console.error("Failed to update user status", error);
+    }
+
+    // ✅ Always navigate
+    navigate("/home");
   };
 
   const cards = [
@@ -98,16 +109,8 @@ const [activeCard, setActiveCard] = useState(0);
       id: 2,
       title: "What is your preferred language?",
       options: [
-        "English",
-        "Spanish",
-        "French",
-        "German",
-        "Chinese",
-        "Japanese",
-        "Korean",
-        "Russian",
-        "Italian",
-        "Portuguese",
+        "English", "Spanish", "French", "German", "Chinese", 
+        "Japanese", "Korean", "Russian", "Italian", "Portuguese",
       ],
       type: "single",
       handler: setPreferredLanguage,
@@ -117,11 +120,8 @@ const [activeCard, setActiveCard] = useState(0);
       id: 3,
       title: "What is your preferred movie length?",
       options: [
-        "Less than 90 minutes",
-        "90-120 minutes",
-        "120-150 minutes",
-        "Over 150 minutes",
-        "No preference",
+        "Less than 90 minutes", "90-120 minutes", 
+        "120-150 minutes", "Over 150 minutes", "No preference",
       ],
       type: "single",
       handler: setMovieLength,
@@ -131,12 +131,8 @@ const [activeCard, setActiveCard] = useState(0);
       id: 4,
       title: "Do you prefer movies from a certain time period?",
       options: [
-        "Before 1970",
-        "1970-1980",
-        "1990-2000",
-        "2010-2020",
-        "2020+",
-        "No preference",
+        "Before 1970", "1970-1980", "1990-2000", 
+        "2010-2020", "2020+", "No preference",
       ],
       type: "single",
       handler: setPeriod,
