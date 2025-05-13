@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const userSchema = new mongoose.Schema({ 
+const userSchema = new mongoose.Schema({
     // User and email are unique
     // user, email, password and dateOfBirth are required
 
@@ -19,7 +19,12 @@ const userSchema = new mongoose.Schema({
     },
     age: {
       type: Number,
-    }, 
+    },
+
+    isNewUser: {
+      type: Boolean,
+      default: true
+    },
     
     favorite_books: [
         {

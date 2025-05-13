@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -14,7 +14,16 @@ export default function OnboardingSurvey() {
   const [movieLength, setMovieLength] = useState("");
   const [period, setPeriod] = useState("");
   const [tryNew, setTryNew] = useState("");
-  const [activeCard, setActiveCard] = useState(0);
+
+useEffect(() => {
+  const userId = localStorage.getItem("userId");
+  if (!userId) {
+    alert("No user ID found. Please sign in first.");
+    window.location.href = "/signin";
+  }
+}, []);
+
+const [activeCard, setActiveCard] = useState(0);
 
   const toggleSelection = (value, setFunction, stateArray) => {
     setFunction(
