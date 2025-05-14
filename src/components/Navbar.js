@@ -33,6 +33,7 @@ function Navbar({query,setQuery}) {
                     <Link to="/books">Books</Link>
                     <Link to="/movies">Movies</Link>
                     <Link to="/games">Games</Link>
+                    <Link to="/discovery">Discover</Link>
                 </div>
                 <div className="right-links">
                     <Link to="bugreport">Bug Reporting</Link>

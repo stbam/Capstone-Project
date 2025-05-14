@@ -13,7 +13,7 @@ const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 5002;
-const TMDB_API_KEY ="9acc16caf27143a749376727fd222dc6"; // process.env.TMDB_API_KEY;
+const TMDB_API_KEY = process.env.TMDB_API_KEY; // process.env.TMDB_API_KEY;
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
@@ -391,8 +391,18 @@ app.get("/recommendations", async (req, res) => {
         // Step 1: Get user vector by calling onehot.py
         const userVector = await getUserVectorFromPython(userId);
 
-        // Step 2: Fetch movies from DB with vectors
-        const movies = await Movie.find({}, { _id: 0, tmdb_id: 1, title: 1, vector: 1, poster_path: 1, genres: 1 });
+        // Step 2: Fetch movies with vectors (only needed fields)
+        const movies = await Movie.find({}, {
+            _id: 0,
+            tmdb_id: 1,
+            title: 1,
+            vector: 1,
+            poster_path: 1,
+            genres: 1,
+            release_date: 1,
+            language: 1,
+            runtime: 1
+        });
 
         if (!movies || movies.length === 0) {
             return res.status(404).json({ error: "No movies found for recommendations" });
@@ -401,19 +411,31 @@ app.get("/recommendations", async (req, res) => {
         // Step 3: Compute cosine similarity for each movie
         const similarities = movies.map(movie => {
             const similarity = calculateCosineSimilarity(userVector, movie.vector);
-            return { movie: movie.title, similarity, tmdb_id: movie.tmdb_id };
+            return {
+                tmdb_id: movie.tmdb_id,
+                title: movie.title,
+                similarity,
+                poster_path: movie.poster_path || null,
+                genres: movie.genres || [],
+                release_date: movie.release_date || null,
+                language: movie.language || null,
+                runtime: movie.runtime || null
+            };
         });
 
-        // FILTER HERE WITH similarities.slice(0,x) to limit the number of recommendations
+        // Step 4: Sort and select top N
         similarities.sort((a, b) => b.similarity - a.similarity);
-        const topRecommendations = similarities;
+        const topRecommendations = similarities.slice(0, 20); // Change 20 if you want fewer
 
+        // Step 5: Send enriched recommendations
         res.json({ recommendations: topRecommendations });
+
     } catch (error) {
         console.error("Error generating recommendations:", error);
         res.status(500).json({ error: "Failed to generate recommendations" });
     }
 });
+
 
 
 

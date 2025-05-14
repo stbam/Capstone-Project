@@ -9,6 +9,7 @@ import Home from "./pages/home";
 import Books from "./pages/books";
 import Movies from "./pages/movies";
 import Games from "./pages/games";
+import Discovery from "./pages/discovery";
 import Profile from "./pages/profile";
 import Profilev2 from "./pages/profilev2";//new profile
 
@@ -67,6 +68,7 @@ function App() {
         <Route path="/game/:id" element={<GameDetailsPage/>}/>
         <Route path="/recovery" element={<Recover />} />
         <Route path="/onboarding-survey" element={<OnboardingSurvey />} />
+        <Route path="/discovery" element={<Discovery />} />
       </Routes>
     </Router>
   );
