@@ -55,9 +55,9 @@ export default function SignInForm() {
 
         // Redirect based on new user status
         if (result.isNewUser) {
-          navigate("/onboarding-survey"); // Redirect to survey
+          window.location.href = "/onboarding-survey"; // full page reload
         } else {
-          navigate("/home"); // Redirect to home/dashboard
+          window.location.href = "/home"; // full page reload
         }
 
       } else {
