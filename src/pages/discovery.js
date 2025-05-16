@@ -15,9 +15,18 @@ const Discovery = () => {
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No token found — user must be logged in.");
+          return;
+        }
+
         const response = await axios.get("http://localhost:5002/recommendations", {
-          params: { userId: "6811552fe330c6c4dc9ceb1e" },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
+
 
         console.log("Fetched recommendations:", response.data);
         setRecommendations(response.data.recommendations);

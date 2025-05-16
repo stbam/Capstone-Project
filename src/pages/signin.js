@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
 export default function SignInForm() {
@@ -29,36 +28,44 @@ export default function SignInForm() {
         },
         body: JSON.stringify(data),
       });
-      const  result = await response.json();
+
+      const result = await response.json();
 
       if (response.ok) {
         console.log("Logged in successfully!");
-        console.log('User ID:', result.userId);
+        console.log("User ID:", result.userId);
 
-     // Store the userId in localStorage
-      localStorage.setItem("userId", result.userId);
-      localStorage.setItem("username", formData.username); // Store the username
+        // Store the userId and username
+        localStorage.setItem("userId", result.userId);
+        localStorage.setItem("username", formData.username);
+        // added by gabe for dyanmic recommendations
+        localStorage.setItem("token", result.token);
 
-      // Fetch profile picture using the userId
-     /* const picRes = await fetch(`http://localhost:3003/user/profile-picture/${result.userId}`);
-      if (picRes.ok) {
-        const picData = await picRes.json();
-        const base64Image = `data:${picData.contentType};base64,${picData.data}`;
-        localStorage.setItem("avatar", base64Image);
-      } else {
-        localStorage.removeItem("avatar"); // fallback if image not found
-      }*/
 
-      
-     // console.log(localStorage.avatar,"here it is ")
-
+        // Optional: fetch and store profile picture
+        /*
+        const picRes = await fetch(`http://localhost:3003/user/profile-picture/${result.userId}`);
+        if (picRes.ok) {
+          const picData = await picRes.json();
+          const base64Image = `data:${picData.contentType};base64,${picData.data}`;
+          localStorage.setItem("avatar", base64Image);
+        } else {
+          localStorage.removeItem("avatar"); // fallback
+        }
+        */
 
         setFormData({ username: "", password: "" });
-        
-        navigate('/'); // Redirect after login
+
+        // Redirect based on new user status
+        if (result.isNewUser) {
+          window.location.href = "/onboarding-survey"; // full page reload
+        } else {
+          window.location.href = "/home"; // full page reload
+        }
+
       } else {
         console.log("Login failed.");
-        alert("Invalid credentials. Please try again.");
+        alert(result.message || "Invalid credentials. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -77,7 +84,6 @@ export default function SignInForm() {
       <div className="form-container">
         <h2 className="form-questions">Welcome Back to Bingr</h2>
         <form onSubmit={handleSubmit}>
-
           <div className="outer-input">
             <p className="form-questions">Username</p>
             <input 
@@ -102,11 +108,11 @@ export default function SignInForm() {
             />
           </div>
 
-          <button className="submit-button" type="submit">Sign In</button>
+          <button type="submit" className="submit-button">Sign In</button>
         </form>
 
-        <p style={{ marginTop: "10px", color: "white"}}>
-          Don't have an account? <Link to="/register" style={{color: "red"}} >Register here</Link>
+        <p className="form-questions">
+          Don't have an account? <Link to="/register">Register</Link>
         </p>
       </div>
     </>

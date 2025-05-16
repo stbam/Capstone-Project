@@ -10,6 +10,9 @@ const axios = require("axios");
 const { exec } = require("child_process");
 const path = require("path");
 
+const authenticateToken = require('./backend/auth');
+
+
 
 const app = express();
 const PORT = process.env.PORT || 5002;
@@ -202,43 +205,6 @@ app.get("/genres", (req, res) => {
     res.json({ genres });
 });
 
-// Handle movie interaction from frontend
-app.post("/movie-interaction", (req, res) => {
-    const movieData = req.body;
-    console.log("Received movie interaction data:", movieData);
-
-    // Here you can do something with the data, like save to a DB or log analytics
-    res.status(200).json({ message: "Movie data received successfully." });
-});
-
-// Function to print the movie vector and corresponding genre names
-function printMovieVectorWithLabels(movieVector, genresList, lengthList, timePeriodList, languageList) {
-    console.log("\nMovie Vector Breakdown:");
-
-    // Genres
-    console.log("Genres:");
-    genresList.forEach((genre, index) => {
-        console.log(`${genre}: ${movieVector[index]}`);
-    });
-
-    // Length
-    console.log("\nMovie Length:");
-    lengthList.forEach((length, index) => {
-        console.log(`${length}: ${movieVector[genresList.length + index]}`);
-    });
-
-    // Time Period
-    console.log("\nTime Period:");
-    timePeriodList.forEach((period, index) => {
-        console.log(`${period}: ${movieVector[genresList.length + lengthList.length + index]}`);
-    });
-
-    // Language
-    console.log("\nLanguage:");
-    languageList.forEach((language, index) => {
-        console.log(`${language}: ${movieVector[genresList.length + lengthList.length + timePeriodList.length + index]}`);
-    });
-}
 
 // Fetch and store movies from TMDB
 app.post("/fetch-and-store-movies", async (req, res) => {
@@ -380,61 +346,59 @@ app.get("/movie/:id/vector", async (req, res) => {
 });
 
 // Recommendation endpoint
-app.get("/recommendations", async (req, res) => {
-    const userId = req.query.userId;
 
-    if (!userId) {
-        return res.status(400).json({ error: "User ID is required" });
-    }
-
+app.get("/recommendations", authenticateToken, async (req, res) => {
+    const userId = req.userId; // extracted from JWT
+    console.log("Received userId from JWT:", userId);
+  
     try {
-        // Step 1: Get user vector by calling onehot.py
-        const userVector = await getUserVectorFromPython(userId);
-
-        // Step 2: Fetch movies with vectors (only needed fields)
-        const movies = await Movie.find({}, {
-            _id: 0,
-            tmdb_id: 1,
-            title: 1,
-            vector: 1,
-            poster_path: 1,
-            genres: 1,
-            release_date: 1,
-            language: 1,
-            runtime: 1
-        });
-
-        if (!movies || movies.length === 0) {
-            return res.status(404).json({ error: "No movies found for recommendations" });
-        }
-
-        // Step 3: Compute cosine similarity for each movie
-        const similarities = movies.map(movie => {
-            const similarity = calculateCosineSimilarity(userVector, movie.vector);
-            return {
-                tmdb_id: movie.tmdb_id,
-                title: movie.title,
-                similarity,
-                poster_path: movie.poster_path || null,
-                genres: movie.genres || [],
-                release_date: movie.release_date || null,
-                language: movie.language || null,
-                runtime: movie.runtime || null
-            };
-        });
-
-        // Step 4: Sort and select top N
-        similarities.sort((a, b) => b.similarity - a.similarity);
-        const topRecommendations = similarities.slice(0, 20); // Change 20 if you want fewer
-
-        // Step 5: Send enriched recommendations
-        res.json({ recommendations: topRecommendations });
-
+      // Step 1: Get user vector by calling onehot.py
+      const userVector = await getUserVectorFromPython(userId);
+  
+      // Step 2: Fetch movie vectors
+      const movies = await Movie.find({}, {
+        _id: 0,
+        tmdb_id: 1,
+        title: 1,
+        vector: 1,
+        poster_path: 1,
+        genres: 1,
+        release_date: 1,
+        language: 1,
+        runtime: 1
+      });
+      console.log(`Fetched ${movies.length} movies`);
+  
+      if (!movies || movies.length === 0) {
+        return res.status(404).json({ error: "No movies found for recommendations" });
+      }
+  
+      // Step 3: Calculate similarity
+      const similarities = movies.map(movie => {
+        const similarity = calculateCosineSimilarity(userVector, movie.vector);
+        return {
+          tmdb_id: movie.tmdb_id,
+          title: movie.title,
+          similarity,
+          poster_path: movie.poster_path || null,
+          genres: movie.genres || [],
+          release_date: movie.release_date || null,
+          language: movie.language || null,
+          runtime: movie.runtime || null
+        };
+      });
+  
+      // Step 4: Sort and return
+      similarities.sort((a, b) => b.similarity - a.similarity);
+      const topRecommendations = similarities.slice(0, 20);
+  
+      res.json({ recommendations: topRecommendations });
+  
     } catch (error) {
-        console.error("Error generating recommendations:", error);
-        res.status(500).json({ error: "Failed to generate recommendations" });
+      console.error("Error generating recommendations:", error);
+      res.status(500).json({ error: "Failed to generate recommendations" });
     }
-});
+  });
 
 
 

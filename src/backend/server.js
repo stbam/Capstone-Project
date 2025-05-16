@@ -127,7 +127,9 @@ app.post('/signin', async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' })
         }
         const token = jwt.sign({ userId: user._id }, SECRET_KEY, { expiresIn: '1hr' }) // When using json web token for user authentication it has to have a secret key
+        console.log(token);
         res.json({ message: 'Login successful',
+          token,
                     userId:user.id,
                     name:user.name
       
