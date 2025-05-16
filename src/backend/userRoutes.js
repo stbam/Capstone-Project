@@ -21,17 +21,26 @@ userRoutes.route("/users").get(async (request, response) => {
 
 //2 - Retrieve One
 userRoutes.route("/users/:id").get(async (request, response) => {
+  let db = database.getDb();
+  console.log("Fetching user by ID:", request.params.id);
 
-  let db = database.getDb()
-  //Finding one user
-  let data = await db.collection("users").findOne({_id: new ObjectId(request.params.id)})
-
-  if(Object.keys(data).length > 0){
-    response.json(data)
-  } else {
-    throw new Error("Data was not found :( ")
+  let data;
+  try {
+    data = await db.collection("users").findOne({ _id: new ObjectId(request.params.id) });
+  } catch (err) {
+    console.error("Error querying MongoDB:", err);
+    return response.status(500).json({ error: "Invalid ID format or DB error" });
   }
-})
+
+  console.log("Result from DB:", data);
+
+  if (data) {
+    response.json(data);
+  } else {
+    response.status(404).json({ error: "User not found" });
+  }
+});
+
 
 //3 - Create One
 userRoutes.route("/users").post(async (request, response) => {
@@ -60,7 +69,7 @@ userRoutes.route("/users/:id").put(async (request, response) => {
   }
 
   //Finding one user
-  let data = await db.collection("users").updatetOne({_id: new ObjectId(request.params.id)}, mongoObject)
+  let data = await db.collection("users").updateOne({_id: new ObjectId(request.params.id)}, mongoObject)
 
   response.json(data)
 })
