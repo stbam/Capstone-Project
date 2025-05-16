@@ -1,5 +1,5 @@
 const express = require("express")
-const database = require("./connect")
+const database = require('./connect');
 const ObjectId = require("mongodb").ObjectId
 
 let userRoutes = express.Router()
@@ -9,6 +9,7 @@ let userRoutes = express.Router()
 userRoutes.route("/users").get(async (request, response) => {
 
   let db = database.getDb()
+  console.log("here is db", db)
   //calling an empty object to show all users
   let data = await db.collection("users").find({}).toArray()
 
@@ -22,6 +23,7 @@ userRoutes.route("/users").get(async (request, response) => {
 //2 - Retrieve One
 userRoutes.route("/users/:id").get(async (request, response) => {
   let db = database.getDb();
+  console.log(db+"here is db")
   console.log("Fetching user by ID:", request.params.id);
 
   let data;

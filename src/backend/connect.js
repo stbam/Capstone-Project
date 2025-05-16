@@ -1,30 +1,27 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
 
-//Hiding the password of the mongodb cluster using the dotenv file config.envs
-require("dotenv").config({path: "./config.env"})
+// connect.js
+const { MongoClient } = require('mongodb');
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(process.env.MONGO_URI, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-let database 
+let dbConnection;
 
 module.exports = {
-
-  //creates the initial connection between the code and the database
-  connectToServer: () => {
-    database = client.db("userData")
+  connectToDb: (cb) => {
+    MongoClient.connect(process.env.MONGO_URI)
+      .then(client => {
+        dbConnection = client.db();
+        return cb();
+      })
+      .catch(err => {
+        console.error(err);
+        return cb(err);
+      });
   },
+  getDb: () => dbConnection
+  
+};
 
-  getDb: () => {
-    return database
-  }
-}
+
+
 
 /*
 async function run() {

@@ -13,7 +13,7 @@ const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 5002;
-const TMDB_API_KEY = process.env.TMDB_API_KEY; // process.env.TMDB_API_KEY;
+const TMDB_API_KEY = "9acc16caf27143a749376727fd222dc6"; // process.env.TMDB_API_KEY;
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
