@@ -86,27 +86,6 @@ userRoutes.route("/users/:id").delete(async (request, response) => {
   response.json(data)
 })
 
-// 6 - PATCH /users/:id/survey-completed
-// Updates the user to mark the survey as completed
-userRoutes.patch("/users/:id/survey-completed", async (req, res) => {
-  try {
-    let db = database.getDb();
-    const userId = req.params.id;
 
-    const result = await db.collection("users").updateOne(
-      { _id: new ObjectId(userId) },
-      { $set: { hasCompletedSurvey: true } }
-    );
-
-    if (result.modifiedCount === 1) {
-      res.status(200).json({ message: "Survey marked as completed." });
-    } else {
-      res.status(404).json({ error: "User not found or already updated." });
-    }
-  } catch (error) {
-    console.error("Error updating survey status:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
 
 module.exports = userRoutes 

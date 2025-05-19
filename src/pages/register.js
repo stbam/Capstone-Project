@@ -41,6 +41,7 @@ export default function BasicForm() {
         console.log("Form submitted successfully!");
         setFormData({ username: "", email: "", password: "", age: "" });
         navigate('/signin'); // Redirect to sign in page
+
       } else {
         console.log("Error frontend");
       }

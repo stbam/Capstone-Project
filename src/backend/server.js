@@ -44,7 +44,7 @@ app.use(express.urlencoded({ extended: true }));
 // Enable CORS for Frontend
 app.use(cors({
   origin: 'http://localhost:3000', // Frontend URL
-  methods: ['GET', 'POST','PUT'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
@@ -200,7 +200,26 @@ app.put('/user/survey/:userId', async (req, res) => {
   }
 });
 
+// PATCH /users/:id/survey-completed
+app.patch('/users/:id/survey-completed', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { hasCompletedSurvey: true },
+      { new: true }
+    );
 
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "Survey marked as completed", user: updatedUser });
+  } catch (error) {
+    console.error("Error updating survey status:", error);
+    res.status(500).json({ error: "Failed to mark survey as completed" });
+  }
+});
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {

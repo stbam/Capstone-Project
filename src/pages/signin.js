@@ -30,8 +30,11 @@ export default function SignInForm() {
       });
 
       const result = await response.json();
+      
 
       if (response.ok) {
+        const userResponse = await fetch(`http://localhost:3003/users/${result.userId}`);
+        const userData = await userResponse.json();
         console.log("Logged in successfully!");
         console.log("User ID:", result.userId);
 
@@ -40,6 +43,8 @@ export default function SignInForm() {
         localStorage.setItem("username", formData.username);
         // added by gabe for dyanmic recommendations
         localStorage.setItem("token", result.token);
+
+        
 
 
         // Optional: fetch and store profile picture
@@ -57,10 +62,11 @@ export default function SignInForm() {
         setFormData({ username: "", password: "" });
 
         // Redirect based on new user status
-        if (result.isNewUser) {
-          window.location.href = "/onboarding-survey"; // full page reload
+
+        if (userData.hasCompletedSurvey) {
+          navigate("/home");
         } else {
-          window.location.href = "/home"; // full page reload
+          navigate("/onboarding-survey");
         }
 
       } else {
