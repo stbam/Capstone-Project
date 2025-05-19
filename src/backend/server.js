@@ -80,10 +80,18 @@ app.post('/register', async (req, res) => {
   console.log("test")
     try { 
         const { email, username, password, age } = req.body      // To request info we want from the user
-        const hashedPassword = await bcrypt.hash(password, 10)  // Hash password, 10 is difficulty
-        const newUser = new User({ email, username, password: hashedPassword, age }) 
-        console.log(newUser)
-        await newUser.save()    // Basically it creates a new schema with this info and save it
+        // Password strength validation (same as in frontend)
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+          return res.status(400).json({
+            error:
+              "Password must be at least 8 characters and include at least one letter, one number, and one special character.",
+          });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ email, username, password: hashedPassword, age });
+        await newUser.save();
 
   
 
