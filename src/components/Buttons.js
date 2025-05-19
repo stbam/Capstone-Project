@@ -19,6 +19,10 @@ function CustomButtons(){
                             // Remove username from localStorage and reload page to reflect changes
                             localStorage.removeItem('username');
                             localStorage.removeItem('avatar');
+                            localStorage.removeItem('banner');
+                            localStorage.removeItem('userId');
+                            localStorage.removeItem('token');
+                            localStorage.removeItem('displayboard');
                             
                             setUsername(null);  // Clear the username from state
                             window.location.reload();
