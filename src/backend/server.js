@@ -10,6 +10,7 @@ const bugReportController = require('./controllers/bugReportController');
 const BookController= require('./controllers/BookController')
 const UserController = require('./controllers/UserController')
 const MovieController=require('./controllers/MovieController')
+const GameController=require('./controllers/GameController')
 const User = require('./models/userSchema')  // to use userschema
 
 // *** UserRoutes file
@@ -166,8 +167,8 @@ app.post('/bugreport', upload.single('file'), bugReportController.updateBugRepor
 //app.listen(3003, () => console.log('✅ Server running on http://localhost:3000'));
 app.post('/want-to-watch',MovieController.MovieAdd);
 app.get("/:username/movies",MovieController.getUserMovie )
-
-
+app.post('/want-to-play',GameController.GameAdd);
+app.get("/:username/games",GameController.getUserGame )
 
 app.post('/want-to-read',BookController.BookAdd);
 app.get("/:username/books",BookController.getUserBook )

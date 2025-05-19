@@ -39,6 +39,7 @@ function Profile({ books,setBooks,maxResults=3}) {
   const defaultBanner = banner; // imported banner ima
   const [userBooks, setUserBooks] = useState([]);
   const [userMovies, setUserMovies] = useState([]);
+  const [userGames, setUserGames] = useState([]);
   const [userDisplays, setUserDisplays] = useState([]);
   const [userProfilePic, setProfilePic] = useState(localStorage.getItem('avatar'));
   const [userBanner, setBanner] = useState(localStorage.getItem('banner'));
@@ -73,9 +74,9 @@ useEffect(() => {
   
           const base64Image = `data:${bannerData.contentType};base64,${bannerData.data}`;
           setBanner(base64Image);
-          if(userId === pagesUserId){
+          //if(userId === pagesUserId){
             localStorage.setItem("banner", base64Image);
-          }
+          //}
 
 
           if (bannerData && bannerData.data && bannerData.contentType) {
@@ -114,9 +115,9 @@ useEffect(() => {
           const pictureData = await pictureRes.json();
           const base64Image = `data:${pictureData.contentType};base64,${pictureData.data}`;
           setProfilePic(base64Image);
-          if(userId === pagesUserId){
+          //if(userId === pagesUserId){
             localStorage.setItem("avatar", base64Image);
-          }
+          //}
 
 
           if (pictureData && pictureData.data && pictureData.contentType) {
@@ -152,10 +153,10 @@ useEffect(() => {
         const data = await response.json();
 
         setUserDisplays(data.data);
-        if(userId === pagesUserId){
+        //if(userId === pagesUserId){
           localStorage.setItem("displayboard", JSON.stringify(data.data))
           console.log(JSON.stringify(userDisplays))
-        }
+        //}
       } catch (error) {
         console.error("Error fetching displays:", error);
       }
@@ -220,6 +221,22 @@ useEffect(() => {
 
 
 
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const response = await fetch(`http://localhost:3003/${username}/games`);
+        const data = await response.json();
+        setUserGames(data);
+      } catch (error) {
+        console.error("Error fetching games:", error);
+      }
+    };
+
+    if (username) fetchGames();
+  }, [username]);
+
+
+
 function IsVisitor(){
     let params = useParams()
     //let testUser = getSingleUser(params.id)
@@ -242,7 +259,7 @@ function IsVisitor(){
       <img src={userBanner || banner} height="100%" width="100%" />
       </div>
       <div className="profile-user-container">
-        <img src={userProfilePic|| "https://avatars.githubusercontent.com/u/19550456"} height={150} width={150} style={{borderRadius: "50%", border: "15px solid #303030",}}/>
+        <img src={userProfilePic|| avatar} height={150} width={150} style={{borderRadius: "50%", border: "15px solid #303030",}}/>
         
         <div className="profile-stats">
           <div className="media-type">
@@ -253,7 +270,7 @@ function IsVisitor(){
           <div className="amount-read">
             <h1>{userBooks.length}</h1>
             <h1>{userMovies.length}</h1>
-            <h1></h1>
+            <h1>{userGames.length}</h1>
           </div>
         </div>
       </div>
@@ -333,7 +350,31 @@ function IsVisitor(){
   ) : (
     <p>No movies added yet.</p>
   )}
-</div>
+  </div>
+
+  <h2>{username}'s Games</h2>
+<div className="profile-lists">
+  {userGames.length > 0 ? (
+    userGames.map((game, index) => (
+      <Link
+        key={game.id || index}
+        to={`/game/${game.id}`}
+        style={{ textDecoration: 'none' }}
+      >
+        <div className="created-lists">
+          <div className="list-thumbnail">
+            <img id="profileImg" src={game.thumbnail} alt={game.title} />
+          </div>
+          <div className="list-details">
+            <p id="movie-title">{game.title}</p>
+          </div>
+        </div>
+      </Link>
+    ))
+  ) : (
+    <p>No games added yet.</p>
+  )}
+  </div>
 
 
   <h1>Timeline</h1>

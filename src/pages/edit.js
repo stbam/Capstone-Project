@@ -8,6 +8,7 @@ import avatar from "../assets/images/user-avatar.png"; // Default avatar image
 function EditPage() {
     const [userBooks, setUserBooks] = useState([]);
     const [userMovies, setUserMovies] = useState([]);
+    const [userGames, setUserGames] = useState([]);
     let userDisplay = ["", "", ""]
     const [leftDisplayPreview, setLeftDisplayPreview] = useState(JSON.parse(localStorage.getItem('displayboard'))[0])
     const [middleDisplayPreview, setMiddleDisplayPreview] = useState(JSON.parse(localStorage.getItem('displayboard'))[1])
@@ -46,6 +47,20 @@ function EditPage() {
 
     if (username) fetchMovies();
   }, [username]);
+
+  useEffect(() => {
+      const fetchGames = async () => {
+        try {
+          const response = await fetch(`http://localhost:3003/${username}/games`);
+          const data = await response.json();
+          setUserGames(data);
+        } catch (error) {
+          console.error("Error fetching games:", error);
+        }
+      };
+  
+      if (username) fetchGames();
+    }, [username]);
 
     const saveImagesToMongo = () => {
         const formData = new FormData();
@@ -147,6 +162,29 @@ function EditPage() {
         //console.log(displayPreview)
     }
 
+    // Handle display upload for games
+    function handleDisplayGamesUpload(board, index){
+        const gameData = {
+            boardID: board,
+            media: "Game",
+            title: userGames[index].title,
+            thumbnail: userGames[index].thumbnail,
+            id: userGames[index].id
+        }
+        if(board === 1){
+            userDisplay[0] = gameData
+            setLeftDisplayPreview(gameData)
+        }else if(board === 2){
+            userDisplay[1] = gameData
+            setMiddleDisplayPreview(gameData)
+        }else{
+            userDisplay[2] = gameData
+            setRightDisplayPreview(gameData)
+        }
+        //setDisplayPreview(userDisplay)
+        //console.log(displayPreview)
+    }
+
     return (
         <div className="edit-page-content">
             <div className="edit-incoming">
@@ -187,6 +225,14 @@ function EditPage() {
                             ) : 
                                     <a>No movies favorited</a>
                             }
+                            <a>Favorite Games</a>
+                            {userGames.length > 0 ? (
+                            userGames.map((game, index) => (
+                                <a onClick={() => handleDisplayGamesUpload(1, index)}>{game.title}</a>
+                            ))
+                            ) : 
+                                    <a>No games favorited</a>
+                            }
                         </div>
                     </div>
                    
@@ -208,6 +254,14 @@ function EditPage() {
                             ))
                             ) : 
                                     <a>No movies favorited</a>
+                            }
+                            <a>Favorite Games</a>
+                            {userGames.length > 0 ? (
+                            userGames.map((game, index) => (
+                                <a onClick={() => handleDisplayGamesUpload(2, index)}>{game.title}</a>
+                            ))
+                            ) : 
+                                    <a>No games favorited</a>
                             }
                         </div>
                     </div>
@@ -231,6 +285,14 @@ function EditPage() {
                             ))
                             ) : 
                                     <a>No movies favorited</a>
+                            }
+                            <a>Favorite Games</a>
+                            {userGames.length > 0 ? (
+                            userGames.map((game, index) => (
+                                <a onClick={() => handleDisplayGamesUpload(3, index)}>{game.title}</a>
+                            ))
+                            ) : 
+                                    <a>No games favorited</a>
                             }
                         </div>
                     </div>

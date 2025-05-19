@@ -10,6 +10,7 @@ import axios from "axios";
 export default function PageButton(){
     const [userBooks, setUserBooks] = useState([]);
     const [userMovies, setUserMovies] = useState([]);
+    const [userGames, setUserGames] = useState([]);
     const [userProfilePic, setProfilePic] = useState(localStorage.getItem('avatar'));
     const [username, setUsername] = useState(localStorage.getItem("username"));
 
@@ -40,6 +41,20 @@ export default function PageButton(){
   
       if (username) fetchMovies();
     }, [username]);
+
+    useEffect(() => {
+        const fetchGames = async () => {
+          try {
+            const response = await fetch(`http://localhost:3003/${username}/games`);
+            const data = await response.json();
+            setUserGames(data);
+          } catch (error) {
+            console.error("Error fetching games:", error);
+          }
+        };
+    
+        if (username) fetchGames();
+      }, [username]);
 
     function formatTitle(entry){
         if(entry.mediaType == 'game'){
@@ -111,7 +126,7 @@ export default function PageButton(){
                     </Link>
                 ))
             ) : <div>
-                <p>nothing</p>
+                <p></p>
                 </div>
                 }
             {userMovies.length > 0 ? (
@@ -130,6 +145,31 @@ export default function PageButton(){
                                 </div>
                                 <div className="user-activity-log">
                                     <p>started watching <i>{movie.title}</i></p>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                ))
+            ) : <div>
+                <p></p>
+                </div>
+                }
+            {userGames.length > 0 ? (
+                userGames.map((game, index) => (
+                    <Link
+                        key={game.id || index}
+                        to={`/game/${game.id}`}
+                    >
+                        <div className="timeline-design">
+                            <div className="user-activity">
+                                <div className="user-activity-icon">
+                                    <img src={userProfilePic|| avatar} height={50} width={50} style={{borderRadius: "50%",}}/>
+                                </div>
+                                <div className="user-activity-name">
+                                    <p>{username}</p>
+                                </div>
+                                <div className="user-activity-log">
+                                    <p>started playing <i>{game.title}</i></p>
                                 </div>
                             </div>
                         </div>

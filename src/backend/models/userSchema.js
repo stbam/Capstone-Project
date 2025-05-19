@@ -72,6 +72,15 @@ const userSchema = new mongoose.Schema({
                 id: {}
               }
             ],
+            favorite_games: [
+            {
+                title: { type: String }, // Game title
+                genre: {type: String}, // Genre of the game
+                description: { type: String },
+                thumbnail: { type: String }, // Optional description
+                id:{type:Number}
+                // Add any other fields you need for each game
+            }],
 });
 
  const User = mongoose.models.User || mongoose.model('User', userSchema);

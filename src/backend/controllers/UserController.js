@@ -45,18 +45,19 @@ exports.UserProfileAdd = async (req, res) => {
     }
   
     // Update displayboards with newly selected items
-    if (req.body.left_displayboard != '[]') {
+    if (req.body.left_displayboard != "undefined") {
+      console.log(req.body.left_displayboard)
       const leftDisplay = JSON.parse(req.body.left_displayboard);
       console.log(leftDisplay)
       user.displayboard[0] = { boardID: leftDisplay.boardID, media: leftDisplay.media, title: leftDisplay.title, thumbnail: leftDisplay.thumbnail, id: leftDisplay.id };
     }
-    if (req.body.middle_displayboard != '[]') {
+    if (req.body.middle_displayboard != "undefined") {
       console.log(req.body.middle_displayboard)
       const middleDisplay = JSON.parse(req.body.middle_displayboard);
       console.log(middleDisplay)
       user.displayboard[1] = { boardID: middleDisplay.boardID, media: middleDisplay.media, title: middleDisplay.title, thumbnail: middleDisplay.thumbnail, id: middleDisplay.id };
     }
-    if (req.body.right_displayboard != '[]') {
+    if (req.body.right_displayboard != "undefined") {
       const rightDisplay = JSON.parse(req.body.right_displayboard);
       console.log(rightDisplay)
       user.displayboard[2] = { boardID: rightDisplay.boardID, media: rightDisplay.media, title: rightDisplay.title, thumbnail: rightDisplay.thumbnail, id: rightDisplay.id };
