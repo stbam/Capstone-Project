@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/grid";
 import { useNavigate } from "react-router-dom";
-import genres from "../movieGenres";
+import genres from "../movieGenres"; // Ensure correct path
 
 function shuffleArray(array) {
   return [...array].sort(() => Math.random() - 0.5);
@@ -17,9 +17,57 @@ function Movies({query,setQuery}) {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedMovieId, setSelectedMovieId] = useState(null);
   const [shuffledGenres] = useState(() => shuffleArray(genres));
+  const [searchResults, setSearchResults] = useState([]);
+
+
+
+
 
   const movieRefs = useRef({});
   const navigate = useNavigate();
+useEffect(() => {
+  const fetchSearchResults = async () => {
+    if (!query) return;
+
+    try {
+      const response = await axios.get("http://localhost:5002/search", {
+        params: { query }
+      });
+
+      const enrichedResults = await Promise.all(
+        response.data.results.map(async (movie) => {
+          try {
+            const detailsResponse = await axios.get(
+              `http://localhost:5002/movie/${movie.id}`
+            );
+            return {
+              id: movie.id,
+              title: movie.title,
+              tagline: detailsResponse.data.tagline || "",
+              overview: movie.overview,
+              release_date: movie.release_date,
+              poster_path: movie.poster_path,
+              vote_average: movie.vote_average || "N/A",
+              popularity: movie.popularity || "N/A",
+              original_language: movie.original_language || "N/A",
+              genre_ids: movie.genre_ids || [],
+              runtime: detailsResponse.data.runtime || "N/A",
+            };
+          } catch (error) {
+            console.error(`Error enriching movie ID ${movie.id}:`, error);
+            return movie; // fallback to raw movie
+          }
+        })
+      );
+
+      setSearchResults(enrichedResults);
+    } catch (err) {
+      console.error("Search failed:", err);
+    }
+  };
+
+  fetchSearchResults();
+}, [query]);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -94,59 +142,27 @@ function Movies({query,setQuery}) {
   }, [shuffledGenres]);
   
 
-  const sendMovieDataToBackend = async (movie) => {
-    try {
-      await axios.post("http://localhost:5002/movie-interaction", {
-        movie_id: movie.id,
-        title: movie.title,
-        genres: movie.genre_ids,
-        rating: movie.vote_average,
-        language: movie.original_language,
-        popularity: movie.popularity,
-        runtime: movie.runtime,
-        release_date: movie.release_date,
-      });
-      console.log(`Sent movie "${movie.title}" interaction to backend`);
-    } catch (error) {
-      console.error("Error sending movie data to backend:", error);
-    }
-  };
-
-  const sendMovies = () => {
-    const moviesData = Object.values(moviesByGenre).flat();
-    sendMoviesToBackend(moviesData);
-  };
-
-  const sendMoviesToBackend = async (moviesData) => {
-    try {
-      // Send movie data to the backend for precomputing vectors
-      await axios.post("http://localhost:5002/precompute-movie-vectors", { movies: moviesData });
-      console.log("Batch of movies sent to backend successfully for precomputing vectors.");
-    } catch (error) {
-      console.error("Error sending batch movie data to backend:", error);
-    }
-  };
-  
-
-
   const calculateHoverBoxPosition = (movieId) => {
     const movieElement = movieRefs.current[movieId];
-    if (!movieElement) return {};
-
+    if (!movieElement) return {}; // Return an empty object if the element is not found
+  
     const movieRect = movieElement.getBoundingClientRect();
     const screenWidth = window.innerWidth;
-    const hoverBoxWidth = 400;
-    const hoverBoxMargin = 10;
-
+    const hoverBoxWidth = 400; // Width of the hover box
+    const hoverBoxMargin = 10; // Margin between the hover box and the movie item
+  
+    // Determine if the movie item is on the left or right side of the screen
     if (movieRect.left + movieRect.width / 2 < screenWidth / 2) {
+      // Movie is on the left side of the screen, hover box goes to the right
       return {
-        left: `${movieRect.right + hoverBoxMargin}px`,
-        top: `${movieRect.top + window.scrollY}px`,
+        left: `${movieRect.right + hoverBoxMargin}px`, // Position to the right of the movie item
+        top: `${movieRect.top + window.scrollY}px`, // Align vertically with the movie item
       };
     } else {
+      // Movie is on the right side of the screen, hover box goes to the left
       return {
-        left: `${movieRect.left - hoverBoxWidth - hoverBoxMargin}px`,
-        top: `${movieRect.top + window.scrollY}px`,
+        left: `${movieRect.left - hoverBoxWidth - hoverBoxMargin}px`, // Position to the left of the movie item
+        top: `${movieRect.top + window.scrollY}px`, // Align vertically with the movie item
       };
     }
   };
@@ -156,6 +172,37 @@ function Movies({query,setQuery}) {
       <div className="page-content">
         <h1>Movies</h1>
       </div>
+
+      {query && searchResults.length > 0 && (
+  <div className="search-results">
+    <div className="search-results-grid" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center',marginBottom:'50px' }}>
+      {searchResults.map(movie => (
+        movie.poster_path && ( // Only render if poster_path exists
+          <div
+            key={movie.id}
+            className="movie-poster"
+            onClick={() => navigate(`/movie/${movie.id}`)}
+            style={{
+              cursor: 'pointer'
+            }}
+          >
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              alt={movie.title}
+              className="movie-poster"
+              
+            />
+            <p style={{ color: "white" }}>{movie.title}</p>
+          </div>
+        )
+      ))}
+    </div>
+  </div>
+)}
+
+
+
+
 
       {isLoading ? (
         <p>Loading...</p>
@@ -181,29 +228,21 @@ function Movies({query,setQuery}) {
                       <div
                         className="image-container"
                         ref={(el) => (movieRefs.current[movie.id] = el)}
-                        onClick={() => {
-                          const isSelected = selectedMovieId === movie.id;
-                          console.log("Clicked movie ID:", movie.id, "Selected:", !isSelected);
-                          setSelectedMovieId(isSelected ? null : movie.id);
-                          if (!isSelected) {
-                            sendMovieDataToBackend(movie);
-                          }
-                        }}
-                        
+                        onClick={() => setSelectedMovieId(selectedMovieId === movie.id ? null : movie.id) /*() => navigate(`/movie/${movie.id}`) */} 
                         style={{ position: "relative" }}
+                        
                       >
                         <img
                           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                           alt={movie.title}
-                          className="movie-poster"
+                          className="movie-poster" // Add a class to the img element
                         />
                         {selectedMovieId === movie.id && (
                           <div
                             className="hover-box"
                             style={{
                               ...hoverBoxStyle,
-                              left: "100px",
-                              top: "100px",
+                              ...calculateHoverBoxPosition(null, movie.id), // Adjust hover box position
                             }}
                           >
                             <p
@@ -212,46 +251,47 @@ function Movies({query,setQuery}) {
                                 fontWeight: "bold",
                                 color: "#B200ED",
                                 textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)",
-                                cursor: "pointer",
+                                cursor: "pointer" // Add cursor pointer style
                               }}
-                              onClick={() => navigate(`/movie/${movie.id}`)}
+                              onClick={() => navigate(`/movie/${movie.id}`)} // Navigate to movie details page
                             >
                               <strong>{movie.title}</strong>
                             </p>
                             {movie.tagline && (
-                              <p style={{ fontStyle: "italic", opacity: 0.8, color: "white" }}>
+                              <p style={{ fontStyle: "italic", opacity: 0.8, color: "white" }}> {/* Change text color to white */}
                                 {movie.tagline}
                               </p>
                             )}
-                            <p style={{ color: "white" }}>
-                              <strong style={{ color: "#89CFF0" }}>Rating:</strong>{" "}
-                              {movie.vote_average} / 10
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              <strong style={{color: "#89CFF0"}}>Rating:</strong> {movie.vote_average} / 10
                             </p>
-                            <p style={{ color: "white" }}>
-                              <strong style={{ color: "#89CFF0" }}>Genres:</strong>{" "}
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              <strong style={{color: "#89CFF0"}}>Genres:</strong>{" "}
                               {movie.genre_ids
                                 .map((id) => genres.find((g) => g.id === id)?.name)
                                 .join(", ")}
                             </p>
-                            <p style={{ color: "white" }}>
-                              <strong style={{ color: "#89CFF0" }}>Popularity:</strong>{" "}
-                              {movie.popularity}
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              <strong style={{color: "#89CFF0"}}>Popularity:</strong> {movie.popularity}
                             </p>
-                            <p style={{ color: "white" }}>
-                              <strong style={{ color: "#89CFF0" }}>Language:</strong>{" "}
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              <strong style={{color: "#89CFF0"}}>Language:</strong>{" "}
                               {movie.original_language.toUpperCase()}
                             </p>
-                            <p style={{ color: "white" }}>
-                              <strong style={{ color: "#89CFF0" }}>Release:</strong>{" "}
-                              {movie.release_date}
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              <strong style={{color: "#89CFF0"}}>Release:</strong> {movie.release_date}
                             </p>
-                            <p style={{ color: "white" }}>
-                              <strong style={{ color: "#89CFF0" }}>Runtime:</strong>{" "}
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              <strong style={{color: "#89CFF0"}}>Runtime:</strong>{" "}
                               {movie.runtime !== "N/A"
-                                ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m`
+                                ? `${Math.floor(movie.runtime / 60)}h ${
+                                    movie.runtime % 60
+                                  }m`
                                 : "N/A"}
                             </p>
-                            <p style={{ color: "white" }}>{movie.overview}</p>
+                            <p style={{ color: "white" }}> {/* Change text color to white */}
+                              {movie.overview}
+                            </p>
                           </div>
                         )}
                       </div>
@@ -271,16 +311,16 @@ function Movies({query,setQuery}) {
 const hoverBoxStyle = {
   position: "absolute",
   top: "0",
-  width: "400px",
+  width: "400px", // Adjust width as needed
   backgroundColor: "rgba(0, 0, 0, 0.8)",
   color: "white",
   padding: "15px",
   borderRadius: "8px",
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
   zIndex: 10,
-  whiteSpace: "normal",
-  wordWrap: "break-word",
-  overflowY: "auto",
+  whiteSpace: "normal", // Ensure text wraps
+  wordWrap: "break-word", // Allow breaking long words
+  overflowY: "auto", // Enable vertical scrolling if content exceeds maxHeight
 };
 
 export default Movies;
