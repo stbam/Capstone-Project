@@ -21,7 +21,7 @@ export const useGamesData = () => {
       try {
         const games = {};
         const genrePromises = genres.map((genre) =>
-          axios.get(`http://localhost:5001/api/games-by-tag/${genre.name}`).then(async (response) => {
+          axios.get(`/api/games-by-tag/${genre.name}`).then(async (response) => {
             const gamePosters = response.data
               ? shuffleArray(response.data).slice(0, 16).map((game) => ({
                   id: game.appid,
@@ -33,7 +33,7 @@ export const useGamesData = () => {
             const detailedGames = await Promise.all(
               gamePosters.map(async (game) => {
                 try {
-                  const detailsResponse = await axios.get(`http://localhost:5001/api/game-details/${game.id}`);
+                  const detailsResponse = await axios.get(`/api/game-details/${game.id}`);
                   return {
                     ...game,
                     header_image: detailsResponse.data.header_image || "default_image_url", // Fetch header_image
@@ -98,7 +98,7 @@ function Games() {
       const details = {};
 
       const genrePromises = shuffledGenres.map((genre) =>
-        axios.get(`http://localhost:5001/api/games-by-tag/${genre.name}`).then(async (response) => {
+        axios.get(`/api/games-by-tag/${genre.name}`).then(async (response) => {
           const gamePosters = response.data
             ? shuffleArray(response.data).slice(0, 16).map((game) => ({
                 id: game.appid,
@@ -110,7 +110,7 @@ function Games() {
           // Fetch game details for each
           const detailPromises = gamePosters.map(async (game) => {
             try {
-              const res = await axios.get(`http://localhost:5001/api/game-details/${game.id}`);
+              const res = await axios.get(`/api/game-details/${game.id}`);
               details[game.id] = res.data;
             } catch (error) {
               console.error("Error fetching game details:", error);
