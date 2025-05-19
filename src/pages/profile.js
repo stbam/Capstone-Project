@@ -18,7 +18,7 @@ function Profile() {
 }
 
 export default Profile;*/
-import { useEffect, useState,query,setQuery } from "react";
+import { useEffect, useState } from "react";
 
 import React from "react";
 import "../App.css";
@@ -35,7 +35,7 @@ import axios from "axios";
 
 
 
-function Profile({ books,setBooks,maxResults=3}) {
+function Profile({ books,setBooks,maxResults=3,query,setQuery}) {
   const defaultBanner = banner; // imported banner ima
   const [userBooks, setUserBooks] = useState([]);
   const [userMovies, setUserMovies] = useState([]);
