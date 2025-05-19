@@ -93,16 +93,18 @@ app.post('/register', async (req, res) => {
         const newUser = new User({ email, username, password: hashedPassword, age });
         await newUser.save();
 
-  
-
-
-
         res.status(201).json({ message: 'User created successfully' })
     } catch (error) {
-      console.log("error")
-      console.log(error);
-        res.status(500).json({ error: 'Error signing up' })
-        
+      console.error("Registration error:", error);
+    
+      // If it's a Mongoose validation error, return all field errors
+      if (error.name === 'ValidationError') {
+        const messages = Object.values(error.errors).map(e => e.message);
+        return res.status(400).json({ error: messages.join(' | ') });
+      }
+    
+      // Fallback for any other kind of error
+      res.status(500).json({ error: 'Error signing up' });
     }
 })
 
