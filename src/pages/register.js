@@ -20,7 +20,13 @@ export default function BasicForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
+    // 🚫 Prevent spaces in username
+    if (/\s/.test(formData.username)) {
+      alert("Username cannot contain spaces.");
+      return;
+    }
+
     // 🔒 Enforce password strength check on frontend
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
     if (!passwordRegex.test(formData.password)) {
