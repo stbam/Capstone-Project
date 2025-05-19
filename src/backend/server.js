@@ -103,8 +103,11 @@ app.post('/register', async (req, res) => {
         return res.status(400).json({ error: messages.join(' | ') });
       }
     
-      // Fallback for any other kind of error
-      res.status(500).json({ error: 'Error signing up' });
+      // Duplicate key error (MongoDB unique index violation)
+      if (error.code === 11000) {
+        const field = Object.keys(error.keyValue)[0];
+        return res.status(409).json({ error: `${field.charAt(0).toUpperCase() + field.slice(1)} already exists.` });
+      }
     }
 })
 
