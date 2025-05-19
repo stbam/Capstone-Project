@@ -39,12 +39,23 @@ app.use(express.urlencoded({ extended: true }));
 
 // *** User Routes
 //app.use(users)
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://capstone-project-production-a378.up.railway.app'
+];
 
 
 // *** User Authentication part (Martin's Middleware) already uses cors. Make sure they don't conflict.
 // Enable CORS for Frontend
 app.use(cors({
-  origin: 'http://localhost:3000', // Frontend URL
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true); // allow non-browser requests like Postman
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   methods: ['GET', 'POST', 'PUT', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
