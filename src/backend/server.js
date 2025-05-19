@@ -80,21 +80,34 @@ app.post('/register', async (req, res) => {
   console.log("test")
     try { 
         const { email, username, password, age } = req.body      // To request info we want from the user
-        const hashedPassword = await bcrypt.hash(password, 10)  // Hash password, 10 is difficulty
-        const newUser = new User({ email, username, password: hashedPassword, age }) 
-        console.log(newUser)
-        await newUser.save()    // Basically it creates a new schema with this info and save it
+        // Password strength validation (same as in frontend)
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+          return res.status(400).json({
+            error:
+              "Password must be at least 8 characters and include at least one letter, one number, and one special character.",
+          });
+        }
 
-  
-
-
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ email, username, password: hashedPassword, age });
+        await newUser.save();
 
         res.status(201).json({ message: 'User created successfully' })
     } catch (error) {
-      console.log("error")
-      console.log(error);
-        res.status(500).json({ error: 'Error signing up' })
-        
+      console.error("Registration error:", error);
+    
+      // If it's a Mongoose validation error, return all field errors
+      if (error.name === 'ValidationError') {
+        const messages = Object.values(error.errors).map(e => e.message);
+        return res.status(400).json({ error: messages.join(' | ') });
+      }
+    
+      // Duplicate key error (MongoDB unique index violation)
+      if (error.code === 11000) {
+        const field = Object.keys(error.keyValue)[0];
+        return res.status(409).json({ error: `${field.charAt(0).toUpperCase() + field.slice(1)} already exists.` });
+      }
     }
 })
 

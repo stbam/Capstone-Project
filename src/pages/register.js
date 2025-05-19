@@ -21,35 +21,48 @@ export default function BasicForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // 🚫 Prevent spaces in username
+    if (/\s/.test(formData.username)) {
+      alert("Username cannot contain spaces.");
+      return;
+    }
+
+    // 🔒 Enforce password strength check on frontend
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      alert("Password must be at least 8 characters and include at least one letter, one number, and one special character.");
+      return;
+    }
+  
     const data = {
-      username: formData.username,  // Changed 'name' to 'username'
+      username: formData.username,
       email: formData.email,
       password: formData.password,
       age: formData.age,
     };
-
+  
     try {
       const response = await fetch("http://localhost:3003/register", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",  // ✅ Ensure JSON is sent
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),  // ✅ Convert object to JSON
+        body: JSON.stringify(data),
       });
-
+  
       if (response.ok) {
         console.log("Form submitted successfully!");
         setFormData({ username: "", email: "", password: "", age: "" });
-        navigate('/signin'); // Redirect to sign in page
-
+        navigate('/signin');
       } else {
-        console.log("Error frontend");
+        const errorData = await response.json();
+        alert(errorData.error || "Registration failed. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred while submitting the form.");
     }
-  };
+  };  
 
   return (
     <>
