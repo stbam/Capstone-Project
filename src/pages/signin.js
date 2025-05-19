@@ -65,8 +65,10 @@ export default function SignInForm() {
 
         if (userData.hasCompletedSurvey) {
           navigate("/home");
+          window.location.reload();
         } else {
           navigate("/onboarding-survey");
+          window.location.reload();
         }
 
       } else {
