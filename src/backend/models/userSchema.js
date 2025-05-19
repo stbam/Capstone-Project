@@ -6,13 +6,15 @@ const userSchema = new mongoose.Schema({
 
     username: {
         type: String,
-        required: true
-      
+        required: true,
+        lowercase: true,
+        trim: true
     },
     email: {
         type: String,
-        required: true
-     
+        required: true,
+        lowercase: true,
+        trim: true
     },
     password: {
       type: String,
@@ -67,7 +69,19 @@ const userSchema = new mongoose.Schema({
               },
 });
 
- const User = mongoose.models.User || mongoose.model('User', userSchema);
+// Force lowercase for username and email before saving
+userSchema.pre('save', function (next) {
+  if (this.isModified('username')) {
+    this.username = this.username.toLowerCase();
+  }
+  if (this.isModified('email')) {
+    this.email = this.email.toLowerCase();
+  }
+  next();
+});
+
+
+const User = mongoose.models.User || mongoose.model('User', userSchema);
 
  //const User = mongoose.model('User', userSchema)    // User represents the whole schema now
  module.exports = User  // to be able to use this in any other file
