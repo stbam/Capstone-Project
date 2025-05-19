@@ -173,12 +173,15 @@ app.post('/want-to-read',BookController.BookAdd);
 app.get("/:username/books",BookController.getUserBook )
 app.get("/user/profile-picture/:userId",UserController.userProfileGet)
 app.get("/user/profile-banner/:userId",UserController.userBannerGet)
+app.get("/user/display/:userId",UserController.userDisplayboardGet)
+app.get("/user/username/:userId",UserController.userNameGet)
 
 
 
 app.put('/user-banner', upload.fields([
   { name: 'profile_picture', maxCount: 1 },
-  { name: 'banner_image', maxCount: 1 }
+  { name: 'banner_image', maxCount: 1 },
+  { name: 'displayboard', maxCount: 3}
 ]), UserController.UserProfileAdd);
 
 // PUT Survey

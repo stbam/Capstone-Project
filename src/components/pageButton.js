@@ -1,31 +1,46 @@
 import React from "react";
 import Button from "@mui/material/Button";
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
+import { Link, useParams } from "react-router-dom";
 import '../App.css'
+import avatar from "../assets/images/user-avatar.png"
 import { userActivity } from "./userActivityData";
+import axios from "axios";
 
 export default function PageButton(){
-    /*const [index, setIndex] = useState(0);
+    const [userBooks, setUserBooks] = useState([]);
+    const [userMovies, setUserMovies] = useState([]);
+    const [userProfilePic, setProfilePic] = useState(localStorage.getItem('avatar'));
+    const [username, setUsername] = useState(localStorage.getItem("username"));
 
-    function handleNextClick(){
-        if(index < (userActivity.length - 1)){
-            setIndex(index + 1);
+    useEffect(() => {
+      const fetchBooks = async () => {
+        try {
+          const response = await fetch(`http://localhost:3003/${username}/books`);
+          const data = await response.json();
+          setUserBooks(data);
+        } catch (error) {
+          console.error("Error fetching books:", error);
         }
-        else{
-            return(
-                <div>
-                <p>nothing to see here</p>
-                </div>
-            );
+      };
+  
+      if (username) fetchBooks();
+    }, [username]);
+
+  useEffect(() => {
+      const fetchMovies = async () => {
+        try {
+          const response = await fetch(`http://localhost:3003/${username}/movies`);
+          const data = await response.json();
+          setUserMovies(data);
+        } catch (error) {
+          console.error("Error fetching books:", error);
         }
-    }
-    function handleBackClick(){
-        if(index > 0){
-            setIndex(index - 1);
-        }
-    }
-    const testActivity = userActivity;
-    let activity = userActivity[index];*/
+      };
+  
+      if (username) fetchMovies();
+    }, [username]);
+
     function formatTitle(entry){
         if(entry.mediaType == 'game'){
             return <p>started playing {entry.title}</p>
@@ -52,10 +67,10 @@ export default function PageButton(){
                 <div className="user-activity">
                     {checkNewDate(userActivity, listNO)}
                     <div className="user-activity-icon">
-                        <img src="https://avatars.githubusercontent.com/u/19550456" height={50} width={50} style={{borderRadius: "50%",}}/>
+                        <img src={userProfilePic|| avatar} height={50} width={50} style={{borderRadius: "50%",}}/>
                     </div>
                     <div className="user-activity-name">
-                        <p>Bharat</p>
+                        <p>{username}</p>
                     </div>
                     <div className="user-activity-log">
                         {formatTitle(userActivity[listNO])}
@@ -72,46 +87,58 @@ export default function PageButton(){
     }
 
     return (
+    <div>
         <div>
-        {/*<div className="user-activity">
-            <div className="user-activity-date"> {activity.date} </div>
-            <div className="user-activity-icon">
-                <img src="https://avatars.githubusercontent.com/u/19550456" height={50} width={50} style={{borderRadius: "50%",}}/>
-            </div>
-            <div className="user-activity-name">
-                <p>Bharat</p>
-            </div>
-            <div className="user-activity-log">
-                <p>started watching <i>{activity.movie}</i></p>
-            </div>
-        </div>
-        
-        <div className="user-activity">
-            <div className="user-activity-date"> {activity.date} </div>
-            <div className="user-activity-icon">
-                <img src="https://avatars.githubusercontent.com/u/19550456" height={50} width={50} style={{borderRadius: "50%",}}/>
-            </div>
-            <div className="user-activity-name">
-                <p>Bharat</p>
-            </div>
-            <div className="user-activity-log">
-                <p>started watching <i>{activity.movie}</i></p>
-            </div>
-        </div>
-        <div className="page-button-container">
-            <div className="page-counter">
-                <div>
-                    <Button className="page-button-outline" onClick={handleBackClick} disabled={index == 0}>Prev</Button>
-                    <Button className="page-button-outline" onClick={handleNextClick} disabled={index == userActivity.length - 1}>Next</Button>
+            {userBooks.length > 0 ? (
+                userBooks.map((book, index) => (
+                    <Link
+                        key={book.id || index}
+                        to={`/book/${book.id}`}
+                    >
+                        <div className="timeline-design">
+                            <div className="user-activity">
+                                <div className="user-activity-icon">
+                                    <img src={userProfilePic|| "https://avatars.githubusercontent.com/u/19550456"} height={50} width={50} style={{borderRadius: "50%",}}/>
+                                </div>
+                                <div className="user-activity-name">
+                                    <p>{username}</p>
+                                </div>
+                                <div className="user-activity-log">
+                                    <p>started reading <i>{book.title}</i></p>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                ))
+            ) : <div>
+                <p>nothing</p>
                 </div>
-            </div>
-        </div>*/}
-        <div>
-            {userActivity.map(timestamp => (
-                <li className="timeline-design" key={userActivity.entryNo}>
-                        {DisplayActivity(timestamp.entryNo)}
-                </li>
-            ))}
+                }
+            {userMovies.length > 0 ? (
+                userMovies.map((movie, index) => (
+                    <Link
+                        key={movie.id || index}
+                        to={`/movie/${movie.id}`}
+                    >
+                        <div className="timeline-design">
+                            <div className="user-activity">
+                                <div className="user-activity-icon">
+                                    <img src={userProfilePic|| avatar} height={50} width={50} style={{borderRadius: "50%",}}/>
+                                </div>
+                                <div className="user-activity-name">
+                                    <p>{username}</p>
+                                </div>
+                                <div className="user-activity-log">
+                                    <p>started watching <i>{movie.title}</i></p>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                ))
+            ) : <div>
+                <p>No further activity</p>
+                </div>
+                }
         </div>
     </div>
     );

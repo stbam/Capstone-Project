@@ -30,7 +30,6 @@ export default function FollowButton() {
         <>
             <div className="edit-button-container">
                 <div className="profile-name">
-                    <h1>Bharat</h1>
                         <a>{counter.following}</a>
                         <b><Link to="/followers">Followers</Link></b>
                         <b>* {counter.followers} </b>

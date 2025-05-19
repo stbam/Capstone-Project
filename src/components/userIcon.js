@@ -48,14 +48,23 @@ function UserIcon() {
 
 
     
-
+    if (userId) {
     return (
         <div className="avatar-container">
-            <Link to="/profile">
+            <Link to={`/profile/${userId}`}>
                 <Avatar src={avatar} style={{ cursor: "pointer" }} />
             </Link>
         </div>
     );
+    } else{
+        return (
+        <div className="avatar-container">
+            <Link to="/signin">
+                <Avatar src={avatar} style={{ cursor: "pointer" }} />
+            </Link>
+        </div>
+        )
+    }
 }
 
 export default UserIcon;

@@ -11,6 +11,7 @@ exports.uploadImages = upload.fields(
    
   { name: "profile_picture", maxCount: 1 },
   { name: "banner_image", maxCount: 1 },
+  { name: 'displayboard', maxCount: 3},
 ]);
 
 exports.UserProfileAdd = async (req, res) => {
@@ -43,6 +44,24 @@ exports.UserProfileAdd = async (req, res) => {
       user.banner_image = { data: bannerBuffer, contentType: bannerContentType };
     }
   
+    // Update displayboards with newly selected items
+    if (req.body.left_displayboard != '[]') {
+      const leftDisplay = JSON.parse(req.body.left_displayboard);
+      console.log(leftDisplay)
+      user.displayboard[0] = { boardID: leftDisplay.boardID, media: leftDisplay.media, title: leftDisplay.title, thumbnail: leftDisplay.thumbnail, id: leftDisplay.id };
+    }
+    if (req.body.middle_displayboard != '[]') {
+      console.log(req.body.middle_displayboard)
+      const middleDisplay = JSON.parse(req.body.middle_displayboard);
+      console.log(middleDisplay)
+      user.displayboard[1] = { boardID: middleDisplay.boardID, media: middleDisplay.media, title: middleDisplay.title, thumbnail: middleDisplay.thumbnail, id: middleDisplay.id };
+    }
+    if (req.body.right_displayboard != '[]') {
+      const rightDisplay = JSON.parse(req.body.right_displayboard);
+      console.log(rightDisplay)
+      user.displayboard[2] = { boardID: rightDisplay.boardID, media: rightDisplay.media, title: rightDisplay.title, thumbnail: rightDisplay.thumbnail, id: rightDisplay.id };
+    }
+
     // Save the updated user document
     await user.save();
   
@@ -111,4 +130,51 @@ exports.userBannerGet = async (req, res) => {
     }
 };
 
+exports.userDisplayboardGet = async (req,res) => {
+  //console.log("diss")
+  const userId = req.params.userId;
+  //console.log("test display")
+  try {
+    const user = await User.findById(userId); // Using async/await to get the user
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
+    if (user.displayboard) {
+      // Only proceed if display exist
+      res.json({data: user.displayboard})
+    } else {
+      // If display is not found or has no data
+      res.status(404).json({ message: "Display not found" })
+    }
+  } catch (error) {
+    console.error("Error fetching user display: ", error);
+    res.status(500).json({ message: "Error fetching user display" })
+  }
+}
+
+exports.userNameGet = async (req, res) => {
+  //console.log("name")
+  const userId = req.params.userId; // Or however you get the userId
+  //console.log("test name")
+  try {
+      const user = await User.findById(userId); // Using async/await to get the user
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
+      }
+
+      // Debug: Log the user's name
+     console.log(user.username);
+
+      if (user.username) {
+          // Only proceed if name exists
+          res.json({ data: user.username });
+      } else {
+        // If name is not found or has no data
+          res.status(404).json({ message: "Name not found" });
+      }
+  } catch (error) {
+      console.error("Error fetching user name:", error);
+      res.status(500).json({ message: "Error fetching user name" });
+  }
+};

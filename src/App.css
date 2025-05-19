@@ -521,9 +521,9 @@ object-fit: cover;
   .user-activity{
     display: flex;
     padding-left: 20px;
+    padding-top: 10px;
     position: relative;
-    top: -36px;
-    height: 25px;
+    height: 45px;
   }
   .user-activity-date{
     font-size: 15px;
@@ -535,12 +535,10 @@ object-fit: cover;
     border-left: solid darkorchid;
     height: 90px;
     position: relative;
-    left: -13px;
   }
   .user-activity-icon{
-    padding-left: 30px;
+    padding-left: 20px;
     position: relative;
-    top: -15px;
   }
   .user-activity-name{
     padding-left: 10px;
@@ -548,7 +546,6 @@ object-fit: cover;
     font-family: Arial;
     color: darkorchid;
     position: relative;
-    top: -15px;
   }
   .user-activity-log{
     padding-left: 10px;
@@ -556,7 +553,6 @@ object-fit: cover;
     font-family: Arial;
     color: white;
     position: relative;
-    top: -15px;
   }
   .timeline-design{
     margin-left: 10px;
@@ -725,7 +721,6 @@ object-fit: cover;
 .dropdown-custom-content{
   display: none;
   background-color: #3F2A52 !important;
-  height: 30px;
   text-align: center;
   justify-content: center;
 }
@@ -733,6 +728,7 @@ object-fit: cover;
   color: white !important;
   display: block;
   font-size: 15px;
+  border: 1px solid #000000;
   text-align: center;
   justify-content: center;
 }

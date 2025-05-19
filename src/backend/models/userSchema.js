@@ -63,6 +63,15 @@ const userSchema = new mongoose.Schema({
                 type: [Number], // One-hot encoded vector
                 default: [],
               },
+            displayboard: [
+              {
+                boardID: {type: Number}, //Which display is being stored (1=Left, 3=Right)
+                media: {type: String}, //type of media being stored
+                title: {type: String}, //item title
+                thumbnail: {type: String}, //item thumbnail
+                id: {}
+              }
+            ],
 });
 
  const User = mongoose.models.User || mongoose.model('User', userSchema);
