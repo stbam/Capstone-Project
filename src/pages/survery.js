@@ -30,36 +30,38 @@ export default function OnboardingSurvey() {
       console.error("User ID not found in localStorage.");
       return;
     }
-
-  // 🔒 Validation: Ensure all required fields are filled
-  if (
-    selectedMedia.length === 0 ||
-    selectedGenres.length === 0 ||
-    !preferredLanguage ||
-    !movieLength ||
-    !period ||
-    !tryNew
-  ) {
-    alert("Please complete all questions before submitting.");
-    return;
-  }
-
+  
+    // 🔒 Validation
+    if (
+      selectedMedia.length === 0 ||
+      selectedGenres.length === 0 ||
+      !preferredLanguage ||
+      !movieLength ||
+      !period ||
+      !tryNew
+    ) {
+      alert("Please complete all questions before submitting.");
+      return;
+    }
+  
     const surveyData = {
-      selectedMedia: selectedMedia,
-      selectedGenres: selectedGenres,
+      selectedMedia,
+      selectedGenres,
       preferred_language: preferredLanguage,
       movie_length: movieLength,
-      period: period,
+      period,
       try_new: tryNew,
     };
-
+  
     try {
-      const response = await axios.put(
-        `http://localhost:3003/user/survey/${userId}`,
-        surveyData
-      );
-      console.log("Survey submitted:", response.data);
-      alert("Survey submitted successfully!");
+      // 1. Submit survey answers
+      await axios.put(`http://localhost:3003/user/survey/${userId}`, surveyData);
+  
+      // 2. Mark the user as having completed the survey
+      await axios.patch(`http://localhost:3003/users/${userId}/survey-completed`);
+  
+      // 3. Redirect to home
+      window.location.href = "/home";
     } catch (error) {
       console.error("Error submitting survey:", error);
       alert("Failed to submit survey.");

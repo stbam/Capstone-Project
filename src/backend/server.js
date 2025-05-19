@@ -1,5 +1,3 @@
-
-
 const express = require('express') // setups server
 const connect = require("./connect")
 const cors = require('cors') // Helps minimize errors when connecting to database or API

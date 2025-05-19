@@ -55,6 +55,10 @@ const userSchema = new mongoose.Schema({
                 movie_length: { type: String, default: null },
                 period: { type: String, default: null },
               },
+              hasCompletedSurvey: {
+                type: Boolean,
+                default: false,
+              },
               vector: {
                 type: [Number], // One-hot encoded vector
                 default: [],
