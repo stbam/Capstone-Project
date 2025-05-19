@@ -248,12 +248,13 @@ app.patch('/users/:id/survey-completed', async (req, res) => {
     res.status(500).json({ error: "Failed to mark survey as completed" });
   }
 });
+const PORT = process.env.PORT || 3003;
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("✅ Connected to MongoDB with Mongoose");
 
-    app.listen(3003, () => {
+    app.listen(PORT, () => {
       console.log("✅ Server running on http://localhost:3003");
     });
   })
